@@ -18,7 +18,7 @@ class _GamePageState extends State<GamePage> {
           children: <Widget>[
             Expanded(
               flex: 1,
-              //TODO FractionnallySizedBox?
+              //TODO FractionallySizedBox?
               child: FractionallySizedBox( // Screen top (top player)
                 widthFactor: 1.0,
                 child: Area("Top Player"),
