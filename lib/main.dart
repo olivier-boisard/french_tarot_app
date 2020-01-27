@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'main_page.dart';
+import 'game_page.dart';
 
 // Got inspirations from https://medium.com/flutter-community/creating-solitaire-in-flutter-946c34ef053c
 
@@ -12,7 +12,7 @@ class FrenchTarotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: MainPage(),
+      home: GamePage(),
     );
   }
 }
