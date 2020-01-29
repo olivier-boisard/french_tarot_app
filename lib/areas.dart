@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:french_tarot/card.dart';
 
 class Area extends StatelessWidget {
-  final String areaName;
+  final bool visibleHand;
 
-  const Area(this.areaName, {Key key}) : super(key: key);
+  const Area({this.visibleHand = false, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,9 @@ class Area extends StatelessWidget {
     final cards = <Widget>[];
     for (var i = 0; i < nCards; i++) {
       cards.add(
-        Positioned(
-          child: FaceDownCard(),
-          left: i * offsetInPixel,
+        Padding(
+          padding: EdgeInsets.only(left: i * offsetInPixel),
+          child: visibleHand ? FaceUpCard() : FaceDownCard(),
         ),
       );
     }
@@ -27,3 +28,4 @@ class Area extends StatelessWidget {
     );
   }
 }
+

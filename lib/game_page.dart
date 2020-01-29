@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:french_tarot/areas.dart';
 
 class GamePage extends StatefulWidget {
-  
+
   @override
   _GamePageState createState() => _GamePageState();
 }
@@ -18,11 +18,7 @@ class _GamePageState extends State<GamePage> {
           children: <Widget>[
             Expanded(
               flex: 1,
-              //TODO FractionallySizedBox?
-              child: FractionallySizedBox( // Screen top (top player)
-                widthFactor: 1.0,
-                child: Area("Top Player"),
-              ),
+              child: Area(),
             ),
             Expanded( // Screen middle (left player, play area, right player)
               flex: 2,
@@ -30,22 +26,38 @@ class _GamePageState extends State<GamePage> {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Area("Left Player"),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RotatedBox(
+                        child: Area(),
+                        quarterTurns: 1,
+                      ),
+                    ),
                   ),
                   Expanded(
                     flex: 2,
-                    child: Area("Play Area"),
+                    child: Container(),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Area("Right Area"),
-                  )
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: RotatedBox(
+                        child: Area(),
+                        quarterTurns: 3,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             Expanded( // Human Player
-                child: Area("Human Player")
-            )
+              flex: 1,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Area(visibleHand: true),
+              ),
+            ),
           ],
         ),
       ),
