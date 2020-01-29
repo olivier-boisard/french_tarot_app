@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:french_tarot/card.dart';
 
 class Area extends StatelessWidget {
   final String areaName;
@@ -8,19 +11,19 @@ class Area extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        //TODO remove this wrapper
-        border: Border.all(
-          color: Colors.black,
+    const nCards = 18;
+    final offsetInPixel = window.physicalSize.width / 70;
+    final cards = <Widget>[];
+    for (var i = 0; i < nCards; i++) {
+      cards.add(
+        Positioned(
+          child: FaceDownCard(),
+          left: i * offsetInPixel,
         ),
-      ),
-      child: Center(
-        child: Text(
-          areaName,
-          textAlign: TextAlign.center,
-        ),
-      ),
+      );
+    }
+    return Stack(
+        children: cards
     );
   }
 }
