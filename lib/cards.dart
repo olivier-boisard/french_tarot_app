@@ -36,7 +36,8 @@ enum Value {
   jack,
   knight,
   queen,
-  king
+  king,
+  excuse
 }
 
 final _cardWidgetHeight = (0.04 * window.physicalSize.height);
