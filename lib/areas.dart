@@ -19,7 +19,9 @@ class Area extends StatelessWidget {
       cards.add(
         Padding(
           padding: EdgeInsets.only(left: i * offsetInPixel),
-          child: visibleHand ? FaceUpCard() : FaceDownCard(),
+          child: visibleHand
+              ? FaceUpCard(TarotCard(Suit.heart, Value.numeric_1))
+              : FaceDownCard(),
         ),
       );
     }
