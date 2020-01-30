@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:french_tarot/cards.dart';
+import 'package:french_tarot/deck.dart';
 
 class Area extends StatelessWidget {
   final bool visibleHand;
@@ -15,12 +16,13 @@ class Area extends StatelessWidget {
     const nCards = 18;
     final offsetInPixel = window.physicalSize.width / 70;
     final cards = <Widget>[];
+    final deck = Deck();
     for (var i = 0; i < nCards; i++) {
       cards.add(
         Padding(
           padding: EdgeInsets.only(left: i * offsetInPixel),
           child: visibleHand
-              ? FaceUpCard(TarotCard(Suit.heart, Value.numeric_1))
+              ? FaceUpCard(deck.cards[i])
               : FaceDownCard(),
         ),
       );
