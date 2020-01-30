@@ -59,5 +59,7 @@ class Deck {
     for (Value value in trumpValues) {
       cards.add(TarotCard(Suit.trump, value));
     }
+
+    cards.shuffle();
   }
 }
