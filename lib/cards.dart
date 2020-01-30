@@ -8,7 +8,8 @@ enum Suit {
   heart,
   spades,
   club,
-  trump
+  trump,
+  none
 }
 
 enum Value {
@@ -74,7 +75,8 @@ class FaceUpCard extends StatelessWidget {
     Suit.club: "♣",
     Suit.heart: "♥",
     Suit.diamond: "♦",
-    Suit.spades: "♠"
+    Suit.spades: "♠",
+    Suit.trump: "⭐",
   };
 
   static const Map<Value, String> _valueToString = {
@@ -88,6 +90,17 @@ class FaceUpCard extends StatelessWidget {
     Value.numeric_8: "8",
     Value.numeric_9: "9",
     Value.numeric_10: "10",
+    Value.numeric_11: "11",
+    Value.numeric_12: "12",
+    Value.numeric_13: "13",
+    Value.numeric_14: "14",
+    Value.numeric_15: "15",
+    Value.numeric_16: "16",
+    Value.numeric_17: "17",
+    Value.numeric_18: "18",
+    Value.numeric_19: "19",
+    Value.numeric_20: "20",
+    Value.numeric_21: "21",
     Value.king: "♔",
     Value.queen: "♕",
     Value.knight: "♘",
@@ -103,8 +116,11 @@ class FaceUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final valueAsString = _valueToString[card.value];
     final suitAsString = _suitToString[card.suit];
+    const excuseAsString = "🎸";
     final smallTextWidget = Text(
-      "$valueAsString\n$suitAsString",
+      card.value != Value.excuse
+          ? "$valueAsString\n$suitAsString"
+          : excuseAsString,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: window.physicalSize.width / 150,
@@ -134,7 +150,9 @@ class FaceUpCard extends StatelessWidget {
           Expanded(
             child: Align(
               child: Text(
-                  "$valueAsString$suitAsString",
+                  card.value == Value.excuse
+                      ? excuseAsString
+                      : "$valueAsString$suitAsString",
                   textAlign: TextAlign.center
               ),
               alignment: Alignment.center,
