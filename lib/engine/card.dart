@@ -3,10 +3,8 @@ import 'package:french_tarot/engine/exceptions.dart';
 enum Suit { spades, heart, diamond, clover, trump, none }
 
 class Card {
-  Suit suit;
-  int scoreValue;
-  int strength;
-  int isOudler;
+  final Suit suit;
+  final int strength;
 
   Card.coloredCard(this.suit, this.strength) {
     if (this.strength < 1 || this.strength > FigureValues.KING) {
