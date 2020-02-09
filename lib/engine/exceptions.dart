@@ -1,0 +1,1 @@
+class IllegalCardValueException implements Exception {}
