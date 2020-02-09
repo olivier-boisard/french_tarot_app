@@ -7,12 +7,12 @@ class Card {
   final int strength;
 
   Card.coloredCard(this.suit, this.strength) {
-    if (this.strength < 1 || this.strength > FigureValues.KING) {
+    if (strength < 1 || strength > FigureValues.KING) {
       throw IllegalCardStrengthException();
     }
 
     const allowedSuits = [Suit.heart, Suit.diamond, Suit.clover, Suit.spades];
-    if (!allowedSuits.contains(this.suit)) {
+    if (!allowedSuits.contains(suit)) {
       throw IllegalCardStrengthException();
     }
   }
