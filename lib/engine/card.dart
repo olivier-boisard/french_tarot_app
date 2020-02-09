@@ -7,12 +7,12 @@ class Card {
   int _scoreValue;
   int _isOudler;
 
-  Card.createColoredCard(this._suit, this._scoreValue) {
+  Card.coloredCard(this._suit, this._scoreValue) {
     if (this._scoreValue < 1 || this._scoreValue > FigureValues.KING) {
       throw IllegalCardValueException();
     }
   }
-
+  
   bool beats(Suit demanded, Card card) {
     throw UnimplementedError();
   }
