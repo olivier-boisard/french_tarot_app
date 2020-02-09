@@ -13,8 +13,12 @@ void main() {
     expect(() => Card.coloredCard(Suit.heart, FigureValues.KING),
         returnsNormally);
   });
-  test("Construct colored card failed", () {
+  test("Construct colored card wrong strength", () {
     expect(() => Card.coloredCard(Suit.heart, 21),
-        throwsA(isInstanceOf<IllegalCardValueException>()));
+        throwsA(isInstanceOf<IllegalCardStrengthException>()));
+  });
+  test("Construct colored card wrong suit", () {
+    expect(() => Card.coloredCard(Suit.trump, 1),
+        throwsA(isInstanceOf<IllegalCardStrengthException>()));
   });
 }

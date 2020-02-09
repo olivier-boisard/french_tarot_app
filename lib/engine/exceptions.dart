@@ -1,1 +1,1 @@
-class IllegalCardValueException implements Exception {}
+class IllegalCardStrengthException implements Exception {}

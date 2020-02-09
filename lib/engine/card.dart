@@ -3,24 +3,30 @@ import 'package:french_tarot/engine/exceptions.dart';
 enum Suit { spades, heart, diamond, clover, trump, none }
 
 class Card {
-  Suit _suit;
-  int _scoreValue;
-  int _isOudler;
+  Suit suit;
+  int scoreValue;
+  int strength;
+  int isOudler;
 
-  Card.coloredCard(this._suit, this._scoreValue) {
-    if (this._scoreValue < 1 || this._scoreValue > FigureValues.KING) {
-      throw IllegalCardValueException();
+  Card.coloredCard(this.suit, this.strength) {
+    if (this.strength < 1 || this.strength > FigureValues.KING) {
+      throw IllegalCardStrengthException();
+    }
+
+    const allowedSuits = [Suit.heart, Suit.diamond, Suit.clover, Suit.spades];
+    if (!allowedSuits.contains(this.suit)) {
+      throw IllegalCardStrengthException();
     }
   }
-  
+
   bool beats(Suit demanded, Card card) {
     throw UnimplementedError();
   }
 }
 
 class FigureValues {
-  static int JACK = 11;
-  static int KNIGHT = 12;
-  static int QUEEN = 13;
-  static int KING = 14;
+  static const int JACK = 11;
+  static const int KNIGHT = 12;
+  static const int QUEEN = 13;
+  static const int KING = 14;
 }
