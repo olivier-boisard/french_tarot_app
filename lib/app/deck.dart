@@ -1,4 +1,4 @@
-import 'package:french_tarot/cards.dart';
+import 'package:french_tarot/app/cards.dart';
 
 class Deck {
   final List<TarotCard> cards;

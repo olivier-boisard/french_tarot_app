@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:french_tarot/cards.dart';
-import 'package:french_tarot/deck.dart';
+import 'package:french_tarot/app/cards.dart';
+import 'package:french_tarot/app/deck.dart';
 
 class Area extends StatelessWidget {
   final bool visibleHand;

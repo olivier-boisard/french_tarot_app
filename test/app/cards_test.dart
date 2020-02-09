@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/cards.dart';
+import 'package:french_tarot/app/cards.dart';
 
 //TODO unit tests
 

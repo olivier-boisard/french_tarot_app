@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:french_tarot/areas.dart';
+import 'package:french_tarot/app/areas.dart';
 
 class GamePage extends StatefulWidget {
 
