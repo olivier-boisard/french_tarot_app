@@ -17,6 +17,16 @@ class Card {
     }
   }
 
+  double get score {
+    final strengthScoreMap = {
+      FigureValues.JACK: 1.5,
+      FigureValues.KNIGHT: 2.5,
+      FigureValues.QUEEN: 3.5,
+      FigureValues.KING: 4.5
+    };
+    return strengthScoreMap[strength] ?? 0.5;
+  }
+
   bool beats(Suit demanded, Card card) {
     throw UnimplementedError();
   }

@@ -21,4 +21,12 @@ void main() {
     expect(() => Card.coloredCard(Suit.trump, 1),
         throwsA(isInstanceOf<IllegalCardStrengthException>()));
   });
+  test("Standard card score", () {
+    var card = Card.coloredCard(Suit.diamond, 1);
+    expect(card.score, equals(0.5));
+  });
+  //TODO test get card score
+  //TODO test get card isOudler
+  //TODO create creation of trump and excuse
+  //TODO test beats
 }
