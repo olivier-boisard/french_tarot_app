@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:french_tarot/engine/card.dart';
 
 class Deck {
-  final List<Card> cards;
+  final List<Card> cards; //TODO make private
   final Random _random;
 
   Deck()
