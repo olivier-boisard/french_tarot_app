@@ -65,7 +65,11 @@ class Turn {
     return validCards;
   }
 
-  Card _extractStrongestTrump(List<Card> playedTrumps) {
+  List<Card> _extractCardsMatchingAskedSuit(List<Card> hand) {
+    return hand.where((card) => card.suit == _askedSuit).toList();
+  }
+
+  static Card _extractStrongestTrump(List<Card> playedTrumps) {
     var strongestTrump = playedTrumps.first;
     for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
       if (trump.beats(Suit.trump, strongestTrump)) {
@@ -75,23 +79,19 @@ class Turn {
     return strongestTrump;
   }
 
-  List<Card> _copyCardList(List<Card> hand) {
+  static List<Card> _copyCardList(List<Card> hand) {
     return List<Card>.from(hand);
   }
 
-  List<Card> _extractCardsMatchingAskedSuit(List<Card> hand) {
-    return hand.where((card) => card.suit == _askedSuit).toList();
-  }
-
-  List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
+  static List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
     return cards.where((card) => _filterTrump(card, lowerBound)).toList();
   }
 
-  bool _filterTrump(Card card, int lowerBound) {
+  static bool _filterTrump(Card card, int lowerBound) {
     return card.suit == Suit.trump && card.strength > lowerBound;
   }
 
-  bool _containsExcuse(List<Card> hand) {
+  static bool _containsExcuse(List<Card> hand) {
     return hand.any((card) => card == Card.excuse());
   }
 
