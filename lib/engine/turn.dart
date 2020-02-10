@@ -13,13 +13,14 @@ class Turn {
     if (playedCards.isEmpty) {
       return List<Card>.from(hand);
     }
-
-    if (playedCards.length == 1 && playedCards.first == Card.excuse()) {
+    var firstCard = playedCards.first;
+    if (firstCard == Card.excuse() && playedCards.length == 1) {
       return List<Card>.from(hand);
     }
-    
 
-    final asked = playedCards.first.suit;
+    final asked = firstCard != Card.excuse()
+        ? firstCard.suit
+        : playedCards[1].suit;
     var validCards = hand.where((card) => card.suit == asked).toList();
     if (validCards.isEmpty) {
       validCards = hand.where((card) => card.suit == Suit.trump).toList();
