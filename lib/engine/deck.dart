@@ -4,7 +4,6 @@ import 'package:french_tarot/engine/card.dart';
 
 class Deck {
   final Random random;
-
   final List<Card> cards;
 
   Deck()
@@ -12,6 +11,16 @@ class Deck {
         cards = _createCardList();
 
   Deck.withRandom(this.random) : cards = _createCardList();
+
+  void shuffle() {
+    cards.shuffle(random);
+  }
+
+  List<Card> pop(int nCards) {
+    final output = List<Card>.from(cards.getRange(0, nCards));
+    cards.removeRange(0, nCards);
+    return output;
+  }
 
   static List<Card> _createCardList() {
     final cards = List<Card>();
@@ -40,13 +49,4 @@ class Deck {
     }
   }
 
-  void shuffle() {
-    cards.shuffle(random);
-  }
-
-  List<Card> pop(int nCards) {
-    final output = List<Card>.from(cards.getRange(0, nCards));
-    cards.removeRange(0, nCards);
-    return output;
-  }
 }
