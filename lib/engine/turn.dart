@@ -6,18 +6,6 @@ class Turn {
 
   Turn() : playedCards = List<Card>();
 
-  bool get onlyExcuseWasPlayed {
-    return playedCards.first == Card.excuse() && playedCards.length == 1;
-  }
-
-  Suit get askedSuit {
-    final firstPlayedCard = playedCards.first;
-    final asked = firstPlayedCard != Card.excuse()
-        ? firstPlayedCard.suit
-        : playedCards[1].suit;
-    return asked;
-  }
-
   int get winningCardIndex {
     if (playedCards.isEmpty) {
       throw EmptyTurn();
@@ -25,12 +13,24 @@ class Turn {
     int index = 0;
     var strongestCard = playedCards.first;
     for (int i = 1; i < playedCards.length; i++) {
-      if (playedCards[i].beats(askedSuit, strongestCard)) {
+      if (playedCards[i].beats(_askedSuit, strongestCard)) {
         index = i;
         strongestCard = playedCards[i];
       }
     }
     return index;
+  }
+
+  bool get _onlyExcuseWasPlayed {
+    return playedCards.first == Card.excuse() && playedCards.length == 1;
+  }
+
+  Suit get _askedSuit {
+    final firstPlayedCard = playedCards.first;
+    final asked = firstPlayedCard != Card.excuse()
+        ? firstPlayedCard.suit
+        : playedCards[1].suit;
+    return asked;
   }
 
   void addPlayedCard(Card card) {
@@ -42,7 +42,7 @@ class Turn {
       return _copyCardList(hand);
     }
 
-    if (onlyExcuseWasPlayed) {
+    if (_onlyExcuseWasPlayed) {
       return _copyCardList(hand);
     }
 
@@ -64,7 +64,7 @@ class Turn {
   }
 
   List<Card> _extractCardsMatchingAskedSuit(List<Card> hand) {
-    var validCards = hand.where((card) => card.suit == askedSuit).toList();
+    var validCards = hand.where((card) => card.suit == _askedSuit).toList();
     return validCards;
   }
 

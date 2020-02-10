@@ -3,17 +3,17 @@ import 'dart:math';
 import 'package:french_tarot/engine/card.dart';
 
 class Deck {
-  final Random random;
   final List<Card> cards;
+  final Random _random;
 
   Deck()
-      : random = Random(),
-        cards = _createCardList();
+      : cards = _createCardList(),
+        _random = Random();
 
-  Deck.withRandom(this.random) : cards = _createCardList();
+  Deck.withRandom(this._random) : cards = _createCardList();
 
   void shuffle() {
-    cards.shuffle(random);
+    cards.shuffle(_random);
   }
 
   List<Card> pop(int nCards) {
