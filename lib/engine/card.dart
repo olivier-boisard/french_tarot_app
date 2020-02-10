@@ -5,12 +5,18 @@ enum Suit { spades, heart, diamond, clover, trump, none }
 class Card {
   final Suit suit;
   final int strength;
+  static const List<Suit> standardSuits = [
+    Suit.heart,
+    Suit.diamond,
+    Suit.clover,
+    Suit.spades
+  ];
 
   Card.coloredCard(this.suit, this.strength) {
     _checkStrengthIsValid();
     _checkSuitIsValid();
   }
-  
+
   Card.trump(this.strength) : this.suit = Suit.trump;
 
   Card.excuse()
@@ -52,8 +58,7 @@ class Card {
   }
 
   void _checkSuitIsValid() {
-    const validSuits = [Suit.heart, Suit.diamond, Suit.clover, Suit.spades];
-    if (!validSuits.contains(suit)) {
+    if (!standardSuits.contains(suit)) {
       throw IllegalCardStrengthException();
     }
   }
