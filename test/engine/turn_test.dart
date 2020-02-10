@@ -21,7 +21,7 @@ void main() {
       Card.coloredCard(Suit.spades, 4)
     ];
     final allowedCards = turn.extractAllowedCards(cards);
-    expect(allowedCards.length, equals(cards.length));
+    expect(allowedCards, equals(cards));
   });
   test("Spades is asked, some cards in hand are allowed", () {
     final turn = Turn();
@@ -43,7 +43,7 @@ void main() {
       Card.coloredCard(Suit.clover, 4)
     ];
     final allowedCards = turn.extractAllowedCards(cards);
-    expect(allowedCards.length, equals(cards.length));
+    expect(allowedCards, equals(cards));
   });
   test("Spades is asked, trump", () {
     final turn = Turn();
