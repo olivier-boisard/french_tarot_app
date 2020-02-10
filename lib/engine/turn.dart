@@ -48,7 +48,18 @@ class Turn {
 
     List<Card> validCards = _extractCardsMatchingAskedSuit(hand);
     if (validCards.isEmpty) {
-      validCards = _extractTrumps(hand);
+      final playedTrumps = _extractTrumps(playedCards);
+      if (playedTrumps.isNotEmpty) {
+        var strongestTrump = playedTrumps.first;
+        for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
+          if (trump.beats(Suit.trump, strongestTrump)) {
+            strongestTrump = trump;
+          }
+        }
+        validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
+      } else {
+        validCards = _extractTrumps(hand);
+      }
       if (validCards.isEmpty) {
         return _copyCardList(hand);
       }
@@ -64,12 +75,15 @@ class Turn {
   }
 
   List<Card> _extractCardsMatchingAskedSuit(List<Card> hand) {
-    var validCards = hand.where((card) => card.suit == _askedSuit).toList();
-    return validCards;
+    return hand.where((card) => card.suit == _askedSuit).toList();
   }
 
-  List<Card> _extractTrumps(List<Card> hand) {
-    return hand.where((card) => card.suit == Suit.trump).toList();
+  List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
+    return cards.where((card) => _filterTrump(card, lowerBound)).toList();
+  }
+
+  bool _filterTrump(Card card, int lowerBound) {
+    return card.suit == Suit.trump && card.strength > lowerBound;
   }
 
   bool _containsExcuse(List<Card> hand) {

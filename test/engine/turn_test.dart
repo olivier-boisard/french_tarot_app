@@ -42,7 +42,7 @@ void main() {
   test("Spades is asked, peeing", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
-    final Iterable<Card> cards = [
+    final List<Card> cards = [
       Card.coloredCard(Suit.diamond, 2),
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.clover, 4)
@@ -54,7 +54,7 @@ void main() {
   test("Spades is asked, trump", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
-    final Iterable<Card> cards = [
+    final List<Card> cards = [
       Card.trump(2),
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.clover, 4)
@@ -66,7 +66,7 @@ void main() {
   test("Spades is asked, trump and excuse", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
-    final Iterable<Card> cards = [
+    final List<Card> cards = [
       Card.trump(2),
       Card.excuse(),
       Card.coloredCard(Suit.clover, 4)
@@ -119,7 +119,16 @@ void main() {
   });
 
   test("Trump needed, need to go higher", () {
-    throw UnimplementedError();
+    final turn = Turn();
+    turn.addPlayedCard(Card.coloredCard(Suit.diamond, 1));
+    turn.addPlayedCard(Card.trump(5));
+    final List<Card> cards = [
+      Card.coloredCard(Suit.clover, 1),
+      Card.trump(4),
+      Card.trump(6)
+    ];
+    final allowedCards = turn.extractAllowedCards(cards);
+    expect(allowedCards, [Card.trump(6)]);
   });
 
   test("Trump needed, need to go lower", () {
