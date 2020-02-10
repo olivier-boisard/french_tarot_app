@@ -1,4 +1,5 @@
 import 'package:french_tarot/engine/card.dart';
+import 'package:french_tarot/engine/exceptions.dart';
 
 class Turn {
   final List<Card> playedCards;
@@ -18,6 +19,9 @@ class Turn {
   }
 
   int get winningCardIndex {
+    if (playedCards.isEmpty) {
+      throw EmptyTurn();
+    }
     int index = 0;
     var strongestCard = playedCards.first;
     for (int i = 1; i < playedCards.length; i++) {

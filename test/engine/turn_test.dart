@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
+import 'package:french_tarot/engine/exceptions.dart';
 import 'package:french_tarot/engine/turn.dart';
 
 void main() {
@@ -151,5 +152,9 @@ void main() {
     turn.addPlayedCard(Card.coloredCard(Suit.clover, 2));
     turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
     expect(turn.winningCardIndex, equals(0));
+  });
+
+  test("Winning card index, no cards", () {
+    expect(() => Turn().winningCardIndex, throwsA(isInstanceOf<EmptyTurn>()));
   });
 }
