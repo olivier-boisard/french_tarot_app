@@ -8,15 +8,18 @@ void main() {
     final nCardsInDeck = 78;
     expect(Deck().cards.length, nCardsInDeck);
   });
+
   test("Construct deck with random object", () {
     expect(() => Deck.withRandom(Random()), returnsNormally);
   });
+
   test("Shuffle deck", () {
     final shuffledDeck = Deck();
     shuffledDeck.shuffle();
     expect(shuffledDeck.cards, isNot(orderedEquals(Deck().cards)));
     expect(shuffledDeck.cards, unorderedEquals(Deck().cards));
   });
+  
   test("Pop 10 cards from deck", () {
     final deck = Deck();
     final nCardsToPop = 10;
