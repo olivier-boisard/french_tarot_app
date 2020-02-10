@@ -50,12 +50,7 @@ class Turn {
     if (validCards.isEmpty) {
       final playedTrumps = _extractTrumps(playedCards);
       if (playedTrumps.isNotEmpty) {
-        var strongestTrump = playedTrumps.first;
-        for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
-          if (trump.beats(Suit.trump, strongestTrump)) {
-            strongestTrump = trump;
-          }
-        }
+        final strongestTrump = _extractStrongestTrump(playedTrumps);
         validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
       } else {
         validCards = _extractTrumps(hand);
@@ -68,6 +63,16 @@ class Turn {
       validCards.add(Card.excuse());
     }
     return validCards;
+  }
+
+  Card _extractStrongestTrump(List<Card> playedTrumps) {
+    var strongestTrump = playedTrumps.first;
+    for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
+      if (trump.beats(Suit.trump, strongestTrump)) {
+        strongestTrump = trump;
+      }
+    }
+    return strongestTrump;
   }
 
   List<Card> _copyCardList(List<Card> hand) {
