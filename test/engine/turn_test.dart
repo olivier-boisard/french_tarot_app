@@ -34,4 +34,15 @@ void main() {
     final allowedCards = turn.extractAllowedCards(cards);
     expect(allowedCards.length, equals(2));
   });
+  test("Spades is asked, peeing", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
+    final Iterable<Card> cards = [
+      Card.coloredCard(Suit.diamond, 2),
+      Card.coloredCard(Suit.heart, 3),
+      Card.coloredCard(Suit.clover, 4)
+    ];
+    final allowedCards = turn.extractAllowedCards(cards);
+    expect(allowedCards.length, equals(cards.length));
+  });
 }

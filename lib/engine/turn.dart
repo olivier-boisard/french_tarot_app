@@ -9,8 +9,12 @@ class Turn {
     playedCards.add(card);
   }
 
-  List<Card> extractAllowedCards(List<Card> cards) {
+  List<Card> extractAllowedCards(List<Card> hand) {
     final asked = playedCards.first.suit;
-    return cards.where((cardInHand) => cardInHand.suit == asked).toList();
+    var validCards = hand.where((card) => card.suit == asked).toList();
+    if (validCards.isEmpty) {
+      validCards = List<Card>.from(hand);
+    }
+    return validCards;
   }
 }
