@@ -18,6 +18,9 @@ class Turn {
         validCards = List<Card>.from(hand);
       }
     }
+    if (hand.any((card) => card == Card.excuse())) {
+      validCards.add(Card.excuse());
+    }
     return validCards;
   }
 }
