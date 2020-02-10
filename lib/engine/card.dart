@@ -17,6 +17,8 @@ class Card {
     }
   }
 
+  Card.trump(this.strength) : this.suit = Suit.trump;
+
   double get score {
     final strengthScoreMap = {
       FigureValues.JACK: 1.5,

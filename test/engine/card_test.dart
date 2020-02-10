@@ -41,6 +41,13 @@ void main() {
     var card = Card.coloredCard(Suit.diamond, FigureValues.KING);
     expect(card.score, equals(4.5));
   });
+  test("Construct trump", () {
+    expect(() => Card.trump(1), returnsNormally);
+  });
+  test("Construct trump wrong value", () {
+    expect(() => Card.trump(22), returnsNormally);
+  });
+  //TODO excuse
   //TODO test get card isOudler
   //TODO create creation of trump and excuse
   //TODO test beats
