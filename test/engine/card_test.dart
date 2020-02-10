@@ -73,5 +73,30 @@ void main() {
     final strongerCard = Card.coloredCard(Suit.spades, 10);
     expect(strongerCard.beats(Suit.none, weakerCard), true);
   });
+  test("king beats queen", () {
+    final weakerCard = Card.coloredCard(Suit.spades, CardStrengths.QUEEN);
+    final strongerCard = Card.coloredCard(Suit.spades, CardStrengths.KING);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
+  test("queen beats knight", () {
+    final weakerCard = Card.coloredCard(Suit.spades, CardStrengths.KNIGHT);
+    final strongerCard = Card.coloredCard(Suit.spades, CardStrengths.QUEEN);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
+  test("knight beats jack", () {
+    final weakerCard = Card.coloredCard(Suit.spades, CardStrengths.JACK);
+    final strongerCard = Card.coloredCard(Suit.spades, CardStrengths.KNIGHT);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
+  test("jack beats 10", () {
+    final weakerCard = Card.coloredCard(Suit.spades, 10);
+    final strongerCard = Card.coloredCard(Suit.spades, CardStrengths.JACK);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
+  test("1 beats excuse", () {
+    final weakerCard = Card.excuse();
+    final strongerCard = Card.coloredCard(Suit.spades, 1);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
   //TODO test beats
 }
