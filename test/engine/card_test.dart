@@ -138,4 +138,16 @@ void main() {
     final strongerCard = Card.trump(21);
     expect(weakerCard.beats(Suit.none, strongerCard), false);
   });
+
+  test("1 of spades beats king of heart if spades is demanded", () {
+    final weakerCard = Card.coloredCard(Suit.heart, CardStrengths.KING);
+    final strongerCard = Card.coloredCard(Suit.spades, 1);
+    expect(strongerCard.beats(Suit.spades, weakerCard), true);
+  });
+
+  test("king of heart is beaten by 1 of spades if spades is demanded", () {
+    final weakerCard = Card.coloredCard(Suit.heart, CardStrengths.KING);
+    final strongerCard = Card.coloredCard(Suit.spades, 1);
+    expect(weakerCard.beats(Suit.spades, strongerCard), false);
+  });
 }

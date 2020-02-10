@@ -38,6 +38,13 @@ class Card {
   }
 
   bool beats(Suit demanded, Card card) {
+    final colorDemanded = demanded != Suit.none;
+    if (colorDemanded && suit != demanded) {
+      return false;
+    }
+    if (colorDemanded && card.suit != demanded) {
+      return true;
+    }
     return _adjustedCardStrength > card._adjustedCardStrength;
   }
 
