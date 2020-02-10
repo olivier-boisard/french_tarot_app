@@ -13,7 +13,10 @@ class Turn {
     final asked = playedCards.first.suit;
     var validCards = hand.where((card) => card.suit == asked).toList();
     if (validCards.isEmpty) {
-      validCards = List<Card>.from(hand);
+      validCards = hand.where((card) => card.suit == Suit.trump).toList();
+      if (validCards.isEmpty) {
+        validCards = List<Card>.from(hand);
+      }
     }
     return validCards;
   }
