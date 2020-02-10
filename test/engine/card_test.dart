@@ -63,12 +63,12 @@ void main() {
     final card = Card.coloredCard(Suit.spades, 1);
     expect(card.isOudler, equals(false));
   });
-  test("4 of spades is beaten by 10 of spades", () {
+  test("4 is beaten by 10", () {
     final weakerCard = Card.coloredCard(Suit.spades, 4);
     final strongerCard = Card.coloredCard(Suit.spades, 10);
     expect(weakerCard.beats(Suit.none, strongerCard), false);
   });
-  test("10 of spades beats by 4 of spades", () {
+  test("10 beats 4", () {
     final weakerCard = Card.coloredCard(Suit.spades, 4);
     final strongerCard = Card.coloredCard(Suit.spades, 10);
     expect(strongerCard.beats(Suit.none, weakerCard), true);
