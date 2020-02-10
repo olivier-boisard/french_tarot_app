@@ -84,15 +84,14 @@ class Turn {
   }
 
   static List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
-    return cards.where((card) => _filterTrump(card, lowerBound)).toList();
+    return cards.where((card) => _filterTrumps(card, lowerBound)).toList();
   }
 
-  static bool _filterTrump(Card card, int lowerBound) {
+  static bool _filterTrumps(Card card, int lowerBound) {
     return card.suit == Suit.trump && card.strength > lowerBound;
   }
 
   static bool _containsExcuse(List<Card> hand) {
     return hand.any((card) => card == Card.excuse());
   }
-
 }
