@@ -80,5 +80,18 @@ void main() {
     final allowedCards = turn.extractAllowedCards(cards);
     expect(allowedCards, cards);
   });
+  test("First played card is excuse", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.excuse());
+    final Iterable<Card> cards = [
+      Card.trump(1),
+      Card.coloredCard(Suit.clover, 4),
+      Card.coloredCard(Suit.spades, 5),
+      Card.coloredCard(Suit.heart, 6),
+      Card.coloredCard(Suit.diamond, 7)
+    ];
+    final allowedCards = turn.extractAllowedCards(cards);
+    expect(allowedCards, cards);
+  });
   //TODO retrieveWinningCardIndex()
 }
