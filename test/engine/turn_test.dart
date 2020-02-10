@@ -12,7 +12,7 @@ void main() {
     turn.addPlayedCard(playedCard);
     expect(turn.playedCards.first, equals(playedCard));
   });
-  test("All spades is asked, all cards in hand are allowed", () {
+  test("Spades is asked, all cards in hand are allowed", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
     final Iterable<Card> cards = [
@@ -23,7 +23,7 @@ void main() {
     final allowedCards = turn.extractAllowedCards(cards);
     expect(allowedCards.length, equals(cards.length));
   });
-  test("All spades is asked, some cards in hand are allowed", () {
+  test("Spades is asked, some cards in hand are allowed", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
     final Iterable<Card> cards = [
