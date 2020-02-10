@@ -125,4 +125,31 @@ void main() {
     turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
     expect(turn.winningCardIndex, equals(1));
   });
+
+  test("Winning card index, with trump", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.trump(1));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 4));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 2));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
+    expect(turn.winningCardIndex, equals(0));
+  });
+
+  test("Winning card index, with excuse", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.trump(1));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 4));
+    turn.addPlayedCard(Card.excuse());
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
+    expect(turn.winningCardIndex, equals(0));
+  });
+
+  test("Winning card index, with peeing", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.coloredCard(Suit.spades, 1));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 4));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 2));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
+    expect(turn.winningCardIndex, equals(0));
+  });
 }
