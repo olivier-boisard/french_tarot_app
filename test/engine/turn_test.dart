@@ -118,6 +118,14 @@ void main() {
     expect(allowedCards, [Card.coloredCard(Suit.clover, 4)]);
   });
 
+  test("Trump needed, need to go higher", () {
+    throw UnimplementedError();
+  });
+
+  test("Trump needed, need to go lower", () {
+    throw UnimplementedError();
+  });
+
   test("Winning card index, all cards of same suit", () {
     final turn = Turn();
     turn.addPlayedCard(Card.coloredCard(Suit.clover, 1));
