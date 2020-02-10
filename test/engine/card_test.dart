@@ -22,23 +22,23 @@ void main() {
         throwsA(isInstanceOf<IllegalCardStrengthException>()));
   });
   test("Standard card score no figure", () {
-    var card = Card.coloredCard(Suit.diamond, 1);
+    final card = Card.coloredCard(Suit.diamond, 1);
     expect(card.score, equals(0.5));
   });
   test("Standard card score jack", () {
-    var card = Card.coloredCard(Suit.diamond, CardStrengths.JACK);
+    final card = Card.coloredCard(Suit.diamond, CardStrengths.JACK);
     expect(card.score, equals(1.5));
   });
   test("Standard card score knight", () {
-    var card = Card.coloredCard(Suit.diamond, CardStrengths.KNIGHT);
+    final card = Card.coloredCard(Suit.diamond, CardStrengths.KNIGHT);
     expect(card.score, equals(2.5));
   });
   test("Standard card score queen", () {
-    var card = Card.coloredCard(Suit.diamond, CardStrengths.QUEEN);
+    final card = Card.coloredCard(Suit.diamond, CardStrengths.QUEEN);
     expect(card.score, equals(3.5));
   });
   test("Standard card score king", () {
-    var card = Card.coloredCard(Suit.diamond, CardStrengths.KING);
+    final card = Card.coloredCard(Suit.diamond, CardStrengths.KING);
     expect(card.score, equals(4.5));
   });
   test("Construct trump", () {
@@ -48,19 +48,19 @@ void main() {
     expect(() => Card.trump(22), returnsNormally);
   });
   test("Construct 1 of trump", () {
-    var card = Card.trump(1);
+    final card = Card.trump(1);
     expect(card.isOudler, equals(true));
   });
   test("Construct 21 of trump", () {
-    var card = Card.trump(21);
+    final card = Card.trump(21);
     expect(card.isOudler, equals(true));
   });
   test("Construct excuse", () {
-    var card = Card.excuse();
+    final card = Card.excuse();
     expect(card.isOudler, equals(true));
   });
   test("Construct ace of spaces not oudler", () {
-    var card = Card.coloredCard(Suit.spades, 1);
+    final card = Card.coloredCard(Suit.spades, 1);
     expect(card.isOudler, equals(false));
   });
 
