@@ -17,6 +17,18 @@ class Turn {
     return asked;
   }
 
+  int get winningCardIndex {
+    int index = 0;
+    var strongestCard = playedCards.first;
+    for (int i = 1; i < playedCards.length; i++) {
+      if (playedCards[i].beats(askedSuit, strongestCard)) {
+        index = i;
+        strongestCard = playedCards[i];
+      }
+    }
+    return index;
+  }
+
   void addPlayedCard(Card card) {
     playedCards.add(card);
   }

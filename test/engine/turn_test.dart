@@ -116,4 +116,13 @@ void main() {
     final allowedCards = turn.extractAllowedCards(cards);
     expect(allowedCards, [Card.coloredCard(Suit.clover, 4)]);
   });
+
+  test("Winning card index, all cards of same suit", () {
+    final turn = Turn();
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 1));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 4));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 2));
+    turn.addPlayedCard(Card.coloredCard(Suit.clover, 3));
+    expect(turn.winningCardIndex, equals(1));
+  });
 }
