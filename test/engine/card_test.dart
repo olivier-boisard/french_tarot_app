@@ -51,6 +51,18 @@ void main() {
     var card = Card.trump(1);
     expect(card.isOudler, equals(true));
   });
+  test("Construct 21 of trump", () {
+    var card = Card.trump(21);
+    expect(card.isOudler, equals(true));
+  });
+  test("Construct excuse", () {
+    var card = Card.excuse();
+    expect(card.isOudler, equals(true));
+  });
+  test("Construct ace of spaces not oudler", () {
+    var card = Card.coloredCard(Suit.spades, 1);
+    expect(card.isOudler, equals(false));
+  });
 
   //TODO excuse
   //TODO test get card isOudler
