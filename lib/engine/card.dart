@@ -38,7 +38,7 @@ class Card {
   }
 
   bool beats(Suit demanded, Card card) {
-    return strength > card.strength;
+    return _adjustedCardStrength > card._adjustedCardStrength;
   }
 
   bool operator ==(other) {
@@ -46,6 +46,10 @@ class Card {
   }
 
   int get hashCode => suit.hashCode + strength.hashCode;
+
+  int get _adjustedCardStrength {
+    return suit != Suit.trump ? strength : strength + 100;
+  }
 
 }
 
