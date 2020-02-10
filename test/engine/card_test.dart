@@ -134,8 +134,8 @@ void main() {
   });
 
   test("21 of trump beats 10 of trump", () {
-    final weakerCard = Card.trump(21);
-    final strongerCard = Card.trump(10);
-    expect(strongerCard.beats(Suit.none, weakerCard), false);
+    final weakerCard = Card.trump(10);
+    final strongerCard = Card.trump(21);
+    expect(weakerCard.beats(Suit.none, strongerCard), false);
   });
 }
