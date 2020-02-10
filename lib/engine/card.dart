@@ -7,16 +7,10 @@ class Card {
   final int strength;
 
   Card.coloredCard(this.suit, this.strength) {
-    if (strength < 1 || strength > CardStrengths.KING) {
-      throw IllegalCardStrengthException();
-    }
-
-    const allowedSuits = [Suit.heart, Suit.diamond, Suit.clover, Suit.spades];
-    if (!allowedSuits.contains(suit)) {
-      throw IllegalCardStrengthException();
-    }
+    _checkStrengthIsValid();
+    _checkSuitIsValid();
   }
-
+  
   Card.trump(this.strength) : this.suit = Suit.trump;
 
   Card.excuse()
@@ -49,6 +43,19 @@ class Card {
 
   int get _adjustedCardStrength {
     return suit != Suit.trump ? strength : strength + 100;
+  }
+
+  void _checkStrengthIsValid() {
+    if (strength < 1 || strength > CardStrengths.KING) {
+      throw IllegalCardStrengthException();
+    }
+  }
+
+  void _checkSuitIsValid() {
+    const validSuits = [Suit.heart, Suit.diamond, Suit.clover, Suit.spades];
+    if (!validSuits.contains(suit)) {
+      throw IllegalCardStrengthException();
+    }
   }
 
 }
