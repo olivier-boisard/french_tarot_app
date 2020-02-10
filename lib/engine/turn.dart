@@ -10,6 +10,10 @@ class Turn {
   }
 
   List<Card> extractAllowedCards(List<Card> hand) {
+    if (playedCards.isEmpty) {
+      return List<Card>.from(hand);
+    }
+
     final asked = playedCards.first.suit;
     var validCards = hand.where((card) => card.suit == asked).toList();
     if (validCards.isEmpty) {
