@@ -63,9 +63,15 @@ void main() {
     final card = Card.coloredCard(Suit.spades, 1);
     expect(card.isOudler, equals(false));
   });
-
-  //TODO excuse
-  //TODO test get card isOudler
-  //TODO create creation of trump and excuse
+  test("4 of spades is beaten by 10 of spades", () {
+    final weakerCard = Card.coloredCard(Suit.spades, 4);
+    final strongerCard = Card.coloredCard(Suit.spades, 10);
+    expect(weakerCard.beats(Suit.none, strongerCard), false);
+  });
+  test("10 of spades beats by 4 of spades", () {
+    final weakerCard = Card.coloredCard(Suit.spades, 4);
+    final strongerCard = Card.coloredCard(Suit.spades, 10);
+    expect(strongerCard.beats(Suit.none, weakerCard), true);
+  });
   //TODO test beats
 }

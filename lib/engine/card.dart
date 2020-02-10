@@ -38,7 +38,7 @@ class Card {
   }
 
   bool beats(Suit demanded, Card card) {
-    throw UnimplementedError();
+    return strength > card.strength;
   }
 
   bool operator ==(other) {
