@@ -43,4 +43,10 @@ class Deck {
   void shuffle() {
     cards.shuffle(random);
   }
+
+  List<Card> pop(int nCards) {
+    final output = List<Card>.from(cards.getRange(0, nCards));
+    cards.removeRange(0, nCards);
+    return output;
+  }
 }
