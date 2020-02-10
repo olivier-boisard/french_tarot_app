@@ -132,7 +132,16 @@ void main() {
   });
 
   test("Trump needed, need to go lower", () {
-    throw UnimplementedError();
+    final turn = Turn();
+    turn.addPlayedCard(Card.coloredCard(Suit.diamond, 1));
+    turn.addPlayedCard(Card.trump(7));
+    final List<Card> cards = [
+      Card.coloredCard(Suit.clover, 1),
+      Card.trump(4),
+      Card.trump(6)
+    ];
+    final allowedCards = turn.extractAllowedCards(cards);
+    expect(allowedCards, [Card.trump(4), Card.trump(6)]);
   });
 
   test("Winning card index, all cards of same suit", () {

@@ -52,6 +52,9 @@ class Turn {
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
         validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
+        if (validCards.isEmpty) {
+          validCards = _extractTrumps(hand);
+        }
       } else {
         validCards = _extractTrumps(hand);
       }
