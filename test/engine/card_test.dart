@@ -10,7 +10,7 @@ void main() {
     expect(() => Card.coloredCard(Suit.heart, 1), returnsNormally);
   });
   test("Construct king succeeded", () {
-    expect(() => Card.coloredCard(Suit.heart, FigureValues.KING),
+    expect(() => Card.coloredCard(Suit.heart, CardStrengths.KING),
         returnsNormally);
   });
   test("Construct colored card wrong strength", () {
@@ -26,19 +26,19 @@ void main() {
     expect(card.score, equals(0.5));
   });
   test("Standard card score jack", () {
-    var card = Card.coloredCard(Suit.diamond, FigureValues.JACK);
+    var card = Card.coloredCard(Suit.diamond, CardStrengths.JACK);
     expect(card.score, equals(1.5));
   });
   test("Standard card score knight", () {
-    var card = Card.coloredCard(Suit.diamond, FigureValues.KNIGHT);
+    var card = Card.coloredCard(Suit.diamond, CardStrengths.KNIGHT);
     expect(card.score, equals(2.5));
   });
   test("Standard card score queen", () {
-    var card = Card.coloredCard(Suit.diamond, FigureValues.QUEEN);
+    var card = Card.coloredCard(Suit.diamond, CardStrengths.QUEEN);
     expect(card.score, equals(3.5));
   });
   test("Standard card score king", () {
-    var card = Card.coloredCard(Suit.diamond, FigureValues.KING);
+    var card = Card.coloredCard(Suit.diamond, CardStrengths.KING);
     expect(card.score, equals(4.5));
   });
   test("Construct trump", () {
@@ -47,6 +47,11 @@ void main() {
   test("Construct trump wrong value", () {
     expect(() => Card.trump(22), returnsNormally);
   });
+  test("Construct 1 of trump", () {
+    var card = Card.trump(1);
+    expect(card.isOudler, equals(true));
+  });
+
   //TODO excuse
   //TODO test get card isOudler
   //TODO create creation of trump and excuse
