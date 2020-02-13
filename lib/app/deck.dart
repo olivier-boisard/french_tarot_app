@@ -1,10 +1,10 @@
-import 'package:french_tarot/app/cards.dart';
+import 'cards.dart';
 
 class Deck {
   final List<TarotCard> cards;
 
   Deck() : cards = <TarotCard>[] {
-    final List<Value> suitValues = [
+    final suitValues = [
       Value.numeric_1,
       Value.numeric_2,
       Value.numeric_3,
@@ -20,7 +20,7 @@ class Deck {
       Value.queen,
       Value.king,
     ];
-    final List<Value> trumpValues = [
+    final trumpValues = [
       Value.numeric_1,
       Value.numeric_2,
       Value.numeric_3,
@@ -44,19 +44,19 @@ class Deck {
       Value.numeric_21,
       Value.excuse
     ];
-    final List<Suit> standardSuits = [
+    final standardSuits = [
       Suit.heart,
       Suit.spades,
       Suit.diamond,
       Suit.club
     ];
-    for (Suit suit in standardSuits) {
-      for (Value value in suitValues) {
+    for (final suit in standardSuits) {
+      for (final value in suitValues) {
         cards.add(TarotCard(suit, value));
       }
     }
 
-    for (Value value in trumpValues) {
+    for (final value in trumpValues) {
       cards.add(TarotCard(Suit.trump, value));
     }
 

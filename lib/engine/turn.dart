@@ -1,18 +1,18 @@
-import 'package:french_tarot/engine/card.dart';
-import 'package:french_tarot/engine/exceptions.dart';
+import 'card.dart';
+import 'exceptions.dart';
 
 class Turn {
   final List<Card> playedCards;
 
-  Turn() : playedCards = List<Card>();
+  Turn() : playedCards = <Card>[];
 
   int get winningCardIndex {
     if (playedCards.isEmpty) {
       throw EmptyTurn();
     }
-    int index = 0;
+    var index = 0;
     var strongestCard = playedCards.first;
-    for (int i = 1; i < playedCards.length; i++) {
+    for (var i = 1; i < playedCards.length; i++) {
       if (playedCards[i].beats(_askedSuit, strongestCard)) {
         index = i;
         strongestCard = playedCards[i];
@@ -22,12 +22,12 @@ class Turn {
   }
 
   bool get _onlyExcuseWasPlayed {
-    return playedCards.first == Card.excuse() && playedCards.length == 1;
+    return playedCards.first == const Card.excuse() && playedCards.length == 1;
   }
 
   Suit get _askedSuit {
     final firstPlayedCard = playedCards.first;
-    final asked = firstPlayedCard != Card.excuse()
+    final asked = firstPlayedCard != const Card.excuse()
         ? firstPlayedCard.suit
         : playedCards[1].suit;
     return asked;
@@ -46,7 +46,7 @@ class Turn {
       return _copyCardList(hand);
     }
 
-    List<Card> validCards = _extractCardsMatchingAskedSuit(hand);
+    var validCards = _extractCardsMatchingAskedSuit(hand);
     if (validCards.isEmpty) {
       final playedTrumps = _extractTrumps(playedCards);
       if (playedTrumps.isNotEmpty) {
@@ -63,7 +63,7 @@ class Turn {
       }
     }
     if (_containsExcuse(hand)) {
-      validCards.add(Card.excuse());
+      validCards.add(const Card.excuse());
     }
     return validCards;
   }
@@ -95,6 +95,6 @@ class Turn {
   }
 
   static bool _containsExcuse(List<Card> hand) {
-    return hand.any((card) => card == Card.excuse());
+    return hand.any((card) => card == const Card.excuse());
   }
 }

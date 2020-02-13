@@ -4,25 +4,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/deck.dart';
 
 void main() {
-  test("Construct deck without random object", () {
-    final nCardsInDeck = 78;
+  test('Construct deck without random object', () {
+    const nCardsInDeck = 78;
     expect(Deck().cards.length, nCardsInDeck);
   });
 
-  test("Construct deck with random object", () {
+  test('Construct deck with random object', () {
     expect(() => Deck.withRandom(Random()), returnsNormally);
   });
 
-  test("Shuffle deck", () {
-    final shuffledDeck = Deck();
-    shuffledDeck.shuffle();
+  test('Shuffle deck', () {
+    final shuffledDeck = Deck()
+      ..shuffle();
     expect(shuffledDeck.cards, isNot(orderedEquals(Deck().cards)));
     expect(shuffledDeck.cards, unorderedEquals(Deck().cards));
   });
-  
-  test("Pop 10 cards from deck", () {
+
+  test('Pop 10 cards from deck', () {
     final deck = Deck();
-    final nCardsToPop = 10;
+    const nCardsToPop = 10;
     final nCardsInDeck = deck.cards.length;
     final poppedCards = deck.pop(nCardsToPop);
     expect(poppedCards.length, equals(nCardsToPop));

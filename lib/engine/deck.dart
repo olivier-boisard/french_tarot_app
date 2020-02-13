@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:french_tarot/engine/card.dart';
+import 'card.dart';
 
 class Deck {
   final List<Card> cards; //TODO make private
@@ -23,7 +23,7 @@ class Deck {
   }
 
   static List<Card> _createCardList() {
-    final cards = List<Card>();
+    final cards = <Card>[];
     _addRegularCards(cards);
     _addTrumps(cards);
     _addExcuse(cards);
@@ -31,11 +31,11 @@ class Deck {
   }
 
   static void _addExcuse(List<Card> cards) {
-    cards.add(Card.excuse());
+    cards.add(const Card.excuse());
   }
 
   static void _addTrumps(List<Card> cards) {
-    final maxTrumpStrength = 21;
+    const maxTrumpStrength = 21;
     for (var strength = 1; strength <= maxTrumpStrength; strength++) {
       cards.add(Card.trump(strength));
     }
@@ -43,7 +43,7 @@ class Deck {
 
   static void _addRegularCards(List<Card> cards) {
     for (final suit in Card.standardSuits) {
-      for (var strength = 1; strength <= CardStrengths.KING; strength++) {
+      for (var strength = 1; strength <= CardStrengths.king; strength++) {
         cards.add(Card.coloredCard(suit, strength));
       }
     }

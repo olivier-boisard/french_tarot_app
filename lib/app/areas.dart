@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:french_tarot/app/cards.dart';
-import 'package:french_tarot/app/deck.dart';
+
+import 'cards.dart';
+import 'deck.dart';
 
 class Area extends StatelessWidget {
   final bool visibleHand;
@@ -30,6 +32,12 @@ class Area extends StatelessWidget {
     return Stack(
         children: cards
     );
+  }
+  
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('visibleHand', visibleHand));
   }
 }
 

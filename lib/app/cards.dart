@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum Suit {
@@ -41,7 +42,7 @@ enum Value {
   excuse
 }
 
-final _cardWidgetHeight = (0.04 * window.physicalSize.height);
+final _cardWidgetHeight = 0.04 * window.physicalSize.height;
 final _cardWidgetWidth = _cardWidgetHeight / 2;
 final _cardWidgetBorderRadius = _cardWidgetHeight / 20;
 
@@ -72,39 +73,39 @@ class FaceDownCard extends StatelessWidget {
 
 class FaceUpCard extends StatelessWidget {
   static const Map<Suit, String> _suitToString = {
-    Suit.club: "♣",
-    Suit.heart: "♥",
-    Suit.diamond: "♦",
-    Suit.spades: "♠",
-    Suit.trump: "⭐",
+    Suit.club: '♣',
+    Suit.heart: '♥',
+    Suit.diamond: '♦',
+    Suit.spades: '♠',
+    Suit.trump: '⭐',
   };
 
   static const Map<Value, String> _valueToString = {
-    Value.numeric_1: "1",
-    Value.numeric_2: "2",
-    Value.numeric_3: "3",
-    Value.numeric_4: "4",
-    Value.numeric_5: "5",
-    Value.numeric_6: "6",
-    Value.numeric_7: "7",
-    Value.numeric_8: "8",
-    Value.numeric_9: "9",
-    Value.numeric_10: "10",
-    Value.numeric_11: "11",
-    Value.numeric_12: "12",
-    Value.numeric_13: "13",
-    Value.numeric_14: "14",
-    Value.numeric_15: "15",
-    Value.numeric_16: "16",
-    Value.numeric_17: "17",
-    Value.numeric_18: "18",
-    Value.numeric_19: "19",
-    Value.numeric_20: "20",
-    Value.numeric_21: "21",
-    Value.king: "♔",
-    Value.queen: "♕",
-    Value.knight: "♘",
-    Value.jack: "♗",
+    Value.numeric_1: '1',
+    Value.numeric_2: '2',
+    Value.numeric_3: '3',
+    Value.numeric_4: '4',
+    Value.numeric_5: '5',
+    Value.numeric_6: '6',
+    Value.numeric_7: '7',
+    Value.numeric_8: '8',
+    Value.numeric_9: '9',
+    Value.numeric_10: '10',
+    Value.numeric_11: '11',
+    Value.numeric_12: '12',
+    Value.numeric_13: '13',
+    Value.numeric_14: '14',
+    Value.numeric_15: '15',
+    Value.numeric_16: '16',
+    Value.numeric_17: '17',
+    Value.numeric_18: '18',
+    Value.numeric_19: '19',
+    Value.numeric_20: '20',
+    Value.numeric_21: '21',
+    Value.king: '♔',
+    Value.queen: '♕',
+    Value.knight: '♘',
+    Value.jack: '♗',
   };
 
   final TarotCard card;
@@ -116,10 +117,10 @@ class FaceUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final valueAsString = _valueToString[card.value];
     final suitAsString = _suitToString[card.suit];
-    const excuseAsString = "🎸";
+    const excuseAsString = '🎸';
     final smallTextWidget = Text(
       card.value != Value.excuse
-          ? "$valueAsString\n$suitAsString"
+          ? '$valueAsString\n$suitAsString'
           : excuseAsString,
       textAlign: TextAlign.center,
       style: TextStyle(
@@ -149,18 +150,24 @@ class FaceUpCard extends StatelessWidget {
           row,
           Expanded(
             child: Align(
+              alignment: Alignment.center,
               child: Text(
                   card.value == Value.excuse
                       ? excuseAsString
-                      : "$valueAsString$suitAsString",
+                      : '$valueAsString$suitAsString',
                   textAlign: TextAlign.center
               ),
-              alignment: Alignment.center,
             ),
           ),
           row,
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<TarotCard>('card', card));
   }
 }
