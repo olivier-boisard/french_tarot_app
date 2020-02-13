@@ -15,12 +15,12 @@ class Card {
     Suit.spades
   ];
 
-  //TODO make const
   Card.coloredCard(this.suit, this.strength) {
     _checkStrengthIsValid();
     _checkSuitIsValid();
   }
 
+  //TODO check that trump's strength is valid
   const Card.trump(this.strength) : suit = Suit.trump;
 
   const Card.excuse()
