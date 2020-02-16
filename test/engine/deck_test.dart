@@ -22,6 +22,13 @@ void main() {
     expect(shuffledCard, unorderedEquals(orderedCard));
   });
 
+  test('Results are reproducible', () {
+    const randomSeed = 1;
+    final deck1 = Deck.withRandom(Random(randomSeed));
+    final deck2 = Deck.withRandom(Random(randomSeed));
+    expect(deck1.pop(nCardsInDeck), orderedEquals(deck2.pop(nCardsInDeck)));
+  });
+
   test('Pop 10 cards from deck, 68 are remaining', () {
     final deck = Deck();
     const nCardsToPop = 10;
