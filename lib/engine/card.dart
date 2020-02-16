@@ -28,6 +28,10 @@ class Card {
         strength= CardStrengths.excuse;
 
   double get score {
+    if (isOudler) {
+      return 4.5;
+    }
+    
     const strengthScoreMap = {
       CardStrengths.jack: 1.5,
       CardStrengths.knight: 2.5,

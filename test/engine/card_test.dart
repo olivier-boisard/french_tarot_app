@@ -51,6 +51,18 @@ void main() {
     expect(card.score, equals(4.5));
   });
 
+  test('Oudler card score', () {
+    expect(const Card
+        .excuse()
+        .score, equals(4.5));
+    expect(const Card
+        .trump(1)
+        .score, equals(4.5));
+    expect(const Card
+        .trump(21)
+        .score, equals(4.5));
+  });
+
   test('Construct trump', () {
     expect(() => const Card.trump(1), returnsNormally);
   });
