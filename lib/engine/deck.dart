@@ -17,7 +17,7 @@ class Deck {
   }
 
   List<Card> pop(int nCards) {
-    final output = List<Card>.from(_cards.getRange(0, nCards));
+    final output = _cards.getRange(0, nCards).toList();
     _cards.removeRange(0, nCards);
     return output;
   }

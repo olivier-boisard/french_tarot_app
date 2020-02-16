@@ -83,7 +83,7 @@ class Turn {
   }
 
   static List<Card> _copyCardList(List<Card> hand) {
-    return List<Card>.from(hand);
+    return hand.toList();
   }
 
   static List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
