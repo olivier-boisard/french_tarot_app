@@ -12,6 +12,16 @@ abstract class Player {
     return score.round();
   }
 
+  int get numberOfOudlers {
+    var numberOfOudlers = 0;
+    for (final card in _wonCards) {
+      if (card.isOudler) {
+        numberOfOudlers += 1;
+      }
+    }
+    return numberOfOudlers;
+  }
+
   void winCards(Iterable<Card> wonCards) {
     _wonCards.addAll(wonCards);
   }
