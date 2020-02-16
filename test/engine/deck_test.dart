@@ -29,6 +29,19 @@ void main() {
     expect(deck1.pop(nCardsInDeck), orderedEquals(deck2.pop(nCardsInDeck)));
   });
 
+  test('Different random seeds produce different results', () {
+    const randomSeed1 = 1;
+    const randomSeed2 = 2;
+    final deck1 = Deck.withRandom(Random(randomSeed1))
+      ..shuffle();
+    final deck2 = Deck.withRandom(Random(randomSeed2))
+      ..shuffle();
+    final cards1 = deck1.pop(nCardsInDeck);
+    final cards2 = deck2.pop(nCardsInDeck);
+    expect(cards1, isNot(orderedEquals(cards2)));
+    expect(cards1, unorderedEquals(cards2));
+  });
+
   test('Pop 10 cards from deck, 68 are remaining', () {
     final deck = Deck();
     const nCardsToPop = 10;
