@@ -1,3 +1,5 @@
+import 'package:french_tarot/engine/exceptions.dart';
+
 import 'card.dart';
 import 'turn.dart';
 
@@ -5,6 +7,9 @@ abstract class Player {
   final List<Card> _wonCards = [];
 
   int get score {
+    if (_wonCards.length % 2 == 1) {
+      throw OddNumberOfCardsException();
+    }
     var score = 0.0;
     for (final card in _wonCards) {
       score += card.score;

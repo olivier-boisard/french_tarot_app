@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
+import 'package:french_tarot/engine/exceptions.dart';
 import 'package:french_tarot/engine/player.dart';
 import 'package:french_tarot/engine/turn.dart';
 
@@ -21,6 +22,14 @@ void main() {
 
     expect(player.score, equals(expectedScore));
     expect(player.numberOfOudlers, equals(2));
+  });
+
+  test('Compute score on odd number of cards fails', () {
+    final player = _FakePlayer();
+    final wonCards = [Card.coloredCard(Suit.spades, 1)];
+    player.winCards(wonCards);
+    expect(() => player.score,
+        throwsA(isInstanceOf<OddNumberOfCardsException>()));
   });
 }
 
