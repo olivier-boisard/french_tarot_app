@@ -1,6 +1,5 @@
-import 'package:french_tarot/engine/exceptions.dart';
-
 import 'card.dart';
+import 'exceptions.dart';
 import 'turn.dart';
 
 abstract class Player {
