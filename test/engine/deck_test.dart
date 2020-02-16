@@ -4,29 +4,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/deck.dart';
 
 void main() {
-  test('Construct deck without random object', () {
-    const nCardsInDeck = 78;
-    expect(Deck().cards.length, nCardsInDeck);
-  });
+  const nCardsInDeck = 78;
 
-  test('Construct deck with random object', () {
-    expect(() => Deck.withRandom(Random()), returnsNormally);
+  test('Constructed deck has correct number of cards', () {
+    final deck = Deck()
+      ..pop(nCardsInDeck);
+    expect(() => deck.pop(1), throwsA(isInstanceOf<RangeError>()));
   });
 
   test('Shuffle deck', () {
-    final shuffledDeck = Deck()
+    const randomSeed = 1;
+    final shuffledDeck = Deck.withRandom(Random(randomSeed))
       ..shuffle();
-    expect(shuffledDeck.cards, isNot(orderedEquals(Deck().cards)));
-    expect(shuffledDeck.cards, unorderedEquals(Deck().cards));
+    final shuffledCard = shuffledDeck.pop(nCardsInDeck);
+    final orderedCard = Deck().pop(nCardsInDeck);
+    expect(shuffledCard, isNot(orderedEquals(orderedCard)));
+    expect(shuffledCard, unorderedEquals(orderedCard));
   });
 
-  test('Pop 10 cards from deck', () {
+  test('Pop 10 cards from deck, 68 are remaining', () {
     final deck = Deck();
     const nCardsToPop = 10;
-    final nCardsInDeck = deck.cards.length;
-    final poppedCards = deck.pop(nCardsToPop);
-    expect(poppedCards.length, equals(nCardsToPop));
-    expect(deck.cards.length, equals(nCardsInDeck - nCardsToPop));
-    expect(deck.cards, isNot(contains(poppedCards[0])));
+    final firstlyPoppedCards = deck.pop(nCardsToPop);
+    expect(firstlyPoppedCards.length, equals(nCardsToPop));
+
+    final remainingCards = deck.pop(nCardsInDeck - nCardsToPop);
+    final allPoppedCards = firstlyPoppedCards + remainingCards;
+    expect(allPoppedCards, unorderedEquals(Deck().pop(nCardsInDeck)));
   });
 }

@@ -3,22 +3,22 @@ import 'dart:math';
 import 'card.dart';
 
 class Deck {
-  final List<Card> cards; //TODO make private
+  final List<Card> _cards;
   final Random _random;
 
   Deck()
-      : cards = _createCardList(),
+      : _cards = _createCardList(),
         _random = Random();
 
-  Deck.withRandom(this._random) : cards = _createCardList();
+  Deck.withRandom(this._random) : _cards = _createCardList();
 
   void shuffle() {
-    cards.shuffle(_random);
+    _cards.shuffle(_random);
   }
 
   List<Card> pop(int nCards) {
-    final output = List<Card>.from(cards.getRange(0, nCards));
-    cards.removeRange(0, nCards);
+    final output = List<Card>.from(_cards.getRange(0, nCards));
+    _cards.removeRange(0, nCards);
     return output;
   }
 
