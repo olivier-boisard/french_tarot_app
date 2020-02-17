@@ -34,7 +34,7 @@ void main() {
 }
 
 void _makePlayerWinTwoOudlers(_FakePlayer player) {
-  final oudlers = [const Card.excuse(), const Card.trump(21)];
+  final oudlers = [const Card.excuse(), Card.trump(21)];
   player.winCards(oudlers);
 }
 
@@ -42,8 +42,8 @@ void _makePlayerWinsNonOudlerCards(_FakePlayer player) {
   final wonCards = <Card>[
     Card.coloredCard(Suit.spades, 1),
     Card.coloredCard(Suit.heart, CardStrengths.queen),
-    const Card.trump(2),
-    const Card.trump(3),
+    Card.trump(2),
+    Card.trump(3),
   ];
   player.winCards(wonCards);
 }

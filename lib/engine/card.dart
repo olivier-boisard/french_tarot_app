@@ -20,8 +20,9 @@ class Card {
     _checkSuitIsValid();
   }
 
-  //TODO check that trump's strength is valid
-  const Card.trump(this.strength) : suit = Suit.trump;
+  Card.trump(this.strength) : suit = Suit.trump {
+    _checkStrengthIsValid();
+  }
 
   const Card.excuse()
       : suit = Suit.none,
@@ -43,8 +44,8 @@ class Card {
 
   bool get isOudler {
     final oudlers = [
-      const Card.trump(1),
-      const Card.trump(21),
+      Card.trump(1),
+      Card.trump(21),
       const Card.excuse()
     ];
     return oudlers.contains(this);
@@ -74,7 +75,10 @@ class Card {
   }
 
   void _checkStrengthIsValid() {
-    if (strength < 1 || strength > CardStrengths.king) {
+    if (suit != Suit.trump && (strength < 1 || strength > CardStrengths.king)) {
+      throw IllegalCardStrengthException();
+    }
+    if (suit == Suit.trump && (strength < 1 || strength > 21)) {
       throw IllegalCardStrengthException();
     }
   }

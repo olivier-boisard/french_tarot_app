@@ -55,29 +55,30 @@ void main() {
     expect(const Card
         .excuse()
         .score, equals(4.5));
-    expect(const Card
+    expect(Card
         .trump(1)
         .score, equals(4.5));
-    expect(const Card
+    expect(Card
         .trump(21)
         .score, equals(4.5));
   });
 
   test('Construct trump', () {
-    expect(() => const Card.trump(1), returnsNormally);
+    expect(() => Card.trump(1), returnsNormally);
   });
 
   test('Construct trump wrong value', () {
-    expect(() => const Card.trump(22), returnsNormally);
+    expect(() => Card.trump(22),
+        throwsA(isInstanceOf<IllegalCardStrengthException>()));
   });
 
   test('Construct 1 of trump', () {
-    const card = Card.trump(1);
+    final card = Card.trump(1);
     expect(card.isOudler, equals(true));
   });
 
   test('Construct 21 of trump', () {
-    const card = Card.trump(21);
+    final card = Card.trump(21);
     expect(card.isOudler, equals(true));
   });
 
@@ -135,19 +136,19 @@ void main() {
 
   test('1 of trump beats king', () {
     final weakerCard = Card.coloredCard(Suit.spades, CardStrengths.king);
-    const strongerCard = Card.trump(1);
+    final strongerCard = Card.trump(1);
     expect(strongerCard.beats(Suit.none, weakerCard), true);
   });
 
   test('king is beaten by 1 of trump', () {
     final weakerCard = Card.coloredCard(Suit.spades, CardStrengths.king);
-    const strongerCard = Card.trump(1);
+    final strongerCard = Card.trump(1);
     expect(weakerCard.beats(Suit.none, strongerCard), false);
   });
 
   test('21 of trump beats 10 of trump', () {
-    const weakerCard = Card.trump(10);
-    const strongerCard = Card.trump(21);
+    final weakerCard = Card.trump(10);
+    final strongerCard = Card.trump(21);
     expect(weakerCard.beats(Suit.none, strongerCard), false);
   });
 
