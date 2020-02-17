@@ -4,6 +4,7 @@ import 'turn.dart';
 
 abstract class Player {
   final List<Card> _wonCards = [];
+  final List<Card> _hand = [];
 
   int get score {
     if (_wonCards.length % 2 == 1) {
@@ -28,6 +29,10 @@ abstract class Player {
 
   void winCards(Iterable<Card> wonCards) {
     _wonCards.addAll(wonCards);
+  }
+
+  void deal(Iterable<Card> hand) {
+    _hand.addAll(hand);
   }
 
   Card play(Turn turn);
