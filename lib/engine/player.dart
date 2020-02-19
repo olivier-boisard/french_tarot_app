@@ -1,11 +1,8 @@
 import 'card.dart';
-import 'exceptions.dart';
 import 'turn.dart';
 
 //TODO generify
 typedef PlayerBehavior = Card Function(List<Card> allowedCards);
-
-class EmptyHandException implements Exception {}
 
 class Player {
   final List<Card> _wonCards = [];
@@ -53,3 +50,7 @@ class Player {
     return output;
   }
 }
+
+class EmptyHandException implements Exception {}
+
+class OddNumberOfCardsException implements Exception {}

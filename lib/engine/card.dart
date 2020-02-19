@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-import 'exceptions.dart';
-
 enum Suit { spades, heart, diamond, clover, trump, none }
+
+class IllegalCardStrengthException implements Exception {}
 
 @immutable
 class Card {

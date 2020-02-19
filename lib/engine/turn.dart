@@ -1,5 +1,4 @@
 import 'card.dart';
-import 'exceptions.dart';
 
 class Turn {
   final List<Card> playedCards;
@@ -98,3 +97,5 @@ class Turn {
     return hand.any((card) => card == const Card.excuse());
   }
 }
+
+class EmptyTurn implements Exception {}
