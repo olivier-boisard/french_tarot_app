@@ -2,9 +2,15 @@ import 'card.dart';
 import 'exceptions.dart';
 import 'turn.dart';
 
-abstract class Player {
+//TODO generify
+typedef PlayerBehavior = Card Function(List<Card> allowedCards);
+
+class Player {
   final List<Card> _wonCards = [];
   final List<Card> _hand = [];
+  final PlayerBehavior playerBehavior;
+
+  Player(this.playerBehavior);
 
   int get score {
     if (_wonCards.length % 2 == 1) {
@@ -35,5 +41,7 @@ abstract class Player {
     _hand.addAll(hand);
   }
 
-  Card play(Turn turn);
+  Card play(Turn turn) {
+    return playerBehavior(turn.extractAllowedCards(_hand));
+  }
 }
