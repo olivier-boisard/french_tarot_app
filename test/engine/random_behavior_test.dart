@@ -7,7 +7,8 @@ import 'package:french_tarot/engine/turn.dart';
 void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
-    final player = Player(RandomBehavior().run)
+    final randomBehavior = RandomBehavior<Turn, Card>();
+    final player = Player(randomBehavior.run)
       ..deal(hand);
     expect(player.play(Turn()), isIn(hand));
     expect(() => player.play(Turn()),

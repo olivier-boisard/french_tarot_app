@@ -1,13 +1,11 @@
+import 'behavior.dart';
 import 'card.dart';
 import 'turn.dart';
-
-//TODO generify
-typedef PlayerBehavior = Card Function(List<Card> allowedCards);
 
 class Player {
   final List<Card> _wonCards = [];
   final List<Card> _hand = [];
-  final PlayerBehavior playerBehavior;
+  final Behavior<Turn, Card> playerBehavior;
 
   Player(this.playerBehavior);
 
@@ -44,8 +42,8 @@ class Player {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
-    
-    final output = playerBehavior(turn.extractAllowedCards(_hand));
+
+    final output = playerBehavior(turn, turn.extractAllowedCards(_hand));
     _hand.remove(output);
     return output;
   }
