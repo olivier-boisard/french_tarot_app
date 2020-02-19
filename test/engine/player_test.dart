@@ -1,12 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/player.dart';
-import 'package:french_tarot/engine/turn.dart';
 
 class FakePlayer extends Player {
   FakePlayer() : super(fakeBehavior);
 
-  static Card fakeBehavior(Turn state, List<Card> allowedCards) {
+  static Card fakeBehavior(State state, List<Card> allowedCards) {
     return null;
   }
 }

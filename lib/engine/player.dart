@@ -2,10 +2,11 @@ import 'behavior.dart';
 import 'card.dart';
 import 'turn.dart';
 
+
 class Player {
   final List<Card> _wonCards = [];
   final List<Card> _hand = [];
-  final Behavior<Turn, Card> playerBehavior;
+  final Behavior<State, Card> playerBehavior;
 
   Player(this.playerBehavior);
 
@@ -38,15 +39,34 @@ class Player {
     _hand.addAll(hand);
   }
 
-  Card play(Turn turn) {
+  Card play(EnvironmentState environmentState) {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
 
-    final output = playerBehavior(turn, turn.extractAllowedCards(_hand));
+    final state = State(environmentState, _hand);
+    final output = playerBehavior(state, state.allowedCards);
     _hand.remove(output);
     return output;
   }
+}
+
+class EnvironmentState {
+  Turn turn;
+
+  EnvironmentState(this.turn);
+}
+
+class State {
+  EnvironmentState environmentState;
+  List<Card> hand;
+
+  State(this.environmentState, this.hand);
+
+  List<Card> get allowedCards {
+    return environmentState.turn.extractAllowedCards(hand);
+  }
+
 }
 
 class EmptyHandException implements Exception {}

@@ -7,11 +7,12 @@ import 'package:french_tarot/engine/turn.dart';
 void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
-    final randomBehavior = RandomBehavior<Turn, Card>();
+    final randomBehavior = RandomBehavior<State, Card>();
     final player = Player(randomBehavior.run)
       ..deal(hand);
-    expect(player.play(Turn()), isIn(hand));
-    expect(() => player.play(Turn()),
+    final environmentState = EnvironmentState(Turn());
+    expect(player.play(environmentState), isIn(hand));
+    expect(() => player.play(environmentState),
         throwsA(isInstanceOf<EmptyHandException>()));
   });
 }
