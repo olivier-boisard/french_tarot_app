@@ -52,6 +52,7 @@ class Player {
   }
 }
 
+//TODO Player and _CardPhaseState should depend on a abstraction of this
 class EnvironmentState {
   Turn turn;
 
