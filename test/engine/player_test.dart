@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/player.dart';
+import 'package:french_tarot/engine/state.dart';
 
 class FakePlayer extends Player {
   FakePlayer() : super(fakeBehavior);

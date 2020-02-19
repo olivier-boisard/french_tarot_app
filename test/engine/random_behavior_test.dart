@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/player.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
+import 'package:french_tarot/engine/state.dart';
 import 'package:french_tarot/engine/turn.dart';
 
 void main() {

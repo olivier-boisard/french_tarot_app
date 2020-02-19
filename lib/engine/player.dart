@@ -1,12 +1,13 @@
 import 'behavior.dart';
 import 'card.dart';
+import 'state.dart';
 import 'turn.dart';
 
 
 class Player {
   final List<Card> _wonCards = [];
   final List<Card> _hand = [];
-  final Behavior<State, Card> playerBehavior;
+  final Behavior<_CardPhaseState, Card> playerBehavior;
 
   Player(this.playerBehavior);
 
@@ -44,8 +45,8 @@ class Player {
       throw EmptyHandException();
     }
 
-    final state = State(environmentState, _hand);
-    final output = playerBehavior(state, state.allowedCards);
+    final state = _CardPhaseState(environmentState, _hand);
+    final output = playerBehavior(state, state.allowedActions);
     _hand.remove(output);
     return output;
   }
@@ -57,18 +58,18 @@ class EnvironmentState {
   EnvironmentState(this.turn);
 }
 
-class State {
-  EnvironmentState environmentState;
-  List<Card> hand;
-
-  State(this.environmentState, this.hand);
-
-  List<Card> get allowedCards {
-    return environmentState.turn.extractAllowedCards(hand);
-  }
-
-}
-
 class EmptyHandException implements Exception {}
 
 class OddNumberOfCardsException implements Exception {}
+
+class _CardPhaseState implements State<Card> {
+  EnvironmentState environmentState;
+  List<Card> hand;
+
+  _CardPhaseState(this.environmentState, this.hand);
+
+  @override
+  List<Card> get allowedActions {
+    return environmentState.turn.extractAllowedCards(hand);
+  }
+}
