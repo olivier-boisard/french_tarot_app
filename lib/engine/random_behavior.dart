@@ -13,4 +13,3 @@ class RandomBehavior {
     return allowedCards[_random.nextInt(allowedCards.length)];
   }
 }
-
