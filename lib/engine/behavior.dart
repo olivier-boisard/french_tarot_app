@@ -1,4 +1,4 @@
-typedef Behavior<A> = Action<A> Function(State state);
+typedef Behavior<T> = Action Function(State state);
 
 class Action<T> {
   final double probability;
