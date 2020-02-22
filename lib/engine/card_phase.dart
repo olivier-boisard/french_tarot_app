@@ -1,15 +1,9 @@
+import 'action.dart';
 import 'card.dart';
 import 'state.dart';
 import 'turn.dart';
 
 typedef Behavior<A> = A Function(State state);
-
-class Action<T> {
-  final double probability;
-  final T value;
-
-  Action(this.probability, this.value);
-}
 
 class CardPhaseAgent {
   final List<Card> _hand;

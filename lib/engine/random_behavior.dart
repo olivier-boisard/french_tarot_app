@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'card_phase.dart';
+import 'action.dart';
 import 'state.dart';
 
 class RandomBehavior<A> {
