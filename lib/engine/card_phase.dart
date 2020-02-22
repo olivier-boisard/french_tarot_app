@@ -1,22 +1,30 @@
-import 'behavior.dart';
 import 'card.dart';
 import 'state.dart';
 import 'turn.dart';
 
+typedef Behavior<A> = A Function(State state);
+
+class Action<T> {
+  final double probability;
+  final T value;
+
+  Action(this.probability, this.value);
+}
+
 class CardPhaseAgent {
   final List<Card> _hand;
-  final Behavior<CardPhaseState, Card> _behavior;
+  final Behavior<Action<Card>> _behavior;
 
   CardPhaseAgent(this._hand, this._behavior);
 
-  Card act(CardPhaseEnvironmentState environmentState) {
+  Action<Card> act(CardPhaseEnvironmentState environmentState) {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
 
     final state = CardPhaseState(environmentState, _hand);
     final output = _behavior(state);
-    _hand.remove(output);
+    _hand.remove(output.value);
     return output;
   }
 }

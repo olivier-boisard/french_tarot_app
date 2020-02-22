@@ -1,16 +1,19 @@
 import 'dart:math';
 
-import 'package:french_tarot/engine/state.dart';
+import 'card_phase.dart';
+import 'state.dart';
 
-class RandomBehavior<S, A> {
+class RandomBehavior<A> {
   final Random _random;
 
   RandomBehavior() : _random = Random();
 
   RandomBehavior.withRandom(this._random);
 
-  A run(State state) {
+  Action<A> run(State state) {
     final allowedActions = state.allowedActions;
-    return allowedActions[_random.nextInt(allowedActions.length)];
+    final probability = 1.0 / state.allowedActions.length;
+    final value = allowedActions[_random.nextInt(allowedActions.length)];
+    return Action(probability, value);
   }
 }
