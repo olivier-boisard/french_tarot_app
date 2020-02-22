@@ -1,13 +1,10 @@
-import 'action.dart';
+import 'behavior.dart';
 import 'card.dart';
-import 'state.dart';
 import 'turn.dart';
-
-typedef Behavior<A> = A Function(State state);
 
 class CardPhaseAgent {
   final List<Card> _hand;
-  final Behavior<Action<Card>> _behavior;
+  final Behavior<Card> _behavior;
 
   CardPhaseAgent(this._hand, this._behavior);
 
