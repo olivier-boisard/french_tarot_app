@@ -1,24 +1,22 @@
 import 'behavior.dart';
 import 'card.dart';
-import 'player.dart';
 import 'state.dart';
 import 'turn.dart';
 
 class CardPhaseAgent {
-  final Player _player;
+  final List<Card> _hand;
   final Behavior<CardPhaseState, Card> _behavior;
 
-  CardPhaseAgent(this._player, this._behavior);
+  CardPhaseAgent(this._hand, this._behavior);
 
   Card act(CardPhaseEnvironmentState environmentState) {
-    final hand = _player.hand;
-    if (hand.isEmpty) {
+    if (_hand.isEmpty) {
       throw EmptyHandException();
     }
 
-    final state = CardPhaseState(environmentState, hand);
+    final state = CardPhaseState(environmentState, _hand);
     final output = _behavior(state);
-    hand.remove(output);
+    _hand.remove(output);
     return output;
   }
 }
@@ -30,13 +28,15 @@ class CardPhaseEnvironmentState {
 }
 
 class CardPhaseState implements State<Card> {
-  CardPhaseEnvironmentState environmentState;
-  List<Card> hand;
+  CardPhaseEnvironmentState _environmentState;
+  List<Card> _hand;
 
-  CardPhaseState(this.environmentState, this.hand);
+  CardPhaseState(this._environmentState, this._hand);
 
   @override
   List<Card> get allowedActions {
-    return environmentState.turn.extractAllowedCards(hand);
+    return _environmentState.turn.extractAllowedCards(_hand);
   }
 }
+
+class EmptyHandException implements Exception {}

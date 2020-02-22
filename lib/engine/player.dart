@@ -2,7 +2,6 @@ import 'card.dart';
 
 
 class Player {
-  final List<Card> hand = [];
   final List<Card> _wonCards = [];
 
   int get score {
@@ -29,12 +28,6 @@ class Player {
   void winCards(Iterable<Card> wonCards) {
     _wonCards.addAll(wonCards);
   }
-
-  void deal(Iterable<Card> cards) {
-    hand.addAll(cards);
-  }
 }
-
-class EmptyHandException implements Exception {}
 
 class OddNumberOfCardsException implements Exception {}
