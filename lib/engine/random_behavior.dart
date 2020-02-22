@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:french_tarot/engine/state.dart';
+
 class RandomBehavior<S, A> {
   final Random _random;
 
@@ -7,7 +9,8 @@ class RandomBehavior<S, A> {
 
   RandomBehavior.withRandom(this._random);
 
-  A run(S state, List<A> possibleActions) {
-    return possibleActions[_random.nextInt(possibleActions.length)];
+  A run(State state) {
+    final allowedActions = state.allowedActions;
+    return allowedActions[_random.nextInt(allowedActions.length)];
   }
 }

@@ -1,19 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/player.dart';
-import 'package:french_tarot/engine/state.dart';
-
-class FakePlayer extends Player {
-  FakePlayer() : super(fakeBehavior);
-
-  static Card fakeBehavior(State state, List<Card> allowedCards) {
-    return null;
-  }
-}
 
 void main() {
   test('Player has won cards, evaluate score and number of oudlers', () {
-    final player = FakePlayer();
+    final player = Player();
     const expectedScore = 14;
 
     _makePlayerWinsNonOudlerCards(player);
@@ -24,7 +15,7 @@ void main() {
   });
 
   test('Compute score on odd number of cards fails', () {
-    final player = FakePlayer();
+    final player = Player();
     final wonCards = [Card.coloredCard(Suit.spades, 1)];
     player.winCards(wonCards);
     expect(() => player.score,
@@ -32,12 +23,12 @@ void main() {
   });
 }
 
-void _makePlayerWinTwoOudlers(FakePlayer player) {
+void _makePlayerWinTwoOudlers(Player player) {
   final oudlers = [const Card.excuse(), Card.trump(21)];
   player.winCards(oudlers);
 }
 
-void _makePlayerWinsNonOudlerCards(FakePlayer player) {
+void _makePlayerWinsNonOudlerCards(Player player) {
   final wonCards = <Card>[
     Card.coloredCard(Suit.spades, 1),
     Card.coloredCard(Suit.heart, CardStrengths.queen),

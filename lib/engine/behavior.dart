@@ -1,2 +1,4 @@
 //TODO document
-typedef Behavior<S, A> = A Function(S state, List<A> possibleActions);
+import 'state.dart';
+
+typedef Behavior<S extends State, A> = A Function(S state);
