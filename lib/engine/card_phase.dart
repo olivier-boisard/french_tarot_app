@@ -1,6 +1,5 @@
 import 'behavior.dart';
 import 'card.dart';
-import 'turn.dart';
 
 class CardPhaseAgent {
   final List<Card> _hand;
@@ -8,7 +7,7 @@ class CardPhaseAgent {
 
   CardPhaseAgent(this._hand, this._behavior);
 
-  Action<Card> act(CardPhaseEnvironmentState environmentState) {
+  Action<Card> act(EnvironmentStateInterface<Card> environmentState) {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
@@ -20,21 +19,15 @@ class CardPhaseAgent {
   }
 }
 
-class CardPhaseEnvironmentState {
-  Turn turn;
-
-  CardPhaseEnvironmentState(this.turn);
-}
-
 class CardPhaseState implements State<Card> {
-  CardPhaseEnvironmentState _environmentState;
+  EnvironmentStateInterface<Card> _environmentState;
   List<Card> _hand;
 
   CardPhaseState(this._environmentState, this._hand);
 
   @override
   List<Card> get allowedActions {
-    return _environmentState.turn.extractAllowedCards(_hand);
+    return _environmentState.filterAllowedActions(_hand);
   }
 }
 
