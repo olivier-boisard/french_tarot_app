@@ -1,7 +1,5 @@
-import 'behavior.dart';
 import 'card.dart';
-
-typedef DecisionMaker<A> = Decision<A> Function(List<A> possibleActions);
+import 'decision.dart';
 
 class CardPhaseAgent {
   final List<Card> _hand;

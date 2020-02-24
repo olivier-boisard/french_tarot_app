@@ -4,3 +4,5 @@ class Decision<T> {
 
   Decision(this.probability, this.action);
 }
+
+typedef DecisionMaker<A> = Decision<A> Function(List<A> possibleActions);

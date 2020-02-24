@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'behavior.dart';
+import 'decision.dart';
 
 class RandomBehavior<A> {
   final Random _random;
