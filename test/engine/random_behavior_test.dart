@@ -1,20 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/card_phase.dart';
-import 'package:french_tarot/engine/card_phase_environment_state.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
-import 'package:french_tarot/engine/turn.dart';
 
 void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
     final handCopy = hand.toList();
-    final agent = CardPhaseAgent(hand, RandomBehavior<Card>().run);
-    final state = CardPhaseEnvironmentState(Turn());
+    final agent = CardPhaseAgent(hand);
+    final decisionFunction = RandomBehavior<Card>().run;
     expect(agent
-        .act(state)
+        .act(decisionFunction)
         .value, isIn(handCopy));
-    expect(() => agent.act(state),
+    expect(() => agent.act(decisionFunction),
         throwsA(isInstanceOf<EmptyHandException>()));
   });
 }

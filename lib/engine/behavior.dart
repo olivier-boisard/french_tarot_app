@@ -1,5 +1,3 @@
-typedef Behavior<A> = Action<A> Function(State<A> state);
-
 typedef ActionsFilter<T> = List<T> Function(List<T> actions);
 
 //TODO rename

@@ -1,33 +1,18 @@
 import 'behavior.dart';
 import 'card.dart';
 
+typedef DecisionMaker<A> = Action<A> Function(List<A> possibleActions);
+
 class CardPhaseAgent {
   final List<Card> _hand;
-  final Behavior<Card> _behavior;
 
-  CardPhaseAgent(this._hand, this._behavior);
+  CardPhaseAgent(this._hand);
 
-  Action<Card> act(EnvironmentStateInterface<Card> environmentState) {
+  Action<Card> act(DecisionMaker<Card> decisionMaker) {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
-
-    final state = CardPhaseState(environmentState, _hand);
-    final output = _behavior(state);
-    _hand.remove(output.value);
-    return output;
-  }
-}
-
-class CardPhaseState implements State<Card> {
-  EnvironmentStateInterface<Card> _environmentState;
-  List<Card> _hand;
-
-  CardPhaseState(this._environmentState, this._hand);
-
-  @override
-  List<Card> get allowedActions {
-    return _environmentState.filterAllowedActions(_hand);
+    return decisionMaker(_hand);
   }
 }
 
