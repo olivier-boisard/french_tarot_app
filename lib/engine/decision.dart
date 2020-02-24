@@ -5,4 +5,4 @@ class Decision<T> {
   Decision(this.probability, this.action);
 }
 
-typedef DecisionMaker<A> = Decision<A> Function(List<A> possibleActions);
+typedef DecisionMaker<T> = Decision<T> Function(List<T> possibleActions);
