@@ -1,11 +1,10 @@
 typedef ActionsFilter<T> = List<T> Function(List<T> actions);
 
-//TODO rename
-class Action<T> {
+class Decision<T> {
   final double probability;
-  final T value;
+  final T action;
 
-  Action(this.probability, this.value);
+  Decision(this.probability, this.action);
 }
 
 abstract class State<A> {

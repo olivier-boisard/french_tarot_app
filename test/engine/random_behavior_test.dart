@@ -11,7 +11,7 @@ void main() {
     final decisionFunction = RandomBehavior<Card>().run;
     expect(agent
         .act(decisionFunction)
-        .value, isIn(handCopy));
+        .action, isIn(handCopy));
     expect(() => agent.act(decisionFunction),
         throwsA(isInstanceOf<EmptyHandException>()));
   });

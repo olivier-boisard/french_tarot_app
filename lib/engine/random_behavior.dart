@@ -9,10 +9,10 @@ class RandomBehavior<A> {
 
   RandomBehavior.withRandom(this._random);
 
-  Action<A> run(List<A> actions) {
+  Decision<A> run(List<A> actions) {
     final allowedActions = actions;
     final probability = 1.0 / actions.length;
     final value = allowedActions[_random.nextInt(actions.length)];
-    return Action(probability, value);
+    return Decision(probability, value);
   }
 }
