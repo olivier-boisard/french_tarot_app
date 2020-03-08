@@ -15,4 +15,6 @@ void main() {
     expect(() => agent.act(decisionFunction),
         throwsA(isInstanceOf<EmptyHandException>()));
   });
+
+  //TODO test correct cards are played
 }
