@@ -5,6 +5,7 @@ import 'package:french_tarot/engine/card.dart';
 import 'package:french_tarot/engine/card_phase.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
 import 'package:french_tarot/engine/turn.dart';
+import 'package:french_tarot/engine/turn_decision_maker_wrapper.dart';
 
 void main() {
   test('Deal card and play first card in turn', () {
@@ -35,9 +36,7 @@ void main() {
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomBehavior<Card>.withRandom(Random(i));
       final agent = CardPhaseAgent(originalHand.toList());
-      final decision = agent.act(
-            (cards) => behavior.run(turn.extractAllowedCards(cards)),
-      );
+      final decision = agent.act(wrapDecisionMaker(turn, behavior.run));
       expect(decision.action, equals(diamondCardInHand));
     }
   });
@@ -60,9 +59,7 @@ void main() {
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomBehavior<Card>.withRandom(Random(i));
       final agent = CardPhaseAgent(originalHand.toList());
-      final decision = agent.act(
-            (cards) => behavior.run(turn.extractAllowedCards(cards)),
-      );
+      final decision = agent.act(wrapDecisionMaker(turn, behavior.run));
       diamondCardsInHand.remove(decision.action);
     }
     expect(diamondCardsInHand, isEmpty);
