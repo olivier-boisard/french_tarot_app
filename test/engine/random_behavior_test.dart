@@ -42,6 +42,29 @@ void main() {
     }
   });
 
-  //TODO add unit test to test that when there are several possible cards, we
-  // get different results
+  test('Get all possible results', () {
+    final diamondCardsInHand = [
+      Card.coloredCard(Suit.diamond, 1),
+      Card.coloredCard(Suit.diamond, 2),
+      Card.coloredCard(Suit.diamond, 3),
+    ];
+    final originalHand = diamondCardsInHand + [
+      Card.coloredCard(Suit.spades, 1),
+      Card.coloredCard(Suit.spades, 2),
+      Card.coloredCard(Suit.spades, 3),
+      Card.coloredCard(Suit.spades, 4),
+    ];
+
+    final turn = Turn()
+      ..addPlayedCard(Card.coloredCard(Suit.diamond, 4));
+    for (var i = 0; i < 1000; i++) {
+      final behavior = RandomBehavior<Card>.withRandom(Random(i));
+      final agent = CardPhaseAgent(originalHand.toList());
+      final decision = agent.act(
+            (cards) => behavior.run(turn.extractAllowedCards(cards)),
+      );
+      diamondCardsInHand.remove(decision.action);
+    }
+    expect(diamondCardsInHand, isEmpty);
+  });
 }
