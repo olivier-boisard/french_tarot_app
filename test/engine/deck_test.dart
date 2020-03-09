@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/deck.dart';
+import 'package:french_tarot/engine/core/deck.dart';
 
 void main() {
   const nCardsInDeck = 78;

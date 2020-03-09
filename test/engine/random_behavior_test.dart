@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card.dart';
-import 'package:french_tarot/engine/card_phase_agent.dart';
+import 'package:french_tarot/engine/card_phase/agent.dart';
+import 'package:french_tarot/engine/card_phase/decision_maker_wrapper.dart';
+import 'package:french_tarot/engine/card_phase/turn.dart';
+import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
-import 'package:french_tarot/engine/turn.dart';
-import 'package:french_tarot/engine/turn_decision_maker_wrapper.dart';
 
 void main() {
   test('Deal card and play first card in turn', () {

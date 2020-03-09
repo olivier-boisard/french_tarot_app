@@ -1,4 +1,4 @@
-import 'card.dart';
+import '../core/card.dart';
 
 class Turn {
   final List<Card> playedCards;

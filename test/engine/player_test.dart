@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card.dart';
-import 'package:french_tarot/engine/player.dart';
+import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/player.dart';
 
 void main() {
   test('Player has won cards, evaluate score and number of oudlers', () {

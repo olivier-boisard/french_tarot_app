@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card.dart';
-import 'package:french_tarot/engine/turn.dart';
+import 'package:french_tarot/engine/card_phase/turn.dart';
+import 'package:french_tarot/engine/core/card.dart';
 
 void main() {
   test('Construct Turn object', () {
