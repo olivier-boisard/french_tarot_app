@@ -1,7 +1,7 @@
 import 'card.dart';
 
 
-class Player {
+class PlayerState {
   final List<Card> _wonCards = [];
 
   int get score {
