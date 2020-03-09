@@ -10,9 +10,9 @@ class CardPhaseAgent {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
-    final action = decisionMaker(_hand);
-    _hand.remove(action.action);
-    return action;
+    final decision = decisionMaker(_hand);
+    _hand.remove(decision.action);
+    return decision;
   }
 }
 
