@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card.dart';
-import 'package:french_tarot/engine/card_phase.dart';
+import 'package:french_tarot/engine/card_phase_agent.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
 import 'package:french_tarot/engine/turn.dart';
 import 'package:french_tarot/engine/turn_decision_maker_wrapper.dart';
