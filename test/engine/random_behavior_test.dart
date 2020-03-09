@@ -41,4 +41,7 @@ void main() {
       expect(decision.action, equals(diamondCardInHand));
     }
   });
+
+  //TODO add unit test to test that when there are several possible cards, we
+  // get different results
 }
