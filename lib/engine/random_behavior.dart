@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'decision.dart';
+import 'agent.dart';
 
 class RandomBehavior<A> {
   final Random _random;

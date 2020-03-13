@@ -1,5 +1,5 @@
+import '../agent.dart';
 import '../core/card.dart';
-import '../decision.dart';
 
 class CardPhaseAgent {
   final List<Card> _hand;

@@ -1,4 +1,4 @@
-import '../decision.dart';
+import '../agent.dart';
 import 'environment_state.dart';
 
 typedef OnStateDecisionMaker<T> = Decision<T> Function(List<T> action);

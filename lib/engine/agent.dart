@@ -6,3 +6,4 @@ class Decision<T> {
 }
 
 typedef DecisionMaker<T> = Decision<T> Function(List<T> possibleActions);
+typedef Agent<T> = Decision<T> Function(DecisionMaker<T> decisionMaker);
