@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 
+import 'abstract_card.dart';
+
 @immutable
-class Card {
+class Card implements AbstractCard {
   final Suit suit;
   final int strength;
   static const List<Suit> standardSuits = [
@@ -24,11 +26,12 @@ class Card {
       : suit = Suit.none,
         strength= CardStrengths.excuse;
 
+  @override
   double get score {
     if (isOudler) {
       return 4.5;
     }
-    
+
     const strengthScoreMap = {
       CardStrengths.jack: 1.5,
       CardStrengths.knight: 2.5,
@@ -38,6 +41,7 @@ class Card {
     return strengthScoreMap[strength] ?? 0.5;
   }
 
+  @override
   bool get isOudler {
     final oudlers = [
       Card.trump(1),

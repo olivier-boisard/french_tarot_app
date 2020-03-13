@@ -1,8 +1,7 @@
-import 'card.dart';
-
+import 'abstract_card.dart';
 
 class PlayerState {
-  final List<Card> _wonCards = [];
+  final List<AbstractCard> _wonCards = [];
 
   int get score {
     if (_wonCards.length % 2 == 1) {
@@ -25,7 +24,7 @@ class PlayerState {
     return numberOfOudlers;
   }
 
-  void winCards(Iterable<Card> wonCards) {
+  void winCards(Iterable<AbstractCard> wonCards) {
     _wonCards.addAll(wonCards);
   }
 }
