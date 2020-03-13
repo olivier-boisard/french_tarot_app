@@ -22,7 +22,7 @@ void main() {
       Card.coloredCard(Suit.spades, 3),
       Card.coloredCard(Suit.spades, 4)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, equals(cards));
   });
 
@@ -34,7 +34,7 @@ void main() {
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.spades, 4)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards.length, equals(2));
   });
 
@@ -46,7 +46,7 @@ void main() {
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.clover, 4)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, equals(cards));
   });
 
@@ -58,7 +58,7 @@ void main() {
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.clover, 4)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards.length, equals(1));
   });
 
@@ -70,7 +70,7 @@ void main() {
       const Card.excuse(),
       Card.coloredCard(Suit.clover, 4)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards.length, equals(2));
   });
 
@@ -84,7 +84,7 @@ void main() {
       Card.coloredCard(Suit.heart, 6),
       Card.coloredCard(Suit.diamond, 7)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, cards);
   });
 
@@ -98,7 +98,7 @@ void main() {
       Card.coloredCard(Suit.heart, 6),
       Card.coloredCard(Suit.diamond, 7)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, cards);
   });
 
@@ -113,7 +113,7 @@ void main() {
       Card.coloredCard(Suit.heart, 6),
       Card.coloredCard(Suit.diamond, 7)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, [Card.coloredCard(Suit.clover, 4)]);
   });
 
@@ -126,7 +126,7 @@ void main() {
       Card.trump(4),
       Card.trump(6)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, [Card.trump(6)]);
   });
 
@@ -139,7 +139,7 @@ void main() {
       Card.trump(4),
       Card.trump(6)
     ];
-    final allowedCards = turn.extractAllowedCards(cards);
+    final allowedCards = turn.extractAllowedActions(cards);
     expect(allowedCards, [Card.trump(4), Card.trump(6)]);
   });
 

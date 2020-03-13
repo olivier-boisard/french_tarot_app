@@ -1,6 +1,8 @@
+import 'package:french_tarot/engine/core/environment_state.dart';
+
 import '../core/card.dart';
 
-class Turn {
+class Turn implements EnvironmentState<Card> {
   final List<Card> playedCards;
 
   Turn() : playedCards = <Card>[];
@@ -36,7 +38,8 @@ class Turn {
     playedCards.add(card);
   }
 
-  List<Card> extractAllowedCards(List<Card> hand) {
+  @override
+  List<Card> extractAllowedActions(List<Card> hand) {
     if (playedCards.isEmpty) {
       return _copyCardList(hand);
     }
