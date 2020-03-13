@@ -1,6 +1,5 @@
-import 'package:french_tarot/engine/core/environment_state.dart';
-
 import '../core/card.dart';
+import '../core/environment_state.dart';
 
 class Turn implements EnvironmentState<Card> {
   final List<Card> playedCards;
@@ -98,6 +97,18 @@ class Turn implements EnvironmentState<Card> {
 
   static bool _containsExcuse(List<Card> hand) {
     return hand.any((card) => card == const Card.excuse());
+  }
+
+  @override
+  Card extractGreedyAction(List<Card> actions) {
+    // TODO: implement extractGreedyAction
+    throw UnimplementedError();
+  }
+
+  @override
+  List<double> get featureVector {
+    // TODO: implement featureVector
+    throw UnimplementedError();
   }
 }
 
