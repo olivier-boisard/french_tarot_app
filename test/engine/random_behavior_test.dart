@@ -7,6 +7,7 @@ import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/decision_maker_wrapper.dart';
 import 'package:french_tarot/engine/random_behavior.dart';
 
+//TODO use RandomCardPhaseAgent here after its creation
 void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
