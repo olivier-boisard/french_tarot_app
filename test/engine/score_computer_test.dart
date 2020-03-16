@@ -35,9 +35,30 @@ void main() {
     expect(scoreComputer.oppositionScore, equals(2));
   });
 
-  //TODO test with unknown player
+  test('Opposition plays excuse and wins', () {
+    final turn = Turn()
+      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
+          Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 3));
+    final taker = _createCardPhaseAgent();
+    final opposition = [
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent()
+    ];
+    final orderedPlayer = [taker] + opposition;
 
-  //TODO handle excuse
+    final scoreComputer = ScoreComputer(taker)
+      ..consume(turn, orderedPlayer);
+    expect(scoreComputer.takerScore, equals(0));
+    expect(scoreComputer.oppositionScore, equals(6));
+  });
+
+
+  //TODO Opposition plays excuse and looses
+  //TODO taker plays excuse and wins
+  //TODO what if a team has "won" only the excuse? or has a non-integer score?
+
 }
 
 CardPhaseAgent _createCardPhaseAgent() {
