@@ -54,6 +54,25 @@ void main() {
     expect(scoreComputer.oppositionScore, equals(6));
   });
 
+  test('Oppotion plays excuse and looses', () {
+    final turn = Turn()
+      ..addPlayedCard(Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
+          Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 1));
+    final taker = _createCardPhaseAgent();
+    final opposition = [
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent()
+    ];
+    final orderedPlayer = [taker] + opposition;
+    final scoreComputer = ScoreComputer(taker)
+      ..consume(turn, orderedPlayer);
+
+    expect(scoreComputer.takerScore, equals(1));
+    expect(scoreComputer.oppositionScore, equals(4));
+  });
+
 
   //TODO Opposition plays excuse and looses
   //TODO taker plays excuse
