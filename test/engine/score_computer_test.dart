@@ -7,17 +7,18 @@ import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
   test('Evaluate score', () {
-    final turn1 = Turn();
-    turn1.addPlayedCard(Card.coloredCard(Suit.diamond, 1));
-    turn1.addPlayedCard(Card.coloredCard(Suit.diamond, 2));
-    turn1.addPlayedCard(Card.coloredCard(Suit.diamond, 3));
-    turn1.addPlayedCard(Card.coloredCard(Suit.diamond, 4));
+    final turn1 = Turn()
+      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 4));
 
-    final turn2 = Turn();
-    turn2.addPlayedCard(Card.coloredCard(Suit.diamond, CardStrengths.jack));
-    turn2.addPlayedCard(Card.coloredCard(Suit.diamond, 7));
-    turn2.addPlayedCard(Card.coloredCard(Suit.diamond, 6));
-    turn2.addPlayedCard(Card.coloredCard(Suit.diamond, 5));
+    final turn2 = Turn()
+      ..addPlayedCard(
+          Card.coloredCard(Suit.diamond, CardStrengths.jack))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 7))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 6))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 5));
 
     final taker = _createCardPhaseAgent();
     final opposition = [
@@ -27,8 +28,8 @@ void main() {
     ];
     final orderedPlayer = [taker] + opposition;
 
-    final scoreComputer = ScoreComputer(taker);
-    scoreComputer..consume(turn1, orderedPlayer)..consume(turn2, orderedPlayer);
+    final scoreComputer = ScoreComputer(taker)
+      ..consume(turn1, orderedPlayer)..consume(turn2, orderedPlayer);
 
     expect(scoreComputer.takerScore, equals(3));
     expect(scoreComputer.oppositionScore, equals(2));
