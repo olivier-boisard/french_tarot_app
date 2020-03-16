@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'agent.dart';
+import 'decision_maker.dart';
 
-class RandomBehavior<A> {
+class RandomDecisionMaker<A> {
   final Random _random;
 
-  RandomBehavior() : _random = Random();
+  RandomDecisionMaker() : _random = Random();
 
-  RandomBehavior.withRandom(this._random);
+  RandomDecisionMaker.withRandom(this._random);
 
   Decision<A> run(List<A> allowedActions) {
     final probability = 1.0 / allowedActions.length;

@@ -1,5 +1,5 @@
-import '../agent.dart';
 import '../core/card.dart';
+import '../decision_maker.dart';
 
 class Hand {
   final List<Card> _cards;
