@@ -1,9 +1,9 @@
-import 'package:french_tarot/engine/card_phase/hand.dart';
-import 'package:french_tarot/engine/card_phase/turn.dart';
-import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/decision_maker_wrapper.dart';
-import 'package:french_tarot/engine/decision_maker.dart';
-import 'package:french_tarot/engine/random_decision_maker.dart';
+import '../core/card.dart';
+import '../core/decision_maker_wrapper.dart';
+import '../decision_maker.dart';
+import '../random_decision_maker.dart';
+import 'hand.dart';
+import 'turn.dart';
 
 class RandomCardPhaseAgent {
   final RandomDecisionMaker<Card> _decisionMaker;
