@@ -14,7 +14,7 @@ void main() {
     final cardsInHandCopy = cardsInHand.toList();
     final hand = Hand(cardsInHand);
     final turn = Turn();
-    final agent = CardPhaseAgent(hand, RandomDecisionMaker<Card>().run);
+    final agent = CardPhaseAgent(RandomDecisionMaker<Card>().run, hand);
     final play = agent.play(turn);
     expect(play.action, isIn(cardsInHandCopy));
   });

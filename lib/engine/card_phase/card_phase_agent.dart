@@ -5,10 +5,10 @@ import 'hand.dart';
 import 'turn.dart';
 
 class CardPhaseAgent {
-  final DecisionMaker<Card> _decisionMaker;
   final Hand _hand;
+  final DecisionMaker<Card> _decisionMaker;
 
-  CardPhaseAgent(this._hand, this._decisionMaker);
+  CardPhaseAgent(this._decisionMaker, this._hand);
 
   Decision<Card> play(Turn turn) {
     return _hand.selectCard(wrapDecisionMaker(turn, _decisionMaker));
