@@ -12,6 +12,10 @@ class Deck {
 
   Deck.withRandom(this._random) : _cards = _createCardList();
 
+  int get size {
+    return _cards.length;
+  }
+
   void shuffle() {
     _cards.shuffle(_random);
   }
