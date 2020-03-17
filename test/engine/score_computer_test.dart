@@ -73,8 +73,25 @@ void main() {
     expect(scoreComputer.oppositionScore, equals(4));
   });
 
-  //TODO taker plays excuse
-  //TODO what if a team has "won" only the excuse? or has a non-integer score?
+  test('Taker plays excuse', () {
+    final turn = Turn()
+      ..addPlayedCard(Card.excuse())..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
+          Card.coloredCard(Suit.diamond, 3));
+    final taker = _createCardPhaseAgent();
+    final opposition = [
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent(),
+      _createCardPhaseAgent()
+    ];
+    final orderedPlayer = [taker] + opposition;
+    final scoreComputer = ScoreComputer(taker)
+      ..consume(turn, orderedPlayer);
+
+    expect(scoreComputer.takerScore, equals(4));
+    expect(scoreComputer.oppositionScore, equals(2));
+  });
 
 }
 
