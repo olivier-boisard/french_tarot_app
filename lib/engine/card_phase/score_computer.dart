@@ -27,14 +27,12 @@ class ScoreComputer {
 
   Card _extractTakerPlayedCard(Turn turn,
       List<CardPhaseAgent> agentsPlayOrder) {
-    final takerCard = turn.playedCards[agentsPlayOrder.indexOf(_taker)];
-    return takerCard;
+    return turn.playedCards[agentsPlayOrder.indexOf(_taker)];
   }
 
   bool _didTakerWin(List<CardPhaseAgent> agentsPlayOrder, Turn turn) {
     final winner = agentsPlayOrder[turn.winningCardIndex];
-    final takerWon = winner == _taker;
-    return takerWon;
+    return winner == _taker;
   }
 
   void _dealNonExcuseCardsToWinner(Turn turn, bool takerWon) {
