@@ -69,7 +69,7 @@ void main() {
     final scoreComputer = ScoreComputer(taker)
       ..consume(turn, orderedPlayer);
 
-    expect(scoreComputer.takerScore, equals(1));
+    expect(scoreComputer.takerScore, equals(2));
     expect(scoreComputer.oppositionScore, equals(4));
   });
 
