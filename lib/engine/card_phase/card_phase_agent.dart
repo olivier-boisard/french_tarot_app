@@ -13,4 +13,6 @@ class CardPhaseAgent {
   Decision<Card> play(Turn turn) {
     return _hand.selectCard(wrapDecisionMaker(turn, _decisionMaker));
   }
+
+  bool get handIsEmpty => _hand.isEmpty;
 }

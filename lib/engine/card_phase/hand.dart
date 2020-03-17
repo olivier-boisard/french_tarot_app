@@ -14,6 +14,8 @@ class Hand {
     _cards.remove(decision.action);
     return decision;
   }
+
+  bool get isEmpty => _cards.isEmpty;
 }
 
 class EmptyHandException implements Exception {}

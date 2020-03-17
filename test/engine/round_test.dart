@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/hand.dart';
 import 'package:french_tarot/engine/card_phase/round.dart';
+import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -22,9 +23,15 @@ void main() {
       agents.add(CardPhaseAgent(decisionMaker.run, hand));
     }
 
-    final scores = playRound(agents);
-    expect(scores, isNotEmpty);
-    expect(scores.values.toList()[0], isNot(equals(0)));
-    expect(scores.values.reduce((a, b) => a + b), equals(0));
+    final taker = agents[0];
+    //TODO taker should win cards from dog
+    final scoreComputer = ScoreComputer(taker);
+
+    Round(scoreComputer.consume).play(agents);
+    final totalScore = scoreComputer.oppositionScore + scoreComputer.takerScore;
+    expect(totalScore, equals(91));
   });
+
+
+  //TODO add test to make sure winner of one round gets to play first after
 }
