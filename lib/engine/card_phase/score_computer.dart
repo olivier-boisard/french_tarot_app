@@ -47,15 +47,16 @@ class ScoreComputer {
 
   void _handleExcuse(Turn turn, Card takerPlayedCard, bool takerWon) {
     const excuse = Card.excuse();
+    final takerPlayedExcuse = takerPlayedCard == excuse;
     if (turn.playedCards.contains(excuse)) {
-      final takerPlayedExcuse = takerPlayedCard == excuse;
       if (takerWon && !takerPlayedExcuse) {
-        _oppositionState.winCards([NegativeDummyCard(), excuse]);
+        _oppositionState.winCards([NegativeDummyCard()]);
         _takerState.winCards([PositiveDummyCard()]);
       } else if (!takerWon && takerPlayedExcuse) {
         _oppositionState.winCards([PositiveDummyCard()]);
-        _takerState.winCards([NegativeDummyCard(), excuse]);
+        _takerState.winCards([NegativeDummyCard()]);
       }
+      (takerPlayedExcuse ? _takerState : _oppositionState).winCards([excuse]);
     }
   }
 }
