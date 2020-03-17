@@ -73,8 +73,6 @@ void main() {
     expect(scoreComputer.oppositionScore, equals(4));
   });
 
-
-  //TODO Opposition plays excuse and looses
   //TODO taker plays excuse
   //TODO what if a team has "won" only the excuse? or has a non-integer score?
 
