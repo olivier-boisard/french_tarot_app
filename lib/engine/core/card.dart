@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'abstract_card.dart';
 
+//TODO break in several subtypes for AbstractCard
 @immutable
 class Card implements AbstractCard {
   final Suit suit;
