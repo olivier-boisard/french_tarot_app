@@ -28,17 +28,21 @@ class Card implements AbstractCard {
 
   @override
   double get score {
+    var output = 0.0;
     if (isOudler) {
-      return 4.5;
+      output = 4.5;
+    } else if (suit == Suit.trump) {
+      output = 0.5;
+    } else {
+      const strengthScoreMap = {
+        CardStrengths.jack: 1.5,
+        CardStrengths.knight: 2.5,
+        CardStrengths.queen: 3.5,
+        CardStrengths.king: 4.5
+      };
+      output = strengthScoreMap[strength] ?? 0.5;
     }
-
-    const strengthScoreMap = {
-      CardStrengths.jack: 1.5,
-      CardStrengths.knight: 2.5,
-      CardStrengths.queen: 3.5,
-      CardStrengths.king: 4.5
-    };
-    return strengthScoreMap[strength] ?? 0.5;
+    return output;
   }
 
   @override

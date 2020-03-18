@@ -62,6 +62,14 @@ void main() {
         .score, equals(4.5));
   });
 
+  test('Trump from 2 to 20 score', () {
+    for (var strength = 2; strength <= 20; strength++) {
+      expect(Card
+          .trump(strength)
+          .score, equals(0.5));
+    }
+  });
+
   test('Construct trump', () {
     expect(() => Card.trump(1), returnsNormally);
   });
