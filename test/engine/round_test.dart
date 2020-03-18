@@ -3,7 +3,7 @@ import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/hand.dart';
 import 'package:french_tarot/engine/card_phase/round.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
-import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/player_state.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -19,15 +19,15 @@ void main() {
 
     final agents = <CardPhaseAgent>[];
     for (var i = 0; i < nPlayers; i++) {
-      final decisionMaker = RandomDecisionMaker<Card>();
-      final hand = Hand(deck.pop(nCardsPerPlayer));
+      final decisionMaker = RandomDecisionMaker<AbstractCard>();
+      final hand = Hand<AbstractCard>(deck.pop(nCardsPerPlayer));
       agents.add(CardPhaseAgent(decisionMaker.run, hand));
     }
 
     final taker = agents[0];
     final dog = deck.pop(nCardsInDog);
     final takerState = PlayerState()
-      ..winCards(dog);
+      ..winScoreElements(dog);
     final oppositionState = PlayerState();
     final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
 

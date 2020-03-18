@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
+import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/card.dart';
 
 void main() {
@@ -17,7 +18,7 @@ void main() {
   test('Spades is asked, all cards in hand are allowed', () {
     final turn = Turn()
       ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
-    final Iterable<Card> cards = [
+    final Iterable<AbstractCard> cards = [
       Card.coloredCard(Suit.spades, 2),
       Card.coloredCard(Suit.spades, 3),
       Card.coloredCard(Suit.spades, 4)
@@ -29,7 +30,7 @@ void main() {
   test('Spades is asked, some cards in hand are allowed', () {
     final turn = Turn()
       ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
-    final Iterable<Card> cards = [
+    final Iterable<AbstractCard> cards = [
       Card.coloredCard(Suit.spades, 2),
       Card.coloredCard(Suit.heart, 3),
       Card.coloredCard(Suit.spades, 4)
@@ -76,7 +77,7 @@ void main() {
 
   test('No played cards', () {
     final turn = Turn();
-    final Iterable<Card> cards = [
+    final Iterable<AbstractCard> cards = [
       Card.trump(2),
       const Card.excuse(),
       Card.coloredCard(Suit.clover, 4),
@@ -91,7 +92,7 @@ void main() {
   test('First played card is excuse', () {
     final turn = Turn()
       ..addPlayedCard(const Card.excuse());
-    final Iterable<Card> cards = [
+    final Iterable<AbstractCard> cards = [
       Card.trump(1),
       Card.coloredCard(Suit.clover, 4),
       Card.coloredCard(Suit.spades, 5),
@@ -106,7 +107,7 @@ void main() {
     final turn = Turn()
       ..addPlayedCard(const Card.excuse())..addPlayedCard(
           Card.coloredCard(Suit.clover, 3));
-    final Iterable<Card> cards = [
+    final Iterable<AbstractCard> cards = [
       Card.trump(1),
       Card.coloredCard(Suit.clover, 4),
       Card.coloredCard(Suit.spades, 5),

@@ -1,5 +1,8 @@
+enum Suit { spades, heart, diamond, clover, trump, none }
 abstract class AbstractCard {
-  double get score;
+  bool beats(Suit demanded, AbstractCard card);
 
-  bool get isOudler;
+  Suit get suit;
+
+  int get strength;
 }

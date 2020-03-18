@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 import 'abstract_card.dart';
+import 'abstract_score_element.dart';
 
 //TODO break in several subtypes for AbstractCard
 @immutable
-class Card implements AbstractCard {
+class Card implements ScoreElement, AbstractCard {
+  @override
   final Suit suit;
-  final int strength;
+  final int value;
   static const List<Suit> standardSuits = [
     Suit.heart,
     Suit.diamond,
@@ -14,18 +16,18 @@ class Card implements AbstractCard {
     Suit.spades
   ];
 
-  Card.coloredCard(this.suit, this.strength) {
+  Card.coloredCard(this.suit, this.value) {
     _checkStrengthIsValid();
     _checkSuitIsValid();
   }
 
-  Card.trump(this.strength) : suit = Suit.trump {
+  Card.trump(this.value) : suit = Suit.trump {
     _checkStrengthIsValid();
   }
 
   const Card.excuse()
       : suit = Suit.none,
-        strength= CardStrengths.excuse;
+        value= CardStrengths.excuse;
 
   @override
   double get score {
@@ -41,7 +43,7 @@ class Card implements AbstractCard {
         CardStrengths.queen: 3.5,
         CardStrengths.king: 4.5
       };
-      output = strengthScoreMap[strength] ?? 0.5;
+      output = strengthScoreMap[value] ?? 0.5;
     }
     return output;
   }
@@ -56,7 +58,9 @@ class Card implements AbstractCard {
     return oudlers.contains(this);
   }
 
-  bool beats(Suit demanded, Card card) {
+  @override
+  bool beats(Suit demanded, AbstractCard card) {
+    //TODO this breaks the LSP
     final colorDemanded = demanded != Suit.none;
     if (colorDemanded && suit != demanded) {
       return false;
@@ -64,26 +68,27 @@ class Card implements AbstractCard {
     if (colorDemanded && card.suit != demanded) {
       return true;
     }
-    return _adjustedCardStrength > card._adjustedCardStrength;
+    return strength > card.strength;
   }
 
   @override
   bool operator ==(other) {
-    return suit == other.suit && strength == other.strength;
+    return suit == other.suit && value == other.value;
   }
 
   @override
-  int get hashCode => suit.hashCode + strength.hashCode;
+  int get hashCode => suit.hashCode + value.hashCode;
 
-  int get _adjustedCardStrength {
-    return suit != Suit.trump ? strength : strength + 100;
+  @override
+  int get strength {
+    return suit != Suit.trump ? value : value + 100;
   }
 
   void _checkStrengthIsValid() {
-    if (suit != Suit.trump && (strength < 1 || strength > CardStrengths.king)) {
+    if (suit != Suit.trump && (value < 1 || value > CardStrengths.king)) {
       throw IllegalCardStrengthException();
     }
-    if (suit == Suit.trump && (strength < 1 || strength > 21)) {
+    if (suit == Suit.trump && (value < 1 || value > 21)) {
       throw IllegalCardStrengthException();
     }
   }
@@ -103,7 +108,5 @@ class CardStrengths {
   static const int queen = 13;
   static const int king = 14;
 }
-
-enum Suit { spades, heart, diamond, clover, trump, none }
 
 class IllegalCardStrengthException implements Exception {}

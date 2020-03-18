@@ -1,31 +1,31 @@
-import 'abstract_card.dart';
+import 'abstract_score_element.dart';
 
 class PlayerState {
-  final List<AbstractCard> _wonCards = [];
+  final List<ScoreElement> _wonScoreElements = [];
 
   int get score {
-    if (_wonCards.length % 2 == 1) {
+    if (_wonScoreElements.length % 2 == 1) {
       throw OddNumberOfCardsException();
     }
     var score = 0.0;
-    for (final card in _wonCards) {
-      score += card.score;
+    for (final scoreElement in _wonScoreElements) {
+      score += scoreElement.score;
     }
     return score.round();
   }
 
   int get numberOfOudlers {
     var numberOfOudlers = 0;
-    for (final card in _wonCards) {
-      if (card.isOudler) {
+    for (final scoreElement in _wonScoreElements) {
+      if (scoreElement.isOudler) {
         numberOfOudlers += 1;
       }
     }
     return numberOfOudlers;
   }
 
-  void winCards(Iterable<AbstractCard> wonCards) {
-    _wonCards.addAll(wonCards);
+  void winScoreElements(Iterable<ScoreElement> wonScoreElements) {
+    _wonScoreElements.addAll(wonScoreElements);
   }
 }
 

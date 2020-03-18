@@ -1,12 +1,11 @@
-import '../core/card.dart';
 import '../decision_maker.dart';
 
-class Hand {
-  final List<Card> _cards;
+class Hand<T> {
+  final List<T> _cards;
 
   Hand(this._cards);
 
-  Decision<Card> selectCard(DecisionMaker<Card> decisionMaker) {
+  Decision<T> selectCard(DecisionMaker<T> decisionMaker) {
     if (_cards.isEmpty) {
       throw EmptyHandException();
     }

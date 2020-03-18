@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/hand.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
+import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/decision_maker_wrapper.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -12,8 +13,8 @@ void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
     final handCopy = hand.toList();
-    final agent = Hand(hand);
-    final decisionFunction = RandomDecisionMaker<Card>().run;
+    final agent = Hand<AbstractCard>(hand);
+    final decisionFunction = RandomDecisionMaker<AbstractCard>().run;
 
     expect(agent
         .selectCard(decisionFunction)
@@ -35,8 +36,8 @@ void main() {
       ..addPlayedCard(Card.coloredCard(Suit.diamond, 2));
 
     for (var i = 0; i < 1000; i++) {
-      final behavior = RandomDecisionMaker<Card>.withRandom(Random(i));
-      final agent = Hand(originalHand.toList());
+      final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
+      final agent = Hand<AbstractCard>(originalHand.toList());
       final decision = agent.selectCard(wrapDecisionMaker(turn, behavior.run));
       expect(decision.action, equals(diamondCardInHand));
     }
@@ -58,8 +59,8 @@ void main() {
     final turn = Turn()
       ..addPlayedCard(Card.coloredCard(Suit.diamond, 4));
     for (var i = 0; i < 1000; i++) {
-      final behavior = RandomDecisionMaker<Card>.withRandom(Random(i));
-      final agent = Hand(originalHand.toList());
+      final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
+      final agent = Hand<AbstractCard>(originalHand.toList());
       final decision = agent.selectCard(wrapDecisionMaker(turn, behavior.run));
       diamondCardsInHand.remove(decision.action);
     }

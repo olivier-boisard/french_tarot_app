@@ -1,8 +1,8 @@
-import '../core/abstract_card.dart';
+import '../core/abstract_score_element.dart';
 import '../core/card.dart';
 import '../core/player_state.dart';
+import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
-import 'turn.dart';
 
 class ScoreComputer {
   final CardPhaseAgent _taker;
@@ -15,7 +15,8 @@ class ScoreComputer {
 
   int get oppositionScore => _oppositionState.score;
 
-  void consume(Turn turn, List<CardPhaseAgent> agentsPlayOrder) {
+  void consume(AbstractTurn<ScoreElement> turn,
+      List<CardPhaseAgent> agentsPlayOrder) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealNonExcuseCardsToWinner(turn, takerWon);
 
@@ -23,43 +24,47 @@ class ScoreComputer {
     _handleExcuse(turn, takerCard, takerWon);
   }
 
-  Card _extractTakerPlayedCard(Turn turn,
+  Card _extractTakerPlayedCard(AbstractTurn<ScoreElement> turn,
       List<CardPhaseAgent> agentsPlayOrder) {
     return turn.playedCards[agentsPlayOrder.indexOf(_taker)];
   }
 
-  bool _didTakerWin(List<CardPhaseAgent> agentsPlayOrder, Turn turn) {
+  bool _didTakerWin(List<CardPhaseAgent> agentsPlayOrder,
+      AbstractTurn<ScoreElement> turn) {
     final winner = agentsPlayOrder[turn.winningCardIndex];
     return winner == _taker;
   }
 
-  void _dealNonExcuseCardsToWinner(Turn turn, bool takerWon) {
+  void _dealNonExcuseCardsToWinner(AbstractTurn<ScoreElement> turn,
+      bool takerWon) {
     final playedCardsWithoutExcuse = turn.playedCards.toList()
       ..remove(const Card.excuse());
     if (takerWon) {
-      _takerState.winCards(playedCardsWithoutExcuse);
+      _takerState.winScoreElements(playedCardsWithoutExcuse);
     } else {
-      _oppositionState.winCards(playedCardsWithoutExcuse);
+      _oppositionState.winScoreElements(playedCardsWithoutExcuse);
     }
   }
 
-  void _handleExcuse(Turn turn, Card takerPlayedCard, bool takerWon) {
+  void _handleExcuse(AbstractTurn<ScoreElement> turn, Card takerPlayedCard,
+      bool takerWon) {
     const excuse = Card.excuse();
     final takerPlayedExcuse = takerPlayedCard == excuse;
     if (turn.playedCards.contains(excuse)) {
       if (takerWon && !takerPlayedExcuse) {
-        _oppositionState.winCards([NegativeDummyCard()]);
-        _takerState.winCards([PositiveDummyCard()]);
+        _oppositionState.winScoreElements([NegativeDummyCard()]);
+        _takerState.winScoreElements([PositiveDummyCard()]);
       } else if (!takerWon && takerPlayedExcuse) {
-        _oppositionState.winCards([PositiveDummyCard()]);
-        _takerState.winCards([NegativeDummyCard()]);
+        _oppositionState.winScoreElements([PositiveDummyCard()]);
+        _takerState.winScoreElements([NegativeDummyCard()]);
       }
-      (takerPlayedExcuse ? _takerState : _oppositionState).winCards([excuse]);
+      (takerPlayedExcuse ? _takerState : _oppositionState).winScoreElements(
+          [excuse]);
     }
   }
 }
 
-class PositiveDummyCard implements AbstractCard {
+class PositiveDummyCard implements ScoreElement {
 
   @override
   double get score => 0.5;
@@ -68,7 +73,7 @@ class PositiveDummyCard implements AbstractCard {
   bool get isOudler => false;
 }
 
-class NegativeDummyCard implements AbstractCard {
+class NegativeDummyCard implements ScoreElement {
 
   @override
   double get score => -0.5;

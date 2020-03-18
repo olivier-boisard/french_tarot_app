@@ -1,10 +1,14 @@
+import '../core/abstract_card.dart';
 import '../core/card.dart';
 import '../core/environment_state.dart';
+import 'abstract_turn.dart';
 
-class Turn implements EnvironmentState<Card> {
-  final List<Card> playedCards;
+class Turn
+    implements EnvironmentState<AbstractCard>, AbstractTurn<AbstractCard> {
+  @override
+  final List<AbstractCard> playedCards;
 
-  Turn() : playedCards = <Card>[];
+  Turn() : playedCards = <AbstractCard>[];
 
   int get winningCardIndex {
     if (playedCards.isEmpty) {
@@ -33,12 +37,12 @@ class Turn implements EnvironmentState<Card> {
     return asked;
   }
 
-  void addPlayedCard(Card card) {
+  void addPlayedCard(AbstractCard card) {
     playedCards.add(card);
   }
 
   @override
-  List<Card> extractAllowedActions(List<Card> hand) {
+  List<AbstractCard> extractAllowedActions(List<AbstractCard> hand) {
     if (playedCards.isEmpty) {
       return _copyCardList(hand);
     }
@@ -52,7 +56,7 @@ class Turn implements EnvironmentState<Card> {
       final playedTrumps = _extractTrumps(playedCards);
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
-        validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
+        validCards = _extractTrumps(hand, lowerBound: strongestTrump.value);
         if (validCards.isEmpty) {
           validCards = _extractTrumps(hand);
         }
@@ -92,7 +96,7 @@ class Turn implements EnvironmentState<Card> {
   }
 
   static bool _filterTrumps(Card card, int lowerBound) {
-    return card.suit == Suit.trump && card.strength > lowerBound;
+    return card.suit == Suit.trump && card.value > lowerBound;
   }
 
   static bool _containsExcuse(List<Card> hand) {
@@ -100,7 +104,7 @@ class Turn implements EnvironmentState<Card> {
   }
 
   @override
-  Card extractGreedyAction(List<Card> actions) {
+  AbstractCard extractGreedyAction(List<AbstractCard> actions) {
     // TODO: implement extractGreedyAction
     throw UnimplementedError();
   }
@@ -111,5 +115,6 @@ class Turn implements EnvironmentState<Card> {
     throw UnimplementedError();
   }
 }
+
 
 class EmptyTurn implements Exception {}

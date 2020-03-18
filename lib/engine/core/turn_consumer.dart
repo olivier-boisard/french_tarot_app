@@ -1,5 +1,6 @@
-import '../card_phase/card_phase_agent.dart';
-import '../card_phase/turn.dart';
+import 'package:french_tarot/engine/card_phase/abstract_turn.dart';
 
-typedef TurnConsumer = void Function(
-    Turn turn, List<CardPhaseAgent> agentsPlayOrder);
+import '../card_phase/card_phase_agent.dart';
+
+typedef TurnConsumer<T> = void Function(
+    AbstractTurn<T> turn, List<CardPhaseAgent> agentsPlayOrder);
