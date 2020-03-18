@@ -3,6 +3,7 @@ import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/player_state.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
@@ -28,7 +29,7 @@ void main() {
     ];
     final orderedPlayer = [taker] + opposition;
 
-    final scoreComputer = ScoreComputer(taker)
+    ScoreComputer scoreComputer = _createScoreComputer(taker)
       ..consume(turn1, orderedPlayer)..consume(turn2, orderedPlayer);
 
     expect(scoreComputer.takerScore, equals(3));
@@ -48,7 +49,7 @@ void main() {
     ];
     final orderedPlayer = [taker] + opposition;
 
-    final scoreComputer = ScoreComputer(taker)
+    final scoreComputer = _createScoreComputer(taker)
       ..consume(turn, orderedPlayer);
     expect(scoreComputer.takerScore, equals(0));
     expect(scoreComputer.oppositionScore, equals(6));
@@ -66,7 +67,7 @@ void main() {
       _createCardPhaseAgent()
     ];
     final orderedPlayer = [taker] + opposition;
-    final scoreComputer = ScoreComputer(taker)
+    final scoreComputer = _createScoreComputer(taker)
       ..consume(turn, orderedPlayer);
 
     expect(scoreComputer.takerScore, equals(2));
@@ -86,13 +87,20 @@ void main() {
       _createCardPhaseAgent()
     ];
     final orderedPlayer = [taker] + opposition;
-    final scoreComputer = ScoreComputer(taker)
+    final scoreComputer = _createScoreComputer(taker)
       ..consume(turn, orderedPlayer);
 
     expect(scoreComputer.takerScore, equals(4));
     expect(scoreComputer.oppositionScore, equals(2));
   });
 
+}
+
+ScoreComputer _createScoreComputer(CardPhaseAgent taker) {
+  final takerState = PlayerState();
+  final oppositionState = PlayerState();
+  final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
+  return scoreComputer;
 }
 
 CardPhaseAgent _createCardPhaseAgent() {

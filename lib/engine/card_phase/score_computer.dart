@@ -9,9 +9,7 @@ class ScoreComputer {
   final PlayerState _takerState;
   final PlayerState _oppositionState;
 
-  ScoreComputer(this._taker)
-      : _takerState = PlayerState(),
-        _oppositionState = PlayerState();
+  ScoreComputer(this._taker, this._takerState, this._oppositionState);
 
   int get takerScore => _takerState.score;
 
