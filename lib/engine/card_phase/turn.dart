@@ -88,7 +88,8 @@ class Turn
     return hand.toList();
   }
 
-  static List<AbstractCard> _extractTrumps(List<AbstractCard> cards, {int lowerBound = 0}) {
+  static List<AbstractCard> _extractTrumps(List<AbstractCard> cards,
+      {int lowerBound = 0}) {
     return cards.where((card) => _filterTrumps(card, lowerBound)).toList();
   }
 

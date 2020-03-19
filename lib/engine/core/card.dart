@@ -27,7 +27,7 @@ class Card implements ScoreElement, AbstractCard {
 
   const Card.excuse()
       : suit = Suit.none,
-        value= CardStrengths.excuse;
+        value = CardStrengths.excuse;
 
   @override
   double get score {
@@ -50,11 +50,7 @@ class Card implements ScoreElement, AbstractCard {
 
   @override
   bool get isOudler {
-    final oudlers = [
-      Card.trump(1),
-      Card.trump(21),
-      const Card.excuse()
-    ];
+    final oudlers = [Card.trump(1), Card.trump(21), const Card.excuse()];
     return oudlers.contains(this);
   }
 
@@ -98,7 +94,6 @@ class Card implements ScoreElement, AbstractCard {
       throw IllegalCardStrengthException();
     }
   }
-
 }
 
 class CardStrengths {

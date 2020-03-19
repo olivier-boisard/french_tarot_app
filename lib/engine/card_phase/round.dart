@@ -5,7 +5,6 @@ import 'turn.dart';
 
 //TODO SOLID for this class and the ones it depends on
 class Round {
-
   final TurnConsumer<AbstractCard> _turnConsumer;
 
   Round(this._turnConsumer);
