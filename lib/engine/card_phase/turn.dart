@@ -3,6 +3,8 @@ import '../core/card.dart';
 import '../core/environment_state.dart';
 import 'abstract_turn.dart';
 
+//TODO fix LSP violation due to Excuse
+//TODO break dependency with Card
 class Turn
     implements EnvironmentState<AbstractCard>, AbstractTurn<AbstractCard> {
   @override
