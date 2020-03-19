@@ -1,10 +1,7 @@
 import '../core/abstract_card.dart';
-import '../core/card.dart';
 import '../core/environment_state.dart';
 import 'abstract_turn.dart';
 
-//TODO fix LSP violation due to Excuse
-//TODO break dependency with Card
 class Turn
     implements EnvironmentState<AbstractCard>, AbstractTurn<AbstractCard> {
   @override
@@ -27,13 +24,16 @@ class Turn
     return index;
   }
 
-  bool get _onlyExcuseWasPlayed {
-    return playedCards.first == const Card.excuse() && playedCards.length == 1;
+  bool get _suitIsDetermined {
+    if (playedCards.isEmpty) {
+      return false;
+    }
+    return playedCards.first.suit != Suit.none || playedCards.length != 1;
   }
 
   Suit get _askedSuit {
     final firstPlayedCard = playedCards.first;
-    final asked = firstPlayedCard != const Card.excuse()
+    final asked = firstPlayedCard.suit != Suit.none
         ? firstPlayedCard.suit
         : playedCards[1].suit;
     return asked;
@@ -45,11 +45,7 @@ class Turn
 
   @override
   List<AbstractCard> extractAllowedActions(List<AbstractCard> hand) {
-    if (playedCards.isEmpty) {
-      return _copyCardList(hand);
-    }
-
-    if (_onlyExcuseWasPlayed) {
+    if (!_suitIsDetermined) {
       return _copyCardList(hand);
     }
 
@@ -58,7 +54,7 @@ class Turn
       final playedTrumps = _extractTrumps(playedCards);
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
-        validCards = _extractTrumps(hand, lowerBound: strongestTrump.value);
+        validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
         if (validCards.isEmpty) {
           validCards = _extractTrumps(hand);
         }
@@ -69,17 +65,16 @@ class Turn
         return _copyCardList(hand);
       }
     }
-    if (_containsExcuse(hand)) {
-      validCards.add(const Card.excuse());
-    }
+    final cardsWithoutSuit = validCards.where((card) => card.suit == Suit.none);
+    validCards.addAll(cardsWithoutSuit);
     return validCards;
   }
 
-  List<Card> _extractCardsMatchingAskedSuit(List<Card> hand) {
+  List<AbstractCard> _extractCardsMatchingAskedSuit(List<AbstractCard> hand) {
     return hand.where((card) => card.suit == _askedSuit).toList();
   }
 
-  static Card _extractStrongestTrump(List<Card> playedTrumps) {
+  static AbstractCard _extractStrongestTrump(List<AbstractCard> playedTrumps) {
     var strongestTrump = playedTrumps.first;
     for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
       if (trump.beats(Suit.trump, strongestTrump)) {
@@ -89,20 +84,16 @@ class Turn
     return strongestTrump;
   }
 
-  static List<Card> _copyCardList(List<Card> hand) {
+  static List<AbstractCard> _copyCardList(List<AbstractCard> hand) {
     return hand.toList();
   }
 
-  static List<Card> _extractTrumps(List<Card> cards, {int lowerBound = 0}) {
+  static List<AbstractCard> _extractTrumps(List<AbstractCard> cards, {int lowerBound = 0}) {
     return cards.where((card) => _filterTrumps(card, lowerBound)).toList();
   }
 
-  static bool _filterTrumps(Card card, int lowerBound) {
-    return card.suit == Suit.trump && card.value > lowerBound;
-  }
-
-  static bool _containsExcuse(List<Card> hand) {
-    return hand.any((card) => card == const Card.excuse());
+  static bool _filterTrumps(AbstractCard card, int lowerBound) {
+    return card.suit == Suit.trump && card.strength > lowerBound;
   }
 
   @override
@@ -117,6 +108,5 @@ class Turn
     throw UnimplementedError();
   }
 }
-
 
 class EmptyTurn implements Exception {}
