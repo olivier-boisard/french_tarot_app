@@ -10,16 +10,16 @@ import 'package:french_tarot/engine/random_decision_maker.dart';
 void main() {
   test('Evaluate score', () {
     final turn1 = Turn<Card>()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
+      ..addAction(Card.coloredCard(Suit.diamond, 1))..addAction(
+          Card.coloredCard(Suit.diamond, 2))..addAction(
+          Card.coloredCard(Suit.diamond, 3))..addAction(
           Card.coloredCard(Suit.diamond, 4));
 
     final turn2 = Turn<Card>()
-      ..addPlayedCard(
-          Card.coloredCard(Suit.diamond, CardStrengths.jack))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 7))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 6))..addPlayedCard(
+      ..addAction(
+          Card.coloredCard(Suit.diamond, CardStrengths.jack))..addAction(
+          Card.coloredCard(Suit.diamond, 7))..addAction(
+          Card.coloredCard(Suit.diamond, 6))..addAction(
           Card.coloredCard(Suit.diamond, 5));
 
     final taker = _createCardPhaseAgent();
@@ -39,9 +39,9 @@ void main() {
 
   test('Opposition plays excuse and wins', () {
     final turn = Turn<Card>()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
-          Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 3));
+      ..addAction(Card.coloredCard(Suit.diamond, 1))..addAction(
+          Card.coloredCard(Suit.diamond, 2))..addAction(
+          Card.excuse())..addAction(Card.coloredCard(Suit.diamond, 3));
     final taker = _createCardPhaseAgent();
     final opposition = [
       _createCardPhaseAgent(),
@@ -58,9 +58,9 @@ void main() {
 
   test('Oppotion plays excuse and looses', () {
     final turn = Turn<Card>()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
-          Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 1));
+      ..addAction(Card.coloredCard(Suit.diamond, 3))..addAction(
+          Card.coloredCard(Suit.diamond, 2))..addAction(
+          Card.excuse())..addAction(Card.coloredCard(Suit.diamond, 1));
     final taker = _createCardPhaseAgent();
     final opposition = [
       _createCardPhaseAgent(),
@@ -77,9 +77,9 @@ void main() {
 
   test('Taker plays excuse', () {
     final turn = Turn<Card>()
-      ..addPlayedCard(Card.excuse())..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
-          Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
+      ..addAction(Card.excuse())..addAction(
+          Card.coloredCard(Suit.diamond, 1))..addAction(
+          Card.coloredCard(Suit.diamond, 2))..addAction(
           Card.coloredCard(Suit.diamond, 3));
     final taker = _createCardPhaseAgent();
     final opposition = [

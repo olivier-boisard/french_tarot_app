@@ -1,8 +1,7 @@
 import '../core/abstract_card.dart';
-import '../core/environment_state.dart';
-import 'actions_handler.dart';
+import 'abstract_turn.dart';
 
-class Turn<T extends AbstractCard> implements State<T>, ActionsHandler<T> {
+class Turn<T extends AbstractCard> implements AbstractTurn<T> {
   @override
   final List<T> actions;
 
@@ -39,8 +38,8 @@ class Turn<T extends AbstractCard> implements State<T>, ActionsHandler<T> {
   }
 
   @override
-  void addPlayedCard(T card) {
-    actions.add(card);
+  void addAction(T action) {
+    actions.add(action);
   }
 
   @override

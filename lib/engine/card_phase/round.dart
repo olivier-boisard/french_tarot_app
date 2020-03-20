@@ -1,6 +1,7 @@
 import '../core/abstract_score_element.dart';
 import '../core/card.dart';
 import '../core/turn_consumer.dart';
+import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
 import 'turn.dart';
 
@@ -12,10 +13,12 @@ class Round {
 
   void play(List<CardPhaseAgent> agents) {
     while (!agents[0].handIsEmpty) {
-      final turn = Turn<Card>(); //TODO depend on AbstractTurn
+      //TODO depend on AbstractTurn
+      //TODO depend on an abstraction of Card
+      final AbstractTurn<Card> turn = Turn();
       for (final agent in agents) {
         final decision = agent.play(turn);
-        turn.addPlayedCard(decision.action);
+        turn.addAction(decision.action);
       }
       _turnConsumer(turn, agents);
     }

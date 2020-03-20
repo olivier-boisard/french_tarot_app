@@ -11,13 +11,13 @@ void main() {
   test('Add card', () {
     final turn = Turn();
     final playedCard = Card.trump(2);
-    turn.addPlayedCard(playedCard);
+    turn.addAction(playedCard);
     expect(turn.actions.first, equals(playedCard));
   });
 
   test('Spades is asked, all cards in hand are allowed', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
+      ..addAction(Card.coloredCard(Suit.spades, 1));
     final Iterable<AbstractCard> cards = [
       Card.coloredCard(Suit.spades, 2),
       Card.coloredCard(Suit.spades, 3),
@@ -29,7 +29,7 @@ void main() {
 
   test('Spades is asked, some cards in hand are allowed', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
+      ..addAction(Card.coloredCard(Suit.spades, 1));
     final Iterable<AbstractCard> cards = [
       Card.coloredCard(Suit.spades, 2),
       Card.coloredCard(Suit.heart, 3),
@@ -41,7 +41,7 @@ void main() {
 
   test('Spades is asked, peeing', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
+      ..addAction(Card.coloredCard(Suit.spades, 1));
     final cards = [
       Card.coloredCard(Suit.diamond, 2),
       Card.coloredCard(Suit.heart, 3),
@@ -53,7 +53,7 @@ void main() {
 
   test('Spades is asked, trump', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
+      ..addAction(Card.coloredCard(Suit.spades, 1));
     final cards = [
       Card.trump(2),
       Card.coloredCard(Suit.heart, 3),
@@ -65,7 +65,7 @@ void main() {
 
   test('Spades is asked, trump and excuse', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1));
+      ..addAction(Card.coloredCard(Suit.spades, 1));
     final cards = [
       Card.trump(2),
       const Card.excuse(),
@@ -91,7 +91,7 @@ void main() {
 
   test('First played card is excuse', () {
     final turn = Turn()
-      ..addPlayedCard(const Card.excuse());
+      ..addAction(const Card.excuse());
     final Iterable<AbstractCard> cards = [
       Card.trump(1),
       Card.coloredCard(Suit.clover, 4),
@@ -105,7 +105,7 @@ void main() {
 
   test('Two played cards, first card is excuse', () {
     final turn = Turn()
-      ..addPlayedCard(const Card.excuse())..addPlayedCard(
+      ..addAction(const Card.excuse())..addAction(
           Card.coloredCard(Suit.clover, 3));
     final Iterable<AbstractCard> cards = [
       Card.trump(1),
@@ -120,7 +120,7 @@ void main() {
 
   test('Trump needed, need to go higher', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
+      ..addAction(Card.coloredCard(Suit.diamond, 1))..addAction(
           Card.trump(5));
     final cards = [
       Card.coloredCard(Suit.clover, 1),
@@ -133,7 +133,7 @@ void main() {
 
   test('Trump needed, need to go lower', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
+      ..addAction(Card.coloredCard(Suit.diamond, 1))..addAction(
           Card.trump(7));
     final cards = [
       Card.coloredCard(Suit.clover, 1),
@@ -146,35 +146,35 @@ void main() {
 
   test('Winning card index, all cards of same suit', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.clover, 1))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 4))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 2))..addPlayedCard(
+      ..addAction(Card.coloredCard(Suit.clover, 1))..addAction(
+          Card.coloredCard(Suit.clover, 4))..addAction(
+          Card.coloredCard(Suit.clover, 2))..addAction(
           Card.coloredCard(Suit.clover, 3));
     expect(turn.winningActionIndex, equals(1));
   });
 
   test('Winning card index, with trump', () {
     final turn = Turn()
-      ..addPlayedCard(Card.trump(1))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 4))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 2))..addPlayedCard(
+      ..addAction(Card.trump(1))..addAction(
+          Card.coloredCard(Suit.clover, 4))..addAction(
+          Card.coloredCard(Suit.clover, 2))..addAction(
           Card.coloredCard(Suit.clover, 3));
     expect(turn.winningActionIndex, equals(0));
   });
 
   test('Winning card index, with excuse', () {
     final turn = Turn()
-      ..addPlayedCard(Card.trump(1))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 4))..addPlayedCard(
-          const Card.excuse())..addPlayedCard(Card.coloredCard(Suit.clover, 3));
+      ..addAction(Card.trump(1))..addAction(
+          Card.coloredCard(Suit.clover, 4))..addAction(
+          const Card.excuse())..addAction(Card.coloredCard(Suit.clover, 3));
     expect(turn.winningActionIndex, equals(0));
   });
 
   test('Winning card index, with peeing', () {
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.spades, 1))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 4))..addPlayedCard(
-          Card.coloredCard(Suit.clover, 2))..addPlayedCard(
+      ..addAction(Card.coloredCard(Suit.spades, 1))..addAction(
+          Card.coloredCard(Suit.clover, 4))..addAction(
+          Card.coloredCard(Suit.clover, 2))..addAction(
           Card.coloredCard(Suit.clover, 3));
     expect(turn.winningActionIndex, equals(0));
   });

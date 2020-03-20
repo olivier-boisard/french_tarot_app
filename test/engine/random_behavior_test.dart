@@ -33,7 +33,7 @@ void main() {
       Card.coloredCard(Suit.spades, 4),
     ];
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 2));
+      ..addAction(Card.coloredCard(Suit.diamond, 2));
 
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
@@ -57,7 +57,7 @@ void main() {
     ];
 
     final turn = Turn()
-      ..addPlayedCard(Card.coloredCard(Suit.diamond, 4));
+      ..addAction(Card.coloredCard(Suit.diamond, 4));
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
       final agent = Hand<AbstractCard>(originalHand.toList());
