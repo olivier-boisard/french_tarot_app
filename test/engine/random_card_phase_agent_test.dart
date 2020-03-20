@@ -13,7 +13,7 @@ void main() {
       Card.coloredCard(Suit.diamond, 2),
     ];
     final cardsInHandCopy = cardsInHand.toList();
-    final hand = Hand(cardsInHand);
+    final hand = Hand<AbstractCard>(cardsInHand);
     final turn = Turn();
     final agent = CardPhaseAgent(RandomDecisionMaker<AbstractCard>().run, hand);
     final play = agent.play(turn);
