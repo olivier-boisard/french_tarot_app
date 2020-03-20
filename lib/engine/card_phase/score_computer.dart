@@ -4,6 +4,7 @@ import '../core/player_state.dart';
 import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
 
+//TODO break dependency with Card (in particular with Excuse)
 class ScoreComputer {
   final CardPhaseAgent _taker;
   final PlayerState _takerState;
