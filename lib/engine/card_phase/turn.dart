@@ -3,43 +3,43 @@ import 'abstract_turn.dart';
 
 class Turn<T extends AbstractCard> implements AbstractTurn<T> {
   @override
-  final List<T> actions;
+  final List<T> actionHistory;
 
-  Turn() : actions = <T>[];
+  Turn() : actionHistory = <T>[];
 
   int get winningActionIndex {
-    if (actions.isEmpty) {
+    if (actionHistory.isEmpty) {
       throw EmptyTurn();
     }
     var index = 0;
-    var strongestCard = actions.first;
-    for (var i = 1; i < actions.length; i++) {
-      if (actions[i].beats(_askedSuit, strongestCard)) {
+    var strongestCard = actionHistory.first;
+    for (var i = 1; i < actionHistory.length; i++) {
+      if (actionHistory[i].beats(_askedSuit, strongestCard)) {
         index = i;
-        strongestCard = actions[i];
+        strongestCard = actionHistory[i];
       }
     }
     return index;
   }
 
   bool get _suitIsDetermined {
-    if (actions.isEmpty) {
+    if (actionHistory.isEmpty) {
       return false;
     }
-    return actions.first.suit != Suit.none || actions.length != 1;
+    return actionHistory.first.suit != Suit.none || actionHistory.length != 1;
   }
 
   Suit get _askedSuit {
-    final firstPlayedCard = actions.first;
+    final firstPlayedCard = actionHistory.first;
     final asked = firstPlayedCard.suit != Suit.none
         ? firstPlayedCard.suit
-        : actions[1].suit;
+        : actionHistory[1].suit;
     return asked;
   }
 
   @override
   void addAction(T action) {
-    actions.add(action);
+    actionHistory.add(action);
   }
 
   @override
@@ -50,7 +50,7 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
 
     var validCards = _extractCardsMatchingAskedSuit(hand);
     if (validCards.isEmpty) {
-      final playedTrumps = _extractTrumps(actions);
+      final playedTrumps = _extractTrumps(actionHistory);
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
         validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);
@@ -64,7 +64,7 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
         return _copyCardList(hand);
       }
     }
-    final cardsWithoutSuit = validCards.where((card) => card.suit == Suit.none);
+    final cardsWithoutSuit = actions.where((card) => card.suit == Suit.none);
     validCards.addAll(cardsWithoutSuit);
     return validCards;
   }

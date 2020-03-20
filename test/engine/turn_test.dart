@@ -12,7 +12,7 @@ void main() {
     final turn = Turn();
     final playedCard = Card.trump(2);
     turn.addAction(playedCard);
-    expect(turn.actions.first, equals(playedCard));
+    expect(turn.actionHistory.first, equals(playedCard));
   });
 
   test('Spades is asked, all cards in hand are allowed', () {

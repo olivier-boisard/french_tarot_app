@@ -27,7 +27,7 @@ class ScoreComputer {
 
   Card _extractTakerPlayedCard(
       ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
-    return turn.actions[agentsPlayOrder.indexOf(_taker)];
+    return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
 
   bool _didTakerWin(
@@ -38,7 +38,7 @@ class ScoreComputer {
 
   void _dealNonExcuseCardsToWinner(
       ActionsHandler<ScoreElement> turn, bool takerWon) {
-    final playedCardsWithoutExcuse = turn.actions.toList()
+    final playedCardsWithoutExcuse = turn.actionHistory.toList()
       ..remove(const Card.excuse());
     if (takerWon) {
       _takerState.winScoreElements(playedCardsWithoutExcuse);
@@ -51,7 +51,7 @@ class ScoreComputer {
       ActionsHandler<ScoreElement> turn, Card takerPlayedCard, bool takerWon) {
     const excuse = Card.excuse();
     final takerPlayedExcuse = takerPlayedCard == excuse;
-    if (turn.actions.contains(excuse)) {
+    if (turn.actionHistory.contains(excuse)) {
       if (takerWon && !takerPlayedExcuse) {
         _oppositionState.winScoreElements([NegativeDummyCard()]);
         _takerState.winScoreElements([PositiveDummyCard()]);
