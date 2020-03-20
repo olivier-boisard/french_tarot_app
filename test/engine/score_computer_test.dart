@@ -9,13 +9,13 @@ import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
   test('Evaluate score', () {
-    final turn1 = Turn()
+    final turn1 = Turn<Card>()
       ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 4));
 
-    final turn2 = Turn()
+    final turn2 = Turn<Card>()
       ..addPlayedCard(
           Card.coloredCard(Suit.diamond, CardStrengths.jack))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 7))..addPlayedCard(
@@ -38,7 +38,7 @@ void main() {
   });
 
   test('Opposition plays excuse and wins', () {
-    final turn = Turn()
+    final turn = Turn<Card>()
       ..addPlayedCard(Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
           Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 3));
@@ -57,7 +57,7 @@ void main() {
   });
 
   test('Oppotion plays excuse and looses', () {
-    final turn = Turn()
+    final turn = Turn<Card>()
       ..addPlayedCard(Card.coloredCard(Suit.diamond, 3))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 2))..addPlayedCard(
           Card.excuse())..addPlayedCard(Card.coloredCard(Suit.diamond, 1));
@@ -76,7 +76,7 @@ void main() {
   });
 
   test('Taker plays excuse', () {
-    final turn = Turn()
+    final turn = Turn<Card>()
       ..addPlayedCard(Card.excuse())..addPlayedCard(
           Card.coloredCard(Suit.diamond, 1))..addPlayedCard(
           Card.coloredCard(Suit.diamond, 2))..addPlayedCard(

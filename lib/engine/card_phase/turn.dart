@@ -2,12 +2,12 @@ import '../core/abstract_card.dart';
 import '../core/environment_state.dart';
 import 'abstract_turn.dart';
 
-class Turn
-    implements EnvironmentState<AbstractCard>, AbstractTurn<AbstractCard> {
+class Turn<T extends AbstractCard>
+    implements EnvironmentState<T>, AbstractTurn<T> {
   @override
-  final List<AbstractCard> playedCards;
+  final List<T> playedCards;
 
-  Turn() : playedCards = <AbstractCard>[];
+  Turn() : playedCards = <T>[];
 
   int get winningCardIndex {
     if (playedCards.isEmpty) {
@@ -39,12 +39,13 @@ class Turn
     return asked;
   }
 
-  void addPlayedCard(AbstractCard card) {
+  @override
+  void addPlayedCard(T card) {
     playedCards.add(card);
   }
 
   @override
-  List<AbstractCard> extractAllowedActions(List<AbstractCard> hand) {
+  List<T> extractAllowedActions(List<T> hand) {
     if (!_suitIsDetermined) {
       return _copyCardList(hand);
     }
@@ -70,11 +71,11 @@ class Turn
     return validCards;
   }
 
-  List<AbstractCard> _extractCardsMatchingAskedSuit(List<AbstractCard> hand) {
+  List<T> _extractCardsMatchingAskedSuit(List<T> hand) {
     return hand.where((card) => card.suit == _askedSuit).toList();
   }
 
-  static AbstractCard _extractStrongestTrump(List<AbstractCard> playedTrumps) {
+  T _extractStrongestTrump(List<T> playedTrumps) {
     var strongestTrump = playedTrumps.first;
     for (final trump in playedTrumps.getRange(1, playedTrumps.length)) {
       if (trump.beats(Suit.trump, strongestTrump)) {
@@ -84,21 +85,20 @@ class Turn
     return strongestTrump;
   }
 
-  static List<AbstractCard> _copyCardList(List<AbstractCard> hand) {
+  List<T> _copyCardList(List<T> hand) {
     return hand.toList();
   }
 
-  static List<AbstractCard> _extractTrumps(List<AbstractCard> cards,
-      {int lowerBound = 0}) {
+  List<T> _extractTrumps(List<T> cards, {int lowerBound = 0}) {
     return cards.where((card) => _filterTrumps(card, lowerBound)).toList();
   }
 
-  static bool _filterTrumps(AbstractCard card, int lowerBound) {
+  bool _filterTrumps(T card, int lowerBound) {
     return card.suit == Suit.trump && card.strength > lowerBound;
   }
 
   @override
-  AbstractCard extractGreedyAction(List<AbstractCard> actions) {
+  T extractGreedyAction(List<T> actions) {
     // TODO: implement extractGreedyAction
     throw UnimplementedError();
   }
