@@ -1,4 +1,4 @@
-abstract class EnvironmentState<T> {
+abstract class State<T> {
   List<T> extractAllowedActions(List<T> actions);
 
   T extractGreedyAction(List<T> actions);

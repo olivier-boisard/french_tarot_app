@@ -2,8 +2,7 @@ import '../core/abstract_card.dart';
 import '../core/environment_state.dart';
 import 'abstract_turn.dart';
 
-class Turn<T extends AbstractCard>
-    implements EnvironmentState<T>, AbstractTurn<T> {
+class Turn<T extends AbstractCard> implements State<T>, AbstractTurn<T> {
   @override
   final List<T> playedCards;
 

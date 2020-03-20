@@ -10,7 +10,7 @@ class CardPhaseAgent {
 
   CardPhaseAgent(this._decisionMaker, this._hand);
 
-  Decision<AbstractCard> play(EnvironmentState<AbstractCard> turn) {
+  Decision<AbstractCard> play(State<AbstractCard> turn) {
     return _hand.selectCard(wrapDecisionMaker(turn, _decisionMaker));
   }
 
