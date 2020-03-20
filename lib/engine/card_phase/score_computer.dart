@@ -1,7 +1,7 @@
 import '../core/abstract_score_element.dart';
 import '../core/card.dart';
 import '../core/player_state.dart';
-import 'abstract_turn.dart';
+import 'actions_handler.dart';
 import 'card_phase_agent.dart';
 
 //TODO break dependency with Card (in particular with Excuse)
@@ -17,7 +17,7 @@ class ScoreComputer {
   int get oppositionScore => _oppositionState.score;
 
   void consume(
-      AbstractTurn<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
+      ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealNonExcuseCardsToWinner(turn, takerWon);
 
@@ -26,19 +26,19 @@ class ScoreComputer {
   }
 
   Card _extractTakerPlayedCard(
-      AbstractTurn<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
-    return turn.playedCards[agentsPlayOrder.indexOf(_taker)];
+      ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
+    return turn.actions[agentsPlayOrder.indexOf(_taker)];
   }
 
   bool _didTakerWin(
-      List<CardPhaseAgent> agentsPlayOrder, AbstractTurn<ScoreElement> turn) {
-    final winner = agentsPlayOrder[turn.winningCardIndex];
+      List<CardPhaseAgent> agentsPlayOrder, ActionsHandler<ScoreElement> turn) {
+    final winner = agentsPlayOrder[turn.winningActionIndex];
     return winner == _taker;
   }
 
   void _dealNonExcuseCardsToWinner(
-      AbstractTurn<ScoreElement> turn, bool takerWon) {
-    final playedCardsWithoutExcuse = turn.playedCards.toList()
+      ActionsHandler<ScoreElement> turn, bool takerWon) {
+    final playedCardsWithoutExcuse = turn.actions.toList()
       ..remove(const Card.excuse());
     if (takerWon) {
       _takerState.winScoreElements(playedCardsWithoutExcuse);
@@ -48,10 +48,10 @@ class ScoreComputer {
   }
 
   void _handleExcuse(
-      AbstractTurn<ScoreElement> turn, Card takerPlayedCard, bool takerWon) {
+      ActionsHandler<ScoreElement> turn, Card takerPlayedCard, bool takerWon) {
     const excuse = Card.excuse();
     final takerPlayedExcuse = takerPlayedCard == excuse;
-    if (turn.playedCards.contains(excuse)) {
+    if (turn.actions.contains(excuse)) {
       if (takerWon && !takerPlayedExcuse) {
         _oppositionState.winScoreElements([NegativeDummyCard()]);
         _takerState.winScoreElements([PositiveDummyCard()]);

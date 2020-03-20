@@ -1,46 +1,46 @@
 import '../core/abstract_card.dart';
 import '../core/environment_state.dart';
-import 'abstract_turn.dart';
+import 'actions_handler.dart';
 
-class Turn<T extends AbstractCard> implements State<T>, AbstractTurn<T> {
+class Turn<T extends AbstractCard> implements State<T>, ActionsHandler<T> {
   @override
-  final List<T> playedCards;
+  final List<T> actions;
 
-  Turn() : playedCards = <T>[];
+  Turn() : actions = <T>[];
 
-  int get winningCardIndex {
-    if (playedCards.isEmpty) {
+  int get winningActionIndex {
+    if (actions.isEmpty) {
       throw EmptyTurn();
     }
     var index = 0;
-    var strongestCard = playedCards.first;
-    for (var i = 1; i < playedCards.length; i++) {
-      if (playedCards[i].beats(_askedSuit, strongestCard)) {
+    var strongestCard = actions.first;
+    for (var i = 1; i < actions.length; i++) {
+      if (actions[i].beats(_askedSuit, strongestCard)) {
         index = i;
-        strongestCard = playedCards[i];
+        strongestCard = actions[i];
       }
     }
     return index;
   }
 
   bool get _suitIsDetermined {
-    if (playedCards.isEmpty) {
+    if (actions.isEmpty) {
       return false;
     }
-    return playedCards.first.suit != Suit.none || playedCards.length != 1;
+    return actions.first.suit != Suit.none || actions.length != 1;
   }
 
   Suit get _askedSuit {
-    final firstPlayedCard = playedCards.first;
+    final firstPlayedCard = actions.first;
     final asked = firstPlayedCard.suit != Suit.none
         ? firstPlayedCard.suit
-        : playedCards[1].suit;
+        : actions[1].suit;
     return asked;
   }
 
   @override
   void addPlayedCard(T card) {
-    playedCards.add(card);
+    actions.add(card);
   }
 
   @override
@@ -51,7 +51,7 @@ class Turn<T extends AbstractCard> implements State<T>, AbstractTurn<T> {
 
     var validCards = _extractCardsMatchingAskedSuit(hand);
     if (validCards.isEmpty) {
-      final playedTrumps = _extractTrumps(playedCards);
+      final playedTrumps = _extractTrumps(actions);
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
         validCards = _extractTrumps(hand, lowerBound: strongestTrump.strength);

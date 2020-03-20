@@ -12,7 +12,7 @@ void main() {
     final turn = Turn();
     final playedCard = Card.trump(2);
     turn.addPlayedCard(playedCard);
-    expect(turn.playedCards.first, equals(playedCard));
+    expect(turn.actions.first, equals(playedCard));
   });
 
   test('Spades is asked, all cards in hand are allowed', () {
@@ -150,7 +150,7 @@ void main() {
           Card.coloredCard(Suit.clover, 4))..addPlayedCard(
           Card.coloredCard(Suit.clover, 2))..addPlayedCard(
           Card.coloredCard(Suit.clover, 3));
-    expect(turn.winningCardIndex, equals(1));
+    expect(turn.winningActionIndex, equals(1));
   });
 
   test('Winning card index, with trump', () {
@@ -159,7 +159,7 @@ void main() {
           Card.coloredCard(Suit.clover, 4))..addPlayedCard(
           Card.coloredCard(Suit.clover, 2))..addPlayedCard(
           Card.coloredCard(Suit.clover, 3));
-    expect(turn.winningCardIndex, equals(0));
+    expect(turn.winningActionIndex, equals(0));
   });
 
   test('Winning card index, with excuse', () {
@@ -167,7 +167,7 @@ void main() {
       ..addPlayedCard(Card.trump(1))..addPlayedCard(
           Card.coloredCard(Suit.clover, 4))..addPlayedCard(
           const Card.excuse())..addPlayedCard(Card.coloredCard(Suit.clover, 3));
-    expect(turn.winningCardIndex, equals(0));
+    expect(turn.winningActionIndex, equals(0));
   });
 
   test('Winning card index, with peeing', () {
@@ -176,10 +176,10 @@ void main() {
           Card.coloredCard(Suit.clover, 4))..addPlayedCard(
           Card.coloredCard(Suit.clover, 2))..addPlayedCard(
           Card.coloredCard(Suit.clover, 3));
-    expect(turn.winningCardIndex, equals(0));
+    expect(turn.winningActionIndex, equals(0));
   });
 
   test('Winning card index, no cards', () {
-    expect(() => Turn().winningCardIndex, throwsA(isInstanceOf<EmptyTurn>()));
+    expect(() => Turn().winningActionIndex, throwsA(isInstanceOf<EmptyTurn>()));
   });
 }
