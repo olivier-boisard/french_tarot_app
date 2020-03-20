@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card_phase/hand.dart';
+import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/card.dart';
@@ -13,14 +13,14 @@ void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
     final handCopy = hand.toList();
-    final agent = Hand<AbstractCard>(hand);
+    final agent = OneUseActionHandler<AbstractCard>(hand);
     final decisionFunction = RandomDecisionMaker<AbstractCard>().run;
 
     expect(agent
-        .selectCard(decisionFunction)
+        .pickAction(decisionFunction)
         .action, isIn(handCopy));
-    expect(() => agent.selectCard(decisionFunction),
-        throwsA(isInstanceOf<EmptyHandException>()));
+    expect(() => agent.pickAction(decisionFunction),
+        throwsA(isInstanceOf<EmptyActionHandlerException>()));
   });
 
   test('Only allowed cards are played', () {
@@ -37,8 +37,8 @@ void main() {
 
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
-      final agent = Hand<AbstractCard>(originalHand.toList());
-      final decision = agent.selectCard(wrapDecisionMaker(turn, behavior.run));
+      final agent = OneUseActionHandler<AbstractCard>(originalHand.toList());
+      final decision = agent.pickAction(wrapDecisionMaker(turn, behavior.run));
       expect(decision.action, equals(diamondCardInHand));
     }
   });
@@ -60,8 +60,8 @@ void main() {
       ..addAction(Card.coloredCard(Suit.diamond, 4));
     for (var i = 0; i < 1000; i++) {
       final behavior = RandomDecisionMaker<AbstractCard>.withRandom(Random(i));
-      final agent = Hand<AbstractCard>(originalHand.toList());
-      final decision = agent.selectCard(wrapDecisionMaker(turn, behavior.run));
+      final agent = OneUseActionHandler<AbstractCard>(originalHand.toList());
+      final decision = agent.pickAction(wrapDecisionMaker(turn, behavior.run));
       diamondCardsInHand.remove(decision.action);
     }
     expect(diamondCardsInHand, isEmpty);

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
-import 'package:french_tarot/engine/card_phase/hand.dart';
+import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/card.dart';
@@ -13,7 +13,7 @@ void main() {
       Card.coloredCard(Suit.diamond, 2),
     ];
     final cardsInHandCopy = cardsInHand.toList();
-    final hand = Hand<AbstractCard>(cardsInHand);
+    final hand = OneUseActionHandler<AbstractCard>(cardsInHand);
     final turn = Turn();
     final agent = CardPhaseAgent(RandomDecisionMaker<AbstractCard>().run, hand);
     final play = agent.play(turn);
