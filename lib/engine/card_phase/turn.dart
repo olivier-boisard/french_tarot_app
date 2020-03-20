@@ -53,7 +53,8 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
       final playedTrumps = _extractTrumps(actionHistory);
       if (playedTrumps.isNotEmpty) {
         final strongestTrump = _extractStrongestTrump(playedTrumps);
-        validCards = _extractTrumps(actions, lowerBound: strongestTrump.strength);
+        validCards =
+            _extractTrumps(actions, lowerBound: strongestTrump.strength);
         if (validCards.isEmpty) {
           validCards = _extractTrumps(actions);
         }
