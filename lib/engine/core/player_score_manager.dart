@@ -1,6 +1,6 @@
 import 'abstract_score_element.dart';
 
-class PlayerState {
+class PlayerScoreManager {
   final List<ScoreElement> _wonScoreElements = [];
 
   int get score {

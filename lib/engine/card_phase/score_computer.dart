@@ -1,14 +1,14 @@
 import '../core/abstract_score_element.dart';
 import '../core/card.dart';
-import '../core/player_state.dart';
+import '../core/player_score_manager.dart';
 import 'actions_handler.dart';
 import 'card_phase_agent.dart';
 
 //TODO break dependency with Card (in particular with Excuse)
 class ScoreComputer {
   final CardPhaseAgent _taker;
-  final PlayerState _takerState;
-  final PlayerState _oppositionState;
+  final PlayerScoreManager _takerState;
+  final PlayerScoreManager _oppositionState;
 
   ScoreComputer(this._taker, this._takerState, this._oppositionState);
 

@@ -4,7 +4,7 @@ import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/player_state.dart';
+import 'package:french_tarot/engine/core/player_score_manager.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
@@ -98,8 +98,8 @@ void main() {
 }
 
 ScoreComputer _createScoreComputer(CardPhaseAgent taker) {
-  final takerState = PlayerState();
-  final oppositionState = PlayerState();
+  final takerState = PlayerScoreManager();
+  final oppositionState = PlayerScoreManager();
   final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
   return scoreComputer;
 }
