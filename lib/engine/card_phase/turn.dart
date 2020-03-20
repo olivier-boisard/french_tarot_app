@@ -45,7 +45,7 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
   @override
   List<T> extractAllowedActions(List<T> actions) {
     if (!_suitIsDetermined) {
-      return actions.toList();
+      return _copyCardList(actions);
     }
 
     var validCards = _extractCardsMatchingAskedSuit(actions);
@@ -62,7 +62,7 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
         validCards = _extractTrumps(actions);
       }
       if (validCards.isEmpty) {
-        return actions.toList();
+        return _copyCardList(actions);
       }
     }
     final cardsWithoutSuit = actions.where((card) => card.suit == Suit.none);
@@ -82,6 +82,10 @@ class Turn<T extends AbstractCard> implements AbstractTurn<T> {
       }
     }
     return strongestTrump;
+  }
+
+  List<T> _copyCardList(List<T> hand) {
+    return hand.toList();
   }
 
   List<T> _extractTrumps(List<T> cards, {int lowerBound = 0}) {
