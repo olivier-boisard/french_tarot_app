@@ -1,10 +1,8 @@
 import '../core/abstract_score_element.dart';
-import '../core/card.dart';
 import '../core/player_score_manager.dart';
 import 'actions_handler.dart';
 import 'card_phase_agent.dart';
 
-//TODO break dependency with Card (in particular with Excuse)
 class ScoreComputer {
   final CardPhaseAgent _taker;
   final PlayerScoreManager _takerState;
@@ -19,13 +17,14 @@ class ScoreComputer {
   void consume(
       ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
-    _dealNonExcuseCardsToWinner(turn, takerWon);
+    _dealWinnableScoreElementsToWinner(turn, takerWon);
 
-    final takerCard = _extractTakerPlayedCard(turn, agentsPlayOrder);
-    _handleExcuse(turn, takerCard, takerWon);
+    final takerScoreElement =
+        _extractTakerPlayedScoreElement(turn, agentsPlayOrder);
+    _handleUnwinnables(turn, takerScoreElement, takerWon);
   }
 
-  Card _extractTakerPlayedCard(
+  ScoreElement _extractTakerPlayedScoreElement(
       ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
     return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
@@ -36,47 +35,55 @@ class ScoreComputer {
     return winner == _taker;
   }
 
-  void _dealNonExcuseCardsToWinner(
+  void _dealWinnableScoreElementsToWinner(
       ActionsHandler<ScoreElement> turn, bool takerWon) {
-    final playedCardsWithoutExcuse = turn.actionHistory.toList()
-      ..remove(const Card.excuse());
+    final winnables = turn.actionHistory.where((element) => element.winnable);
     if (takerWon) {
-      _takerState.winScoreElements(playedCardsWithoutExcuse);
+      _takerState.winScoreElements(winnables);
     } else {
-      _oppositionState.winScoreElements(playedCardsWithoutExcuse);
+      _oppositionState.winScoreElements(winnables);
     }
   }
 
-  void _handleExcuse(
-      ActionsHandler<ScoreElement> turn, Card takerPlayedCard, bool takerWon) {
-    const excuse = Card.excuse();
-    final takerPlayedExcuse = takerPlayedCard == excuse;
-    if (turn.actionHistory.contains(excuse)) {
-      if (takerWon && !takerPlayedExcuse) {
-        _oppositionState.winScoreElements([NegativeDummyCard()]);
-        _takerState.winScoreElements([PositiveDummyCard()]);
-      } else if (!takerWon && takerPlayedExcuse) {
-        _oppositionState.winScoreElements([PositiveDummyCard()]);
-        _takerState.winScoreElements([NegativeDummyCard()]);
+  void _handleUnwinnables(ActionsHandler<ScoreElement> turn,
+      ScoreElement takerPlayedScoreElement, bool takerWon) {
+    final takerPlayedNonWinnable = !takerPlayedScoreElement.winnable;
+    final history = turn.actionHistory;
+    final playedNonWinnables = history.where((element) => !element.winnable);
+    if (playedNonWinnables.isNotEmpty) {
+      if (takerWon && !takerPlayedNonWinnable) {
+        _oppositionState.winScoreElements([NegativeScoreElement()]);
+        _takerState.winScoreElements([PositiveScoreElement()]);
+      } else if (!takerWon && takerPlayedNonWinnable) {
+        _oppositionState.winScoreElements([PositiveScoreElement()]);
+        _takerState.winScoreElements([NegativeScoreElement()]);
       }
-      (takerPlayedExcuse ? _takerState : _oppositionState)
-          .winScoreElements([excuse]);
+      (takerPlayedNonWinnable ? _takerState : _oppositionState)
+          .winScoreElements(playedNonWinnables);
     }
   }
 }
 
-class PositiveDummyCard implements ScoreElement {
+class PositiveScoreElement implements ScoreElement {
   @override
   double get score => 0.5;
 
   @override
   bool get isOudler => false;
+
+  //TODO this violates the ISP
+  @override
+  bool get winnable => false;
 }
 
-class NegativeDummyCard implements ScoreElement {
+class NegativeScoreElement implements ScoreElement {
   @override
   double get score => -0.5;
 
   @override
   bool get isOudler => false;
+
+  //TODO this violates the ISP
+  @override
+  bool get winnable => false;
 }

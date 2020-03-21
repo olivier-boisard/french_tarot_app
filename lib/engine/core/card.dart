@@ -94,6 +94,9 @@ class Card implements ScoreElement, AbstractCard {
       throw IllegalCardStrengthException();
     }
   }
+
+  @override
+  bool get winnable => this != const Card.excuse();
 }
 
 class CardStrengths {
