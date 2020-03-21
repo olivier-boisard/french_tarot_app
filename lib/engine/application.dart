@@ -9,5 +9,7 @@ class Application {
 
   Application(this._playerHandlers, this._scoreComputer);
 
-  void run(List<AbstractCardPhaseAgent> agents, AbstractCardPhaseAgent taker) {}
+  void run(List<AbstractCardPhaseAgent> agents, AbstractCardPhaseAgent taker) {
+    throw UnimplementedError();
+  }
 }
