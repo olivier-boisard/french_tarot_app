@@ -1,18 +1,21 @@
-import '../core/score_element.dart';
 import '../core/player_score_manager.dart';
+import '../core/score_element.dart';
+import 'abstract_score_computer.dart';
 import 'actions_handler.dart';
 import 'card_phase_agent.dart';
 import 'playable_score_element.dart';
 
-class ScoreComputer {
+class ScoreComputer implements AbstractScoreComputer {
   final CardPhaseAgent _taker;
   final PlayerScoreManager _takerState;
   final PlayerScoreManager _oppositionState;
 
   ScoreComputer(this._taker, this._takerState, this._oppositionState);
 
+  @override
   int get takerScore => _takerState.score;
 
+  @override
   int get oppositionScore => _oppositionState.score;
 
   void consume(ActionsHandler<PlayableScoreElement> turn,
