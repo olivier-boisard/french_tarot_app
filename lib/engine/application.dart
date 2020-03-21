@@ -9,7 +9,12 @@ class Application {
 
   Application(this._playerHandlers, this._scoreComputer);
 
-  void run(List<AbstractCardPhaseAgent> agents, AbstractCardPhaseAgent taker) {
+  void run() {
     throw UnimplementedError();
+    //TODO deal cards to players
+    //TODO determine taker
+    //TODO play round
+    //TODO evaluate earned and lost points per player for this round
+    //TODO consume earned and lost points
   }
 }
