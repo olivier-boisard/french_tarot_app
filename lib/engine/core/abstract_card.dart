@@ -1,9 +1,4 @@
-enum Suit { spades, heart, diamond, clover, trump, none }
+import 'abstract_score_element.dart';
+import 'suited_playable.dart';
 
-abstract class AbstractCard {
-  bool beats(Suit demanded, AbstractCard card);
-
-  Suit get suit;
-
-  int get strength;
-}
+abstract class AbstractCard implements ScoreElement, SuitedPlayable {}

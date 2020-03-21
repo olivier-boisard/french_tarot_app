@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/core/abstract_card.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/player_score_manager.dart';
 

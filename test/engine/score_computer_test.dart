@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
-import 'package:french_tarot/engine/core/abstract_card.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/player_score_manager.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -108,5 +108,5 @@ CardPhaseAgent _createCardPhaseAgent() {
   // For the sake of this unit test, passing a null hand to the CardPhaseAgent
   // is fine. In reality however, it's important to give the agent a proper
   // instance of Hand.
-  return CardPhaseAgent(RandomDecisionMaker<AbstractCard>().run, null);
+  return CardPhaseAgent(RandomDecisionMaker<SuitedPlayable>().run, null);
 }

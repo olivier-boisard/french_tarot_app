@@ -1,7 +1,7 @@
-import '../core/abstract_card.dart';
+import '../core/suited_playable.dart';
 import 'abstract_turn.dart';
 
-class Turn<T extends AbstractCard> implements AbstractTurn<T> {
+class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
   @override
   final List<T> actionHistory;
 

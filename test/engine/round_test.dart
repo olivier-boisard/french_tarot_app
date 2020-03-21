@@ -3,7 +3,7 @@ import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/card_phase/round.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
-import 'package:french_tarot/engine/core/abstract_card.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/player_score_manager.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -19,8 +19,8 @@ void main() {
 
     final agents = <CardPhaseAgent>[];
     for (var i = 0; i < nPlayers; i++) {
-      final decisionMaker = RandomDecisionMaker<AbstractCard>();
-      final hand = OneUseActionHandler<AbstractCard>(deck.pop(nCardsPerPlayer));
+      final decisionMaker = RandomDecisionMaker<SuitedPlayable>();
+      final hand = OneUseActionHandler<SuitedPlayable>(deck.pop(nCardsPerPlayer));
       agents.add(CardPhaseAgent(decisionMaker.run, hand));
     }
 

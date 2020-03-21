@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
-
 import 'abstract_card.dart';
-import 'abstract_score_element.dart';
+import 'suited_playable.dart';
 
 //TODO break in several subtypes for AbstractCard
 @immutable
-class Card implements ScoreElement, AbstractCard {
+class Card implements AbstractCard {
   @override
   final Suit suit;
   final int value;
@@ -55,7 +54,7 @@ class Card implements ScoreElement, AbstractCard {
   }
 
   @override
-  bool beats(Suit demanded, AbstractCard card) {
+  bool beats(Suit demanded, SuitedPlayable card) {
     //TODO this breaks the LSP
     final colorDemanded = demanded != Suit.none;
     if (colorDemanded && suit != demanded) {
