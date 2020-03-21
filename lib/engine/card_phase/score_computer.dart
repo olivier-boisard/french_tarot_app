@@ -2,6 +2,7 @@ import '../core/abstract_score_element.dart';
 import '../core/player_score_manager.dart';
 import 'actions_handler.dart';
 import 'card_phase_agent.dart';
+import 'playable_score_element.dart';
 
 class ScoreComputer {
   final CardPhaseAgent _taker;
@@ -14,8 +15,8 @@ class ScoreComputer {
 
   int get oppositionScore => _oppositionState.score;
 
-  void consume(
-      ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
+  void consume(ActionsHandler<PlayableScoreElement> turn,
+      List<CardPhaseAgent> agentsPlayOrder) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealWinnableScoreElementsToWinner(turn, takerWon);
 
@@ -24,19 +25,20 @@ class ScoreComputer {
     _handleUnwinnables(turn, takerScoreElement, takerWon);
   }
 
-  ScoreElement _extractTakerPlayedScoreElement(
-      ActionsHandler<ScoreElement> turn, List<CardPhaseAgent> agentsPlayOrder) {
+  PlayableScoreElement _extractTakerPlayedScoreElement(
+      ActionsHandler<PlayableScoreElement> turn,
+      List<CardPhaseAgent> agentsPlayOrder) {
     return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
 
-  bool _didTakerWin(
-      List<CardPhaseAgent> agentsPlayOrder, ActionsHandler<ScoreElement> turn) {
+  bool _didTakerWin(List<CardPhaseAgent> agentsPlayOrder,
+      ActionsHandler<PlayableScoreElement> turn) {
     final winner = agentsPlayOrder[turn.winningActionIndex];
     return winner == _taker;
   }
 
   void _dealWinnableScoreElementsToWinner(
-      ActionsHandler<ScoreElement> turn, bool takerWon) {
+      ActionsHandler<PlayableScoreElement> turn, bool takerWon) {
     final winnables = turn.actionHistory.where((element) => element.winnable);
     if (takerWon) {
       _takerState.winScoreElements(winnables);
@@ -45,8 +47,8 @@ class ScoreComputer {
     }
   }
 
-  void _handleUnwinnables(ActionsHandler<ScoreElement> turn,
-      ScoreElement takerPlayedScoreElement, bool takerWon) {
+  void _handleUnwinnables(ActionsHandler<PlayableScoreElement> turn,
+      PlayableScoreElement takerPlayedScoreElement, bool takerWon) {
     final takerPlayedNonWinnable = !takerPlayedScoreElement.winnable;
     final history = turn.actionHistory;
     final playedNonWinnables = history.where((element) => !element.winnable);
@@ -70,10 +72,6 @@ class PositiveScoreElement implements ScoreElement {
 
   @override
   bool get isOudler => false;
-
-  //TODO this violates the ISP
-  @override
-  bool get winnable => false;
 }
 
 class NegativeScoreElement implements ScoreElement {
@@ -82,8 +80,4 @@ class NegativeScoreElement implements ScoreElement {
 
   @override
   bool get isOudler => false;
-
-  //TODO this violates the ISP
-  @override
-  bool get winnable => false;
 }

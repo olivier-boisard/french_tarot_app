@@ -1,4 +1,4 @@
-import 'abstract_score_element.dart';
+import '../card_phase/playable_score_element.dart';
 import 'suited_playable.dart';
 
-abstract class AbstractCard implements ScoreElement, SuitedPlayable {}
+abstract class AbstractCard implements PlayableScoreElement, SuitedPlayable {}
