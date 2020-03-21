@@ -1,4 +1,4 @@
-import '../core/abstract_score_element.dart';
+import '../core/score_element.dart';
 import '../core/player_score_manager.dart';
 import 'actions_handler.dart';
 import 'card_phase_agent.dart';

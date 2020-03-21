@@ -1,4 +1,4 @@
-import 'abstract_score_element.dart';
+import 'score_element.dart';
 
 class PlayerScoreManager {
   final List<ScoreElement> _wonScoreElements = [];

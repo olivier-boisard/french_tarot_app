@@ -1,4 +1,4 @@
-import '../core/abstract_score_element.dart';
+import '../core/score_element.dart';
 
 abstract class PlayableScoreElement implements ScoreElement {
   bool get winnable;

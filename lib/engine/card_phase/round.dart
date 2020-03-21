@@ -1,5 +1,5 @@
 import '../core/abstract_card.dart';
-import '../core/abstract_score_element.dart';
+import '../core/score_element.dart';
 import '../core/action_per_agent_processor.dart';
 import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
