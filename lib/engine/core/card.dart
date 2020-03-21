@@ -54,7 +54,6 @@ class Card implements AbstractCard {
 
   @override
   bool beats(Suit demanded, SuitedPlayable card) {
-    //TODO this breaks the LSP
     final colorDemanded = demanded != Suit.none;
     if (colorDemanded && suit != demanded) {
       return false;
