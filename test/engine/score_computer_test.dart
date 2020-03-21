@@ -48,10 +48,10 @@ void main() {
       _createCardPhaseAgent(),
       _createCardPhaseAgent()
     ];
-    final orderedPlayer = [taker] + opposition;
+    final orderedPlayers = [taker] + opposition;
 
     final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayer);
+      ..consume(turn, orderedPlayers);
     expect(scoreComputer.takerScore, equals(0));
     expect(scoreComputer.oppositionScore, equals(6));
   });
@@ -67,9 +67,9 @@ void main() {
       _createCardPhaseAgent(),
       _createCardPhaseAgent()
     ];
-    final orderedPlayer = [taker] + opposition;
+    final orderedPlayers = [taker] + opposition;
     final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayer);
+      ..consume(turn, orderedPlayers);
 
     expect(scoreComputer.takerScore, equals(2));
     expect(scoreComputer.oppositionScore, equals(4));
@@ -87,9 +87,9 @@ void main() {
       _createCardPhaseAgent(),
       _createCardPhaseAgent()
     ];
-    final orderedPlayer = [taker] + opposition;
+    final orderedPlayers = [taker] + opposition;
     final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayer);
+      ..consume(turn, orderedPlayers);
 
     expect(scoreComputer.takerScore, equals(4));
     expect(scoreComputer.oppositionScore, equals(2));
