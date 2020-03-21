@@ -4,7 +4,6 @@ import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
 import 'playable_score_element.dart';
 
-//TODO SOLID for this class and the ones it depends on
 class Round {
   final ActionPerAgentProcessor<PlayableScoreElement> _processor;
   final AbstractTurnFactory<AbstractCard> _abstractTurnFactory;
