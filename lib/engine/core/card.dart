@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'abstract_card.dart';
 import 'suited_playable.dart';
 
-//TODO break in several subtypes for AbstractCard
 @immutable
 class Card implements AbstractCard {
   @override
