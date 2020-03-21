@@ -1,9 +1,7 @@
-import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
-
 import '../core/abstract_card.dart';
+import '../core/abstract_card_phase_agent.dart';
 import '../core/action_per_agent_processor.dart';
 import 'abstract_turn.dart';
-import 'card_phase_agent.dart';
 import 'playable_score_element.dart';
 
 class Round {

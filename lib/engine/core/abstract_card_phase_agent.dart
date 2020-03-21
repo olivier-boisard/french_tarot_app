@@ -4,5 +4,6 @@ import 'suited_playable.dart';
 
 abstract class AbstractCardPhaseAgent {
   Decision<SuitedPlayable> play(State<SuitedPlayable> turn);
+
   bool get isReady;
 }
