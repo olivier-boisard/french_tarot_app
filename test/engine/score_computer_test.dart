@@ -30,7 +30,7 @@ void main() {
     ];
     final orderedPlayer = [taker] + opposition;
 
-    ScoreComputer scoreComputer = _createScoreComputer(taker)
+    final scoreComputer = _createScoreComputer(taker)
       ..consume(turn1, orderedPlayer)..consume(turn2, orderedPlayer);
 
     expect(scoreComputer.takerScore, equals(3));
