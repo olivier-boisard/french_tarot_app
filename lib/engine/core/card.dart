@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'abstract_card.dart';
 import 'suited_playable.dart';
 
