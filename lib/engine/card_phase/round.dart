@@ -8,13 +8,13 @@ import 'turn.dart';
 //TODO SOLID for this class and the ones it depends on
 class Round {
   final ActionPerAgentProcessor<ScoreElement> _processor;
+  final AbstractTurnFactory<AbstractCard> _abstractTurnFactory;
 
-  Round(this._processor);
+  Round(this._abstractTurnFactory, this._processor);
 
   void play(List<CardPhaseAgent> agents) {
     while (!agents[0].handIsEmpty) {
-      //TODO depend on AbstractTurn
-      final AbstractTurn<AbstractCard> turn = Turn();
+      final turn = _abstractTurnFactory();
       for (final agent in agents) {
         final decision = agent.play(turn);
         turn.addAction(decision.action);
