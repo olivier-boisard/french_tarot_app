@@ -1,13 +1,13 @@
 import '../core/abstract_score_element.dart';
+import '../core/action_per_agent_processor.dart';
 import '../core/card.dart';
-import '../core/turn_consumer.dart';
 import 'abstract_turn.dart';
 import 'card_phase_agent.dart';
 import 'turn.dart';
 
 //TODO SOLID for this class and the ones it depends on
 class Round {
-  final TurnConsumer<ScoreElement> _turnConsumer;
+  final ActionPerAgentProcessor<ScoreElement> _turnConsumer;
 
   Round(this._turnConsumer);
 
