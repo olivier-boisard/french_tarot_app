@@ -35,8 +35,6 @@ void main(){
 
     final round = Round(() => Turn(), scoreComputer.consume);
 
-    Application(round.play, scoreComputer)..run();
-
     //TODO add proper unit test
   });
 
