@@ -14,7 +14,7 @@ class PlayerScoreManager {
     return score.round();
   }
 
-  int get numberOfOudlers {
+  int get nOudlers {
     var numberOfOudlers = 0;
     for (final scoreElement in _wonScoreElements) {
       if (scoreElement.isOudler) {

@@ -12,7 +12,7 @@ void main() {
     _makePlayerWinTwoOudlers(player);
 
     expect(player.score, equals(expectedScore));
-    expect(player.numberOfOudlers, equals(2));
+    expect(player.nOudlers, equals(2));
   });
 
   test('Compute score on odd number of cards fails', () {
