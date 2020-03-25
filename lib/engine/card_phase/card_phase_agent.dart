@@ -1,14 +1,14 @@
-import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
-
+import '../core/abstract_card_phase_agent.dart';
 import '../core/decision_maker_wrapper.dart';
 import '../core/environment_state.dart';
+import '../core/selector.dart';
 import '../core/suited_playable.dart';
 import '../decision_maker.dart';
 import 'one_use_action_handler.dart';
 
 class CardPhaseAgent implements AbstractCardPhaseAgent {
   final OneUseActionHandler<SuitedPlayable> _hand;
-  final DecisionMaker<SuitedPlayable> _decisionMaker;
+  final Selector<SuitedPlayable> _decisionMaker;
 
   CardPhaseAgent(this._decisionMaker, this._hand);
 

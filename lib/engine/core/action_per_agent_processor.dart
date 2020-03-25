@@ -1,5 +1,5 @@
 import '../card_phase/actions_handler.dart';
-import '../card_phase/card_phase_agent.dart';
+import 'abstract_card_phase_agent.dart';
 
 typedef ActionPerAgentProcessor<T> = void Function(
-    ActionsHandler<T> turn, List<CardPhaseAgent> agentsPlayOrder);
+    ActionsHandler<T> turn, List<AbstractCardPhaseAgent> agentsPlayOrder);

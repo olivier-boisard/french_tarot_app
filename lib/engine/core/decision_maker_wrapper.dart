@@ -1,7 +1,6 @@
-import '../decision_maker.dart';
 import 'environment_state.dart';
+import 'selector.dart';
 
-DecisionMaker<T> wrapDecisionMaker<T>(
-    State<T> state, DecisionMaker<T> decisionMaker) {
+Selector<T> wrapDecisionMaker<T>(State<T> state, Selector<T> decisionMaker) {
   return (actions) => decisionMaker(state.extractAllowedActions(actions));
 }

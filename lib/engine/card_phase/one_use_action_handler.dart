@@ -1,3 +1,4 @@
+import '../core/selector.dart';
 import '../decision_maker.dart';
 
 class OneUseActionHandler<T> {
@@ -5,7 +6,7 @@ class OneUseActionHandler<T> {
 
   OneUseActionHandler(this._actions);
 
-  Decision<T> pickAction(DecisionMaker<T> decisionMaker) {
+  Decision<T> pickAction(Selector<T> decisionMaker) {
     if (_actions.isEmpty) {
       throw EmptyActionHandlerException();
     }

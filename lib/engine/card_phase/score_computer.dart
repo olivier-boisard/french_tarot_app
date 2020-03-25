@@ -1,12 +1,12 @@
+import '../core/abstract_card_phase_agent.dart';
 import '../core/player_score_manager.dart';
 import '../core/score_element.dart';
 import 'abstract_score_computer.dart';
 import 'actions_handler.dart';
-import 'card_phase_agent.dart';
 import 'playable_score_element.dart';
 
 class ScoreComputer implements AbstractScoreComputer {
-  final CardPhaseAgent _taker;
+  final AbstractCardPhaseAgent _taker;
   final PlayerScoreManager _takerState;
   final PlayerScoreManager _oppositionState;
 
@@ -19,7 +19,7 @@ class ScoreComputer implements AbstractScoreComputer {
   int get oppositionScore => _oppositionState.score;
 
   void consume(ActionsHandler<PlayableScoreElement> turn,
-      List<CardPhaseAgent> agentsPlayOrder) {
+      List<AbstractCardPhaseAgent> agentsPlayOrder) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealWinnableScoreElementsToWinner(turn, takerWon);
 
@@ -30,11 +30,11 @@ class ScoreComputer implements AbstractScoreComputer {
 
   PlayableScoreElement _extractTakerPlayedScoreElement(
       ActionsHandler<PlayableScoreElement> turn,
-      List<CardPhaseAgent> agentsPlayOrder) {
+      List<AbstractCardPhaseAgent> agentsPlayOrder) {
     return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
 
-  bool _didTakerWin(List<CardPhaseAgent> agentsPlayOrder,
+  bool _didTakerWin(List<AbstractCardPhaseAgent> agentsPlayOrder,
       ActionsHandler<PlayableScoreElement> turn) {
     final winner = agentsPlayOrder[turn.winningActionIndex];
     return winner == _taker;
