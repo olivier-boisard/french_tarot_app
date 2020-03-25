@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
 import 'package:french_tarot/engine/core/player_score_manager.dart';
+import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
-import 'package:french_tarot/engine/decision_maker.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
@@ -32,7 +32,7 @@ List<int> runApplication() {
   final random = Random(randomSeed);
   final decisionMaker =
       RandomDecisionMaker<SuitedPlayable>.withRandom(random).run;
-  final agentDecisionMakers = <DecisionMaker<SuitedPlayable>>[];
+  final agentDecisionMakers = <Selector<SuitedPlayable>>[];
   for (var i = 0; i < nPlayers; i++) {
     agentDecisionMakers.add(decisionMaker);
   }
