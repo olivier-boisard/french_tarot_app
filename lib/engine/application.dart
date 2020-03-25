@@ -5,6 +5,7 @@ import 'card_phase/one_use_action_handler.dart';
 import 'card_phase/round.dart';
 import 'card_phase/score_computer.dart';
 import 'card_phase/turn.dart';
+import 'core/consumer.dart';
 import 'core/deck.dart';
 import 'core/player_score_manager.dart';
 import 'core/suited_playable.dart';
@@ -16,10 +17,9 @@ class Application {
   Application(this._configuredObject);
 
   void run() {
-    throw UnimplementedError();
     // Create agents
     final deck = Deck()..shuffle();
-    final nCardsInDog = 6;
+    const nCardsInDog = 6;
     final nPlayers = _configuredObject.agentDecisionMakers.length;
     final nCardsToDealToPlayers = (deck.size - nCardsInDog);
     final nCardsPerAgent = nCardsToDealToPlayers ~/ nPlayers;
@@ -28,14 +28,15 @@ class Application {
     }
     final agents = <CardPhaseAgent>[];
     for (final agentDecisionMaker in _configuredObject.agentDecisionMakers) {
-      final cardsInHand = deck.pop(nCardsToDealToPlayers);
+      final cardsInHand = deck.pop(nCardsPerAgent);
       final hand = OneUseActionHandler<SuitedPlayable>(cardsInHand);
       agents.add(CardPhaseAgent(agentDecisionMaker, hand));
     }
     final dog = deck.pop(nCardsInDog);
 
-    final takerState = _configuredObject.takerState..winScoreElements(dog);
-    final oppositionState = _configuredObject.oppositionState;
+    final takerState = _configuredObject.takerScoreManager
+      ..winScoreElements(dog);
+    final oppositionState = _configuredObject.oppositionScoreManager;
 
     // Determine taker
     final random = Random();
@@ -43,14 +44,13 @@ class Application {
 
     // Play round
     final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
-    final round = Round(() => Turn(), scoreComputer.consume);
-    round.play(agents);
+    Round(() => Turn(), scoreComputer.consume).play(agents);
 
     // Evaluate earned and lost points per player for this round
     final contract = [56, 51, 41, 36][takerState.nOudlers];
     var takerEarnedPoints = 0;
     var opponentsEarnedPoints = 0;
-    final nOpponents = (agents.length - 1);
+    final nOpponents = agents.length - 1;
     if (takerState.score >= contract) {
       final basePoint = takerState.score - contract + 25;
       takerEarnedPoints = nOpponents * basePoint;
@@ -61,20 +61,29 @@ class Application {
       opponentsEarnedPoints = basePoint;
     }
 
-    //TODO consume earned and lost points
+    // Compute earned points
+    final earnedPoints = <int>[];
+    for (final agent in agents) {
+      if (identical(agent, takerEarnedPoints)) {
+        earnedPoints.add(takerEarnedPoints);
+      } else {
+        earnedPoints.add(opponentsEarnedPoints);
+      }
+    }
+
+    // Consume earned points
+    _configuredObject.earnedPointsConsumer(earnedPoints);
   }
 }
 
 class ConfiguredObject {
   final List<DecisionMaker<SuitedPlayable>> agentDecisionMakers;
-  final PlayerScoreManager takerState;
-  final PlayerScoreManager oppositionState;
+  final PlayerScoreManager takerScoreManager;
+  final PlayerScoreManager oppositionScoreManager;
+  final Consumer<List<int>> earnedPointsConsumer;
 
-  ConfiguredObject(
-    this.agentDecisionMakers,
-    this.takerState,
-    this.oppositionState,
-  );
+  ConfiguredObject(this.agentDecisionMakers, this.takerScoreManager,
+      this.oppositionScoreManager, this.earnedPointsConsumer);
 }
 
 class InvalidAmountOfCardsInDeckException implements Exception {}

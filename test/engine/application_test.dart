@@ -1,41 +1,39 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
-import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
-import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
-import 'package:french_tarot/engine/card_phase/round.dart';
-import 'package:french_tarot/engine/card_phase/score_computer.dart';
-import 'package:french_tarot/engine/card_phase/turn.dart';
-import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
-import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/player_score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/decision_maker.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
-void main(){
-  test('Run application', (){
-    final deck = Deck()..shuffle();
-
+void main() {
+  test('Run application', () {
+    const randomSeed = 1;
+    const minAbsEarnedScore = 25;
     const nPlayers = 4;
-    const nCardsInDog = 6;
-    final nCardsPerPlayer = (deck.size - nCardsInDog) ~/ nPlayers;
 
-    final agents = <AbstractCardPhaseAgent>[];
+    final random = Random(randomSeed);
+    final decisionMaker =
+        RandomDecisionMaker<SuitedPlayable>.withRandom(random).run;
+    final agentDecisionMakers = <DecisionMaker<SuitedPlayable>>[];
     for (var i = 0; i < nPlayers; i++) {
-      final decisionMaker = RandomDecisionMaker<SuitedPlayable>();
-      final handCards = deck.pop(nCardsPerPlayer);
-      final hand = OneUseActionHandler<SuitedPlayable>(handCards);
-      agents.add(CardPhaseAgent(decisionMaker.run, hand));
+      agentDecisionMakers.add(decisionMaker);
     }
 
-    final taker = agents[0];
-    final dog = deck.pop(nCardsInDog);
-    final takerState = PlayerScoreManager()..winScoreElements(dog);
-    final oppositionState = PlayerScoreManager();
-    final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
+    final takerScoreManager = PlayerScoreManager();
+    final oppositionScoreManager = PlayerScoreManager();
+    final earnedPoints = <int>[];
+    final configuredObject = ConfiguredObject(
+      agentDecisionMakers,
+      takerScoreManager,
+      oppositionScoreManager,
+      earnedPoints.addAll,
+    );
 
-    final round = Round(() => Turn(), scoreComputer.consume);
+    Application(configuredObject).run();
 
-    //TODO add proper unit test
+    expect(earnedPoints[0].abs(), greaterThanOrEqualTo(minAbsEarnedScore));
+    expect(earnedPoints.reduce((a, b) => a + b), equals(0));
   });
-
 }
