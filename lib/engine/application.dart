@@ -17,11 +17,14 @@ class Application {
   Application(this._configuredObject);
 
   void run() {
+    const randomSeed = 1;
+    final random = Random(randomSeed);
+
     // Create agents
-    final deck = Deck()..shuffle();
+    final deck = Deck.withRandom(random)..shuffle();
     const nCardsInDog = 6;
     final nPlayers = _configuredObject.agentDecisionMakers.length;
-    final nCardsToDealToPlayers = (deck.size - nCardsInDog);
+    final nCardsToDealToPlayers = deck.size - nCardsInDog;
     final nCardsPerAgent = nCardsToDealToPlayers ~/ nPlayers;
     if (nCardsToDealToPlayers % nCardsPerAgent != 0) {
       throw InvalidAmountOfCardsInDeckException();
@@ -39,7 +42,6 @@ class Application {
     final oppositionState = _configuredObject.oppositionScoreManager;
 
     // Determine taker
-    final random = Random();
     final taker = agents[random.nextInt(agents.length)];
 
     // Play round
@@ -64,7 +66,7 @@ class Application {
     // Compute earned points
     final earnedPoints = <int>[];
     for (final agent in agents) {
-      if (identical(agent, takerEarnedPoints)) {
+      if (identical(agent, taker)) {
         earnedPoints.add(takerEarnedPoints);
       } else {
         earnedPoints.add(opponentsEarnedPoints);
