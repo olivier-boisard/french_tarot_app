@@ -15,7 +15,7 @@ void main() {
     
     const nPlayers = 4;
     const nCardsInDog = 6;
-    final nCardsPerPlayer = (deck.size - nCardsInDog) ~/ nPlayers;
+    final nCardsPerPlayer = (deck.nRemainingCards - nCardsInDog) ~/ nPlayers;
 
     final agents = <CardPhaseAgent>[];
     for (var i = 0; i < nPlayers; i++) {

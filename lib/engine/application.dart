@@ -22,15 +22,15 @@ class Application {
     const randomSeed = 1;
     const nCardsInDog = 6;
     final random = Random(randomSeed);
+    final oppositionScoreManager = _configuredObject.scoreManagerFactory();
+    final takerScoreManager = _configuredObject.scoreManagerFactory();
 
     final deck = _createDeck(random);
-    final agents = _createAgents(deck, nCardsInDog);
     final dog = _createDog(deck, nCardsInDog);
-
+    final agents = _createAgents(deck, nCardsInDog);
     final taker = _determineTaker(agents, random);
-    final oppositionScoreManager = _configuredObject.scoreManagerFactory();
-    final takerScoreManager = _configuredObject.scoreManagerFactory()
-      ..winScoreElements(dog);
+    _winDog(takerScoreManager, dog);
+
     final scoreComputer = ScoreComputer(
       taker,
       takerScoreManager,
@@ -40,6 +40,10 @@ class Application {
     final earnedPoints = _computeEarnedPoints(takerScoreManager, agents, taker);
 
     _configuredObject.earnedPointsConsumer(earnedPoints);
+  }
+
+  void _winDog(ScoreManager takerScoreManager, List<Card> dog) {
+    takerScoreManager.winScoreElements(dog);
   }
 
   Deck _createDeck(Random random) {
@@ -96,7 +100,7 @@ class Application {
 
   List<AbstractCardPhaseAgent> _createAgents(Deck deck, int nCardsInDog) {
     final nPlayers = _configuredObject.agentDecisionMakers.length;
-    final nCardsToDealToPlayers = deck.size - nCardsInDog;
+    final nCardsToDealToPlayers = deck.originalSize - nCardsInDog;
     final nCardsPerAgent = nCardsToDealToPlayers ~/ nPlayers;
     if (nCardsToDealToPlayers % nCardsPerAgent != 0) {
       throw InvalidAmountOfCardsInDeckException();

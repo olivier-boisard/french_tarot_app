@@ -5,14 +5,23 @@ import 'card.dart';
 class Deck {
   final List<Card> _cards;
   final Random _random;
+  int _originalSize;
+
+  /* _originalSize can't be set in the constructors' initializer list. Hence
+  we have to use a getter to make it read-only */
+  int get originalSize => _originalSize;
 
   Deck()
       : _cards = _createCardList(),
-        _random = Random();
+        _random = Random() {
+    _originalSize = _cards.length;
+  }
 
-  Deck.withRandom(this._random) : _cards = _createCardList();
+  Deck.withRandom(this._random) : _cards = _createCardList() {
+    _originalSize = _cards.length;
+  }
 
-  int get size {
+  int get nRemainingCards {
     return _cards.length;
   }
 
