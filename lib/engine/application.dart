@@ -102,8 +102,12 @@ class ConfiguredObject {
   final PlayerScoreManager oppositionScoreManager;
   final Consumer<List<int>> earnedPointsConsumer;
 
-  ConfiguredObject(this.agentDecisionMakers, this.takerScoreManager,
-      this.oppositionScoreManager, this.earnedPointsConsumer);
+  ConfiguredObject(
+    this.agentDecisionMakers,
+    this.takerScoreManager,
+    this.oppositionScoreManager,
+    this.earnedPointsConsumer,
+  );
 }
 
 class InvalidAmountOfCardsInDeckException implements Exception {}
