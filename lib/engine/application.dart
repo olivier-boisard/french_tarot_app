@@ -9,6 +9,7 @@ import 'core/abstract_card_phase_agent.dart';
 import 'core/card.dart';
 import 'core/deck.dart';
 import 'core/function_interfaces.dart';
+import 'core/score_element.dart';
 import 'core/score_manager.dart';
 import 'core/selector.dart';
 import 'core/suited_playable.dart';
@@ -22,19 +23,18 @@ class Application {
     const randomSeed = 1;
     const nCardsInDog = 6;
     final random = Random(randomSeed);
-    final oppositionScoreManager = _configuredObject.scoreManagerFactory();
-    final takerScoreManager = _configuredObject.scoreManagerFactory();
 
     final deck = _createDeck(random);
     final dog = _createDog(deck, nCardsInDog);
     final agents = _createAgents(deck, nCardsInDog);
     final taker = _determineTaker(agents, random);
+    final takerScoreManager = _configuredObject.takerScoreManager;
     _winDog(takerScoreManager, dog);
 
     final scoreComputer = ScoreComputer(
       taker,
       takerScoreManager,
-      oppositionScoreManager,
+      _configuredObject.oppositionScoreManager,
     );
     _playRound(scoreComputer, agents);
     final earnedPoints = _computeEarnedPoints(takerScoreManager, agents, taker);
@@ -116,13 +116,17 @@ class Application {
 
 class ConfiguredObject {
   final List<Selector<SuitedPlayable>> agentDecisionMakers;
-  final Factory<ScoreManager> scoreManagerFactory;
+  final ScoreManager takerScoreManager;
+  final ScoreManager oppositionScoreManager;
   final Consumer<List<int>> earnedPointsConsumer;
+  final Consumer<List<ScoreElement>> dogDealer;
 
   ConfiguredObject(
     this.agentDecisionMakers,
-    this.scoreManagerFactory,
+    this.takerScoreManager,
+    this.oppositionScoreManager,
     this.earnedPointsConsumer,
+    this.dogDealer,
   );
 }
 

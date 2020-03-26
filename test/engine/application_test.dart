@@ -2,10 +2,13 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
+import 'package:french_tarot/engine/core/score_element.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
+
+void dummyDogConsumer(List<ScoreElement> dog) {}
 
 void main() {
   test('Run application', () {
@@ -38,10 +41,14 @@ List<int> runApplication() {
   }
 
   final earnedPoints = <int>[];
+  final takerScoreManager = ScoreManager();
+  final oppositionScoreManager = ScoreManager();
   final configuredObject = ConfiguredObject(
     agentDecisionMakers,
-    () => ScoreManager(),
+    takerScoreManager,
+    oppositionScoreManager,
     earnedPoints.addAll,
+    dummyDogConsumer,
   );
   Application(configuredObject).run();
   return earnedPoints;
