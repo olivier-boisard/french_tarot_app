@@ -88,7 +88,7 @@ class Application {
     }
     final agents = <AbstractCardPhaseAgent>[];
     for (final agentDecisionMaker in _configuredObject.agentDecisionMakers) {
-      List<Card> cardsInHand = _createDog(deck, nCardsPerAgent);
+      final cardsInHand = _createDog(deck, nCardsPerAgent);
       final hand = OneUseActionHandler<SuitedPlayable>(cardsInHand);
       agents.add(CardPhaseAgent(agentDecisionMaker, hand));
     }
