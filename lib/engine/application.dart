@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:french_tarot/engine/dog_dealer.dart';
+
 import 'card_phase/card_phase_agent.dart';
 import 'card_phase/one_use_action_handler.dart';
 import 'card_phase/round.dart';
@@ -22,28 +24,27 @@ class Application {
   void run() {
     const randomSeed = 1;
     const nCardsInDog = 6;
+    final takerScoreManager = _configuredObject.takerScoreManager;
+    final oppositionScoreManager = _configuredObject.oppositionScoreManager;
+    final earnedPointsConsumer = _configuredObject.earnedPointsConsumer;
+    final dogDealer = DogDealer(takerScoreManager);
     final random = Random(randomSeed);
 
     final deck = _createDeck(random);
     final dog = _createDog(deck, nCardsInDog);
     final agents = _createAgents(deck, nCardsInDog);
     final taker = _determineTaker(agents, random);
-    final takerScoreManager = _configuredObject.takerScoreManager;
-    _winDog(takerScoreManager, dog);
+    dogDealer.deal(dog);
 
     final scoreComputer = ScoreComputer(
       taker,
       takerScoreManager,
-      _configuredObject.oppositionScoreManager,
+      oppositionScoreManager,
     );
     _playRound(scoreComputer, agents);
     final earnedPoints = _computeEarnedPoints(takerScoreManager, agents, taker);
 
-    _configuredObject.earnedPointsConsumer(earnedPoints);
-  }
-
-  void _winDog(ScoreManager takerScoreManager, List<Card> dog) {
-    takerScoreManager.winScoreElements(dog);
+    earnedPointsConsumer(earnedPoints);
   }
 
   Deck _createDeck(Random random) {
