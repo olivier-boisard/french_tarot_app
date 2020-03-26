@@ -43,8 +43,7 @@ class Application {
   }
 
   Deck _createDeck(Random random) {
-    final deck = Deck.withRandom(random)..shuffle();
-    return deck;
+    return Deck.withRandom(random)..shuffle();
   }
 
   List<int> _computeEarnedPoints(
