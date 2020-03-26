@@ -61,7 +61,10 @@ class Application {
     _configuredObject.earnedPointsConsumer(earnedPoints);
   }
 
-  void playRound(ScoreComputer scoreComputer, List<AbstractCardPhaseAgent> agents) {
+  void playRound(
+    ScoreComputer scoreComputer,
+    List<AbstractCardPhaseAgent> agents,
+  ) {
     Round(() => Turn(), scoreComputer.consume).play(agents);
   }
 
