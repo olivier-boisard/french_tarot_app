@@ -4,9 +4,9 @@ import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/card_phase/round.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/deck.dart';
-import 'package:french_tarot/engine/core/player_score_manager.dart';
+import 'package:french_tarot/engine/core/score_manager.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
@@ -27,8 +27,8 @@ void main() {
 
     final taker = agents[0];
     final dog = deck.pop(nCardsInDog);
-    final takerState = PlayerScoreManager()..winScoreElements(dog);
-    final oppositionState = PlayerScoreManager();
+    final takerState = ScoreManager()..winScoreElements(dog);
+    final oppositionState = ScoreManager();
     final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
 
     final round = Round(() => Turn(), scoreComputer.consume);

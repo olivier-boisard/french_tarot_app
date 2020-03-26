@@ -9,7 +9,7 @@ import 'core/abstract_card_phase_agent.dart';
 import 'core/card.dart';
 import 'core/deck.dart';
 import 'core/function_interfaces.dart';
-import 'core/player_score_manager.dart';
+import 'core/score_manager.dart';
 import 'core/selector.dart';
 import 'core/suited_playable.dart';
 
@@ -22,19 +22,36 @@ class Application {
     const randomSeed = 1;
     const nCardsInDog = 6;
     final random = Random(randomSeed);
-    final deck = Deck.withRandom(random)..shuffle();
 
+    final deck = _createDeck(random);
     final agents = _createAgents(deck, nCardsInDog);
     final dog = _createDog(deck, nCardsInDog);
-    final takerState = _configuredObject.takerScoreManager
-      ..winScoreElements(dog);
-    final oppositionState = _configuredObject.oppositionScoreManager;
 
     final taker = _determineTaker(agents, random);
-    final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
-    playRound(scoreComputer, agents);
+    final oppositionScoreManager = _configuredObject.scoreManagerFactory();
+    final takerScoreManager = _configuredObject.scoreManagerFactory()
+      ..winScoreElements(dog);
+    final scoreComputer = ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    );
+    _playRound(scoreComputer, agents);
+    final earnedPoints = _computeEarnedPoints(takerScoreManager, agents, taker);
 
-    // Evaluate earned and lost points per player for this round
+    _configuredObject.earnedPointsConsumer(earnedPoints);
+  }
+
+  Deck _createDeck(Random random) {
+    final deck = Deck.withRandom(random)..shuffle();
+    return deck;
+  }
+
+  List<int> _computeEarnedPoints(
+    ScoreManager takerState,
+    List<AbstractCardPhaseAgent> agents,
+    AbstractCardPhaseAgent taker,
+  ) {
     final contract = [56, 51, 41, 36][takerState.nOudlers];
     var takerEarnedPoints = 0;
     var opponentsEarnedPoints = 0;
@@ -49,7 +66,6 @@ class Application {
       opponentsEarnedPoints = basePoint;
     }
 
-    // Propagate earned points
     final earnedPoints = <int>[];
     for (final agent in agents) {
       if (identical(agent, taker)) {
@@ -58,10 +74,10 @@ class Application {
         earnedPoints.add(opponentsEarnedPoints);
       }
     }
-    _configuredObject.earnedPointsConsumer(earnedPoints);
+    return earnedPoints;
   }
 
-  void playRound(
+  void _playRound(
     ScoreComputer scoreComputer,
     List<AbstractCardPhaseAgent> agents,
   ) {
@@ -98,14 +114,12 @@ class Application {
 
 class ConfiguredObject {
   final List<Selector<SuitedPlayable>> agentDecisionMakers;
-  final PlayerScoreManager takerScoreManager;
-  final PlayerScoreManager oppositionScoreManager;
+  final Factory<ScoreManager> scoreManagerFactory;
   final Consumer<List<int>> earnedPointsConsumer;
 
   ConfiguredObject(
     this.agentDecisionMakers,
-    this.takerScoreManager,
-    this.oppositionScoreManager,
+    this.scoreManagerFactory,
     this.earnedPointsConsumer,
   );
 }

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
-import 'package:french_tarot/engine/core/player_score_manager.dart';
+import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
@@ -37,13 +37,10 @@ List<int> runApplication() {
     agentDecisionMakers.add(decisionMaker);
   }
 
-  final takerScoreManager = PlayerScoreManager();
-  final oppositionScoreManager = PlayerScoreManager();
   final earnedPoints = <int>[];
   final configuredObject = ConfiguredObject(
     agentDecisionMakers,
-    takerScoreManager,
-    oppositionScoreManager,
+    () => ScoreManager(),
     earnedPoints.addAll,
   );
   Application(configuredObject).run();

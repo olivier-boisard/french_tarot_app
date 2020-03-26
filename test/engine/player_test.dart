@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/player_score_manager.dart';
+import 'package:french_tarot/engine/core/score_manager.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 
 void main() {
   test('Player has won cards, evaluate score and number of oudlers', () {
-    final player = PlayerScoreManager();
+    final player = ScoreManager();
     const expectedScore = 14;
 
     _makePlayerWinsNonOudlerCards(player);
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('Compute score on odd number of cards fails', () {
-    final player = PlayerScoreManager();
+    final player = ScoreManager();
     final wonCards = [Card.coloredCard(Suit.spades, 1)];
     player.winScoreElements(wonCards);
     expect(() => player.score,
@@ -24,12 +24,12 @@ void main() {
   });
 }
 
-void _makePlayerWinTwoOudlers(PlayerScoreManager player) {
+void _makePlayerWinTwoOudlers(ScoreManager player) {
   final oudlers = [const Card.excuse(), Card.trump(21)];
   player.winScoreElements(oudlers);
 }
 
-void _makePlayerWinsNonOudlerCards(PlayerScoreManager player) {
+void _makePlayerWinsNonOudlerCards(ScoreManager player) {
   final wonCards = <Card>[
     Card.coloredCard(Suit.spades, 1),
     Card.coloredCard(Suit.heart, CardStrengths.queen),

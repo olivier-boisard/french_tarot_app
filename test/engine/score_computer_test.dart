@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/score_computer.dart';
 import 'package:french_tarot/engine/card_phase/turn.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/player_score_manager.dart';
+import 'package:french_tarot/engine/core/score_manager.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/random_decision_maker.dart';
 
 void main() {
@@ -98,8 +98,8 @@ void main() {
 }
 
 ScoreComputer _createScoreComputer(CardPhaseAgent taker) {
-  final takerState = PlayerScoreManager();
-  final oppositionState = PlayerScoreManager();
+  final takerState = ScoreManager();
+  final oppositionState = ScoreManager();
   final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
   return scoreComputer;
 }
