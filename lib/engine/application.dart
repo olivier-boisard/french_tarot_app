@@ -94,8 +94,7 @@ class Application {
   }
 
   List<Card> _createDog(Deck deck, int nCardsInDog) {
-    final dog = deck.pop(nCardsInDog);
-    return dog;
+    return deck.pop(nCardsInDog);
   }
 
   List<AbstractCardPhaseAgent> _createAgents(Deck deck, int nCardsInDog) {
