@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 
 void main() {
   test('Construct card succeeded', () {
@@ -52,22 +52,14 @@ void main() {
   });
 
   test('Oudler card score', () {
-    expect(const Card
-        .excuse()
-        .score, equals(4.5));
-    expect(Card
-        .trump(1)
-        .score, equals(4.5));
-    expect(Card
-        .trump(21)
-        .score, equals(4.5));
+    expect(const Card.excuse().score, equals(4.5));
+    expect(Card.trump(1).score, equals(4.5));
+    expect(Card.trump(21).score, equals(4.5));
   });
 
   test('Trump from 2 to 20 score', () {
     for (var strength = 2; strength <= 20; strength++) {
-      expect(Card
-          .trump(strength)
-          .score, equals(0.5));
+      expect(Card.trump(strength).score, equals(0.5));
     }
   });
 

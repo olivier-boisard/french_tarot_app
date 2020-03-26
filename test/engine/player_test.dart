@@ -19,8 +19,10 @@ void main() {
     final player = ScoreManager();
     final wonCards = [Card.coloredCard(Suit.spades, 1)];
     player.winScoreElements(wonCards);
-    expect(() => player.score,
-        throwsA(isInstanceOf<OddNumberOfCardsException>()));
+    expect(
+      () => player.score,
+      throwsA(isInstanceOf<OddNumberOfCardsException>()),
+    );
   });
 }
 

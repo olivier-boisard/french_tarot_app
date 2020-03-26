@@ -7,15 +7,13 @@ void main() {
   const nCardsInDeck = 78;
 
   test('Constructed deck has correct number of cards', () {
-    final deck = Deck()
-      ..pop(nCardsInDeck);
+    final deck = Deck()..pop(nCardsInDeck);
     expect(() => deck.pop(1), throwsA(isInstanceOf<RangeError>()));
   });
 
   test('Shuffle deck', () {
     const randomSeed = 1;
-    final shuffledDeck = Deck.withRandom(Random(randomSeed))
-      ..shuffle();
+    final shuffledDeck = Deck.withRandom(Random(randomSeed))..shuffle();
     final shuffledCard = shuffledDeck.pop(nCardsInDeck);
     final orderedCard = Deck().pop(nCardsInDeck);
     expect(shuffledCard, isNot(orderedEquals(orderedCard)));
@@ -32,10 +30,8 @@ void main() {
   test('Different random seeds produce different results', () {
     const randomSeed1 = 1;
     const randomSeed2 = 2;
-    final deck1 = Deck.withRandom(Random(randomSeed1))
-      ..shuffle();
-    final deck2 = Deck.withRandom(Random(randomSeed2))
-      ..shuffle();
+    final deck1 = Deck.withRandom(Random(randomSeed1))..shuffle();
+    final deck2 = Deck.withRandom(Random(randomSeed2))..shuffle();
     final cards1 = deck1.pop(nCardsInDeck);
     final cards2 = deck2.pop(nCardsInDeck);
     expect(cards1, isNot(orderedEquals(cards2)));

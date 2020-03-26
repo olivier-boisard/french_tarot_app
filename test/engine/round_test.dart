@@ -12,7 +12,7 @@ import 'package:french_tarot/engine/random_decision_maker.dart';
 void main() {
   test('Play round', () {
     final deck = Deck()..shuffle();
-    
+
     const nPlayers = 4;
     const nCardsInDog = 6;
     final nCardsPerPlayer = (deck.nRemainingCards - nCardsInDog) ~/ nPlayers;

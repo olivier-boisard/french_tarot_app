@@ -43,7 +43,6 @@ class Application {
     );
     _playRound(scoreComputer, agents);
     final earnedPoints = _computeEarnedPoints(takerScoreManager, agents, taker);
-
     earnedPointsConsumer(earnedPoints);
   }
 
