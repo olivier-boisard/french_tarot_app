@@ -7,34 +7,66 @@ import 'core/abstract_card.dart';
 import 'core/abstract_card_phase_agent.dart';
 import 'core/function_interfaces.dart';
 import 'core/score_manager.dart';
-import 'dog_phase/dog_dealer.dart';
+import 'dog_phase/bidding_result.dart';
 
-class Application {
-  final ConfiguredObject _configuredObject;
+class RandomBiddingPhase {
+  final List<AbstractCardPhaseAgent> _agents;
+  final Random _random;
+  List<Consumer<BiddingResult>> biddingResultsConsumers;
 
-  Application(this._configuredObject);
+  RandomBiddingPhase(this._agents) : _random = Random();
+
+  RandomBiddingPhase.withRandom(this._agents, this._random);
 
   void run() {
-    final agents = _configuredObject.agents;
-
-    final biddingResult = _runBiddingPhase(agents);
-    _runDogPhase(biddingResult);
-    _runCardPhase(biddingResult, agents);
+    final result = BiddingResult(
+      _agents[_random.nextInt(_agents.length)],
+      Bid.PETITE,
+    );
+    _notifyConsumers(result);
   }
 
-  void _runCardPhase(
-    BiddingResult biddingResult,
-    List<AbstractCardPhaseAgent> agents,
-  ) {
+  void _notifyConsumers(BiddingResult result) {
+    if (biddingResultsConsumers != null) {
+      for (final consumer in biddingResultsConsumers) {
+        consumer(result);
+      }
+    }
+  }
+}
+
+class DogPhase {
+  final List<AbstractCard> _dog;
+  final ScoreManager _takerScoreManager;
+  BiddingResult biddingResult;
+
+  DogPhase(this._dog, this._takerScoreManager);
+
+  void run() {
+    _takerScoreManager.winScoreElements(_dog);
+  }
+}
+
+class CardPhase {
+  final List<AbstractCardPhaseAgent> _agents;
+  final ScoreManager _takerScoreManager;
+  final ScoreManager _oppositionScoreManager;
+  List<Consumer<List<int>>> earnedPointsConsumers;
+  BiddingResult biddingResult;
+
+  CardPhase(this._agents,
+      this._takerScoreManager,
+      this._oppositionScoreManager,);
+
+  void run() {
     final scoreComputer = _createScoreComputer(biddingResult.taker);
-    _playRound(scoreComputer, agents);
-    _distributePoints(agents, biddingResult.taker);
+    _playRound(scoreComputer, _agents);
+    _distributePoints(_agents, biddingResult.taker);
   }
 
-  void _runDogPhase(BiddingResult biddingResult) {
-    final takerScoreManager = _configuredObject.takerScoreManager;
-    final dog = _configuredObject.dog;
-    DogDealer(takerScoreManager).deal(biddingResult, dog);
+  void _playRound(ScoreComputer scoreComputer,
+      List<AbstractCardPhaseAgent> agents,) {
+    Round(() => Turn(), scoreComputer.consume).play(agents);
   }
 
   void _distributePoints(
@@ -42,33 +74,36 @@ class Application {
     AbstractCardPhaseAgent taker,
   ) {
     final earnedPoints = _computeEarnedPoints(agents, taker);
-    _configuredObject.earnedPointsConsumer(earnedPoints);
+    _notifyConsumers(earnedPoints);
+  }
+
+  void _notifyConsumers(List<int> values) {
+    if (earnedPointsConsumers != null) {
+      for (final consumer in earnedPointsConsumers) {
+        consumer(values);
+      }
+    }
   }
 
   ScoreComputer _createScoreComputer(AbstractCardPhaseAgent taker) {
-    final scoreComputer = ScoreComputer(
-      taker,
-      _configuredObject.takerScoreManager,
-      _configuredObject.oppositionScoreManager,
-    );
-    return scoreComputer;
+    return ScoreComputer(taker, _takerScoreManager, _oppositionScoreManager);
   }
 
   List<int> _computeEarnedPoints(
     List<AbstractCardPhaseAgent> agents,
     AbstractCardPhaseAgent taker,
   ) {
-    final takerState = _configuredObject.takerScoreManager;
-    final contract = [56, 51, 41, 36][takerState.nOudlers];
+    final contract = [56, 51, 41, 36][_takerScoreManager.nOudlers];
     var takerEarnedPoints = 0;
     var opponentsEarnedPoints = 0;
     final nOpponents = agents.length - 1;
-    if (takerState.score >= contract) {
-      final basePoint = takerState.score - contract + 25;
+    final score = _takerScoreManager.score;
+    if (score >= contract) {
+      final basePoint = score - contract + 25;
       takerEarnedPoints = nOpponents * basePoint;
       opponentsEarnedPoints = -basePoint;
     } else {
-      final basePoint = contract - takerState.score + 25;
+      final basePoint = contract - score + 25;
       takerEarnedPoints = -nOpponents * basePoint;
       opponentsEarnedPoints = basePoint;
     }
@@ -83,19 +118,47 @@ class Application {
     }
     return earnedPoints;
   }
+}
 
-  void _playRound(
-    ScoreComputer scoreComputer,
-    List<AbstractCardPhaseAgent> agents,
-  ) {
-    Round(() => Turn(), scoreComputer.consume).play(agents);
-  }
 
-  BiddingResult _runBiddingPhase(List<AbstractCardPhaseAgent> agents) {
-    return BiddingResult(
-      agents[_configuredObject.random.nextInt(agents.length)],
-      Bid.PETITE,
+class Application {
+  final ConfiguredObject _configuredObject;
+
+  Application(this._configuredObject);
+
+  void run() {
+    //TODO externalize object creation and wiring
+    final agents = _configuredObject.agents;
+
+    final biddingPhase = RandomBiddingPhase.withRandom(
+      agents,
+      _configuredObject.random,
     );
+    final dogPhase = DogPhase(
+      _configuredObject.dog,
+      _configuredObject.takerScoreManager,
+    );
+    final cardPhase = CardPhase(
+      agents,
+      _configuredObject.takerScoreManager,
+      _configuredObject.oppositionScoreManager,
+    );
+
+    biddingPhase.biddingResultsConsumers = [
+          (biddingResult) => {dogPhase.biddingResult = biddingResult},
+          (biddingResult) => {cardPhase.biddingResult = biddingResult},
+    ];
+    cardPhase.earnedPointsConsumers = [ _configuredObject.earnedPointsConsumer];
+
+    final processes = <Process>[
+      biddingPhase.run,
+      dogPhase.run,
+      cardPhase.run,
+    ];
+
+    for (final process in processes) {
+      process();
+    }
   }
 }
 
