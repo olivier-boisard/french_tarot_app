@@ -60,7 +60,7 @@ List<int> runApplication() {
   final takerScoreManager = ScoreManager();
   final oppositionScoreManager = ScoreManager();
   final biddingPhase = RandomBiddingPhase.withRandom(agents, random);
-  final dogPhase = DogPhase(dog, takerScoreManager);
+  final dogPhase = DogPhase(dog, takerScoreManager.winScoreElements);
   final cardPhase = CardPhase(
     agents,
     takerScoreManager,

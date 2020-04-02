@@ -1,16 +1,15 @@
 import '../../core/abstract_card.dart';
-import '../../core/score_manager.dart';
+import '../../core/function_interfaces.dart';
 import '../bid/bid.dart';
 
-//TODO SOLID
 class DogPhase {
   final List<AbstractCard> _dog;
-  final ScoreManager _takerScoreManager;
+  final Consumer<List<AbstractCard>> _dogConsumer;
   BiddingResult biddingResult;
 
-  DogPhase(this._dog, this._takerScoreManager);
+  DogPhase(this._dog, this._dogConsumer);
 
   void run() {
-    _takerScoreManager.winScoreElements(_dog);
+    _dogConsumer(_dog);
   }
 }

@@ -1,7 +1,7 @@
 import '../../core/abstract_card_phase_agent.dart';
+import '../../core/abstract_score_manager.dart';
 import '../../core/function_interfaces.dart';
 import '../../core/score_computer.dart';
-import '../../core/score_manager.dart';
 import '../bid/bid.dart';
 import 'round.dart';
 import 'turn.dart';
@@ -9,8 +9,8 @@ import 'turn.dart';
 // TODO SOLID
 class CardPhase {
   final List<AbstractCardPhaseAgent> _agents;
-  final ScoreManager _takerScoreManager;
-  final ScoreManager _oppositionScoreManager;
+  final AbstractScoreManager _takerScoreManager;
+  final AbstractScoreManager _oppositionScoreManager;
   List<Consumer<List<int>>> earnedPointsConsumers;
   BiddingResult biddingResult;
 
@@ -30,6 +30,7 @@ class CardPhase {
     ScoreComputer scoreComputer,
     List<AbstractCardPhaseAgent> agents,
   ) {
+    //TODO break dependency to Round and Turn
     Round(() => Turn(), scoreComputer.consume).play(agents);
   }
 

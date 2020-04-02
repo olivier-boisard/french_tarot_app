@@ -6,6 +6,7 @@ import 'abstract_score_computer.dart';
 import 'actions_handler.dart';
 import 'playable_score_element.dart';
 
+//TODO SOLID
 class ScoreComputer implements AbstractScoreComputer {
   final AbstractCardPhaseAgent _taker;
   final ScoreManager _takerScoreManager;
