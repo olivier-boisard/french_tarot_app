@@ -6,6 +6,7 @@ import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
 import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
 import 'package:french_tarot/engine/core/deck.dart';
+import 'package:french_tarot/engine/core/function_interfaces.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
@@ -35,6 +36,9 @@ List<int> runApplication() {
   const nCardsInDog = 6;
 
   final random = Random(randomSeed);
+  final earnedPoints = <int>[];
+
+  // Create decision makers
   final decisionMaker = RandomDecisionMaker<SuitedPlayable>.withRandom(
     random,
   ).run;
@@ -43,19 +47,40 @@ List<int> runApplication() {
     decisionMakers.add(decisionMaker);
   }
 
-  final earnedPoints = <int>[];
-  final takerScoreManager = ScoreManager();
-  final oppositionScoreManager = ScoreManager();
+  // Create agents
   final deck = Deck.withRandom(random)..shuffle();
   final dog = deck.pop(nCardsInDog);
-  final configuredObject = ConfiguredObject(
-      _createAgents(deck, decisionMakers, deck.originalSize - dog.length),
-      dog,
-      takerScoreManager,
-      oppositionScoreManager,
-      earnedPoints.addAll,
-      random);
-  Application(configuredObject).run();
+  final nCardsToDeal = deck.originalSize - dog.length;
+  final agents = _createAgents(deck, decisionMakers, nCardsToDeal);
+
+  // Create phases
+  final takerScoreManager = ScoreManager();
+  final oppositionScoreManager = ScoreManager();
+  final biddingPhase = RandomBiddingPhase.withRandom(agents, random);
+  final dogPhase = DogPhase(dog, takerScoreManager);
+  final cardPhase = CardPhase(
+    agents,
+    takerScoreManager,
+    oppositionScoreManager,
+  );
+
+  // Wiring
+  biddingPhase.biddingResultsConsumers = [
+    (biddingResult) => {dogPhase.biddingResult = biddingResult},
+    (biddingResult) => {cardPhase.biddingResult = biddingResult},
+  ];
+  cardPhase.earnedPointsConsumers = [earnedPoints.addAll];
+
+  // Prepare process list
+  final processes = <Process>[
+    biddingPhase.run,
+    dogPhase.run,
+    cardPhase.run,
+  ];
+
+  // Create and run application
+  Application(processes).run();
+
   return earnedPoints;
 }
 

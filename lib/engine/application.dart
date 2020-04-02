@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'card_phase/round.dart';
@@ -69,10 +70,8 @@ class CardPhase {
     Round(() => Turn(), scoreComputer.consume).play(agents);
   }
 
-  void _distributePoints(
-    List<AbstractCardPhaseAgent> agents,
-    AbstractCardPhaseAgent taker,
-  ) {
+  void _distributePoints(List<AbstractCardPhaseAgent> agents,
+      AbstractCardPhaseAgent taker,) {
     final earnedPoints = _computeEarnedPoints(agents, taker);
     _notifyConsumers(earnedPoints);
   }
@@ -89,10 +88,8 @@ class CardPhase {
     return ScoreComputer(taker, _takerScoreManager, _oppositionScoreManager);
   }
 
-  List<int> _computeEarnedPoints(
-    List<AbstractCardPhaseAgent> agents,
-    AbstractCardPhaseAgent taker,
-  ) {
+  List<int> _computeEarnedPoints(List<AbstractCardPhaseAgent> agents,
+      AbstractCardPhaseAgent taker,) {
     final contract = [56, 51, 41, 36][_takerScoreManager.nOudlers];
     var takerEarnedPoints = 0;
     var opponentsEarnedPoints = 0;
@@ -122,62 +119,15 @@ class CardPhase {
 
 
 class Application {
-  final ConfiguredObject _configuredObject;
+  final List<Process> _processes;
 
-  Application(this._configuredObject);
+  Application(this._processes);
 
   void run() {
-    //TODO externalize object creation and wiring
-    final agents = _configuredObject.agents;
-
-    final biddingPhase = RandomBiddingPhase.withRandom(
-      agents,
-      _configuredObject.random,
-    );
-    final dogPhase = DogPhase(
-      _configuredObject.dog,
-      _configuredObject.takerScoreManager,
-    );
-    final cardPhase = CardPhase(
-      agents,
-      _configuredObject.takerScoreManager,
-      _configuredObject.oppositionScoreManager,
-    );
-
-    biddingPhase.biddingResultsConsumers = [
-          (biddingResult) => {dogPhase.biddingResult = biddingResult},
-          (biddingResult) => {cardPhase.biddingResult = biddingResult},
-    ];
-    cardPhase.earnedPointsConsumers = [ _configuredObject.earnedPointsConsumer];
-
-    final processes = <Process>[
-      biddingPhase.run,
-      dogPhase.run,
-      cardPhase.run,
-    ];
-
-    for (final process in processes) {
+    for (final process in _processes) {
       process();
     }
   }
-}
-
-class ConfiguredObject {
-  final List<AbstractCardPhaseAgent> agents;
-  final List<AbstractCard> dog;
-  final ScoreManager takerScoreManager;
-  final ScoreManager oppositionScoreManager;
-  final Consumer<List<int>> earnedPointsConsumer;
-  final Random random;
-
-  ConfiguredObject(
-    this.agents,
-    this.dog,
-    this.takerScoreManager,
-    this.oppositionScoreManager,
-    this.earnedPointsConsumer,
-    this.random,
-  );
 }
 
 class Bid {
