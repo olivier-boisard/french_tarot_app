@@ -4,7 +4,6 @@ import 'function_interfaces.dart';
 import 'playable_score_element.dart';
 import 'score_element.dart';
 
-//TODO SOLID
 class ScoreComputer {
   final AbstractCardPhaseAgent _taker;
   final Consumer<Iterable<ScoreElement>> _takerScoreElementsConsumer;
