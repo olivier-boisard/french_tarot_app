@@ -31,8 +31,8 @@ void main() {
     final oppositionScoreManager = ScoreManager();
     final scoreComputer = ScoreComputer(
       taker,
-      takerScoreManager,
-      oppositionScoreManager,
+      takerScoreManager.winScoreElements,
+      oppositionScoreManager.winScoreElements,
     );
 
     Round(() => Turn(), scoreComputer.consume).play(agents);

@@ -33,8 +33,8 @@ void main() {
     final oppositionScoreManager = ScoreManager();
     ScoreComputer(
       taker,
-      takerScoreManager,
-      oppositionScoreManager,
+      takerScoreManager.winScoreElements,
+      oppositionScoreManager.winScoreElements,
     )
       ..consume(turn1, orderedPlayers)
       ..consume(turn2, orderedPlayers);
@@ -47,7 +47,7 @@ void main() {
     final turn = Turn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, 1))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
-      ..addAction(Card.excuse())
+      ..addAction(const Card.excuse())
       ..addAction(Card.coloredCard(Suit.diamond, 3));
     final taker = _createCardPhaseAgent();
     final opposition = [
@@ -60,8 +60,8 @@ void main() {
     final oppositionScoreManager = ScoreManager();
     ScoreComputer(
       taker,
-      takerScoreManager,
-      oppositionScoreManager,
+      takerScoreManager.winScoreElements,
+      oppositionScoreManager.winScoreElements,
     ).consume(turn, orderedPlayers);
     expect(takerScoreManager.score, equals(0));
     expect(oppositionScoreManager.score, equals(6));
@@ -71,7 +71,7 @@ void main() {
     final turn = Turn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, 3))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
-      ..addAction(Card.excuse())
+      ..addAction(const Card.excuse())
       ..addAction(Card.coloredCard(Suit.diamond, 1));
     final taker = _createCardPhaseAgent();
     final opposition = [
@@ -84,8 +84,8 @@ void main() {
     final oppositionScoreManager = ScoreManager();
     ScoreComputer(
       taker,
-      takerScoreManager,
-      oppositionScoreManager,
+      takerScoreManager.winScoreElements,
+      oppositionScoreManager.winScoreElements,
     ).consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(2));
@@ -94,7 +94,7 @@ void main() {
 
   test('Taker plays excuse', () {
     final turn = Turn<Card>()
-      ..addAction(Card.excuse())
+      ..addAction(const Card.excuse())
       ..addAction(Card.coloredCard(Suit.diamond, 1))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
       ..addAction(Card.coloredCard(Suit.diamond, 3));
@@ -109,8 +109,8 @@ void main() {
     final oppositionScoreManager = ScoreManager();
     ScoreComputer(
       taker,
-      takerScoreManager,
-      oppositionScoreManager,
+      takerScoreManager.winScoreElements,
+      oppositionScoreManager.winScoreElements,
     ).consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(4));

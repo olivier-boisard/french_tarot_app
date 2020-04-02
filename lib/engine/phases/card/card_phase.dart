@@ -1,7 +1,7 @@
 import '../../core/abstract_card_phase_agent.dart';
-import '../../core/abstract_score_manager.dart';
 import '../../core/function_interfaces.dart';
 import '../../core/score_computer.dart';
+import '../../core/score_manager.dart';
 import '../bid/bid.dart';
 import 'round.dart';
 import 'turn.dart';
@@ -9,8 +9,8 @@ import 'turn.dart';
 // TODO SOLID
 class CardPhase {
   final List<AbstractCardPhaseAgent> _agents;
-  final AbstractScoreManager _takerScoreManager;
-  final AbstractScoreManager _oppositionScoreManager;
+  final ScoreManager _takerScoreManager;
+  final ScoreManager _oppositionScoreManager;
   List<Consumer<List<int>>> earnedPointsConsumers;
   BiddingResult biddingResult;
 
@@ -51,7 +51,11 @@ class CardPhase {
   }
 
   ScoreComputer _createScoreComputer(AbstractCardPhaseAgent taker) {
-    return ScoreComputer(taker, _takerScoreManager, _oppositionScoreManager);
+    return ScoreComputer(
+      taker,
+      _takerScoreManager.winScoreElements,
+      _oppositionScoreManager.winScoreElements,
+    );
   }
 
   List<int> _computeEarnedPoints(

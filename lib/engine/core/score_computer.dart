@@ -1,19 +1,19 @@
 import 'abstract_card_phase_agent.dart';
 import 'actions_handler.dart';
+import 'function_interfaces.dart';
 import 'playable_score_element.dart';
 import 'score_element.dart';
-import 'score_manager.dart';
 
 //TODO SOLID
 class ScoreComputer {
   final AbstractCardPhaseAgent _taker;
-  final ScoreManager _takerScoreManager;
-  final ScoreManager _oppositionScoreManager;
+  final Consumer<Iterable<ScoreElement>> _takerScoreElementsConsumer;
+  final Consumer<Iterable<ScoreElement>> _oppositionScoreElementsConsumer;
 
   ScoreComputer(
     this._taker,
-    this._takerScoreManager,
-    this._oppositionScoreManager,
+    this._takerScoreElementsConsumer,
+    this._oppositionScoreElementsConsumer,
   );
 
   void consume(ActionsHandler<PlayableScoreElement> turn,
@@ -40,11 +40,13 @@ class ScoreComputer {
 
   void _dealWinnableScoreElementsToWinner(
       ActionsHandler<PlayableScoreElement> turn, bool takerWon) {
-    final winnables = turn.actionHistory.where((element) => element.winnable);
+    final scoreElements = turn.actionHistory.where(
+            (element) => element.winnable
+    );
     if (takerWon) {
-      _takerScoreManager.winScoreElements(winnables);
+      _takerScoreElementsConsumer(scoreElements);
     } else {
-      _oppositionScoreManager.winScoreElements(winnables);
+      _oppositionScoreElementsConsumer(scoreElements);
     }
   }
 
@@ -55,14 +57,16 @@ class ScoreComputer {
     final playedNonWinnables = history.where((element) => !element.winnable);
     if (playedNonWinnables.isNotEmpty) {
       if (takerWon && !takerPlayedNonWinnable) {
-        _oppositionScoreManager.winScoreElements([NegativeScoreElement()]);
-        _takerScoreManager.winScoreElements([PositiveScoreElement()]);
+        _oppositionScoreElementsConsumer([NegativeScoreElement()]);
+        _takerScoreElementsConsumer([PositiveScoreElement()]);
       } else if (!takerWon && takerPlayedNonWinnable) {
-        _oppositionScoreManager.winScoreElements([PositiveScoreElement()]);
-        _takerScoreManager.winScoreElements([NegativeScoreElement()]);
+        _oppositionScoreElementsConsumer([PositiveScoreElement()]);
+        _takerScoreElementsConsumer([NegativeScoreElement()]);
       }
-      (takerPlayedNonWinnable ? _takerScoreManager : _oppositionScoreManager)
-          .winScoreElements(playedNonWinnables);
+      final consumer = takerPlayedNonWinnable
+          ? _takerScoreElementsConsumer
+          : _oppositionScoreElementsConsumer;
+      consumer(playedNonWinnables);
     }
   }
 }
