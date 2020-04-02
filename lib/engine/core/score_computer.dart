@@ -16,33 +16,41 @@ class ScoreComputer {
     this._oppositionScoreElementsConsumer,
   );
 
-  void consume(ActionsHandler<PlayableScoreElement> turn,
-      List<AbstractCardPhaseAgent> agentsPlayOrder) {
+  void consume(
+    ActionsHandler<PlayableScoreElement> turn,
+    List<AbstractCardPhaseAgent> agentsPlayOrder,
+  ) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealWinnableScoreElementsToWinner(turn, takerWon);
 
-    final takerScoreElement =
-        _extractTakerPlayedScoreElement(turn, agentsPlayOrder);
-    _handleUnwinnables(turn, takerScoreElement, takerWon);
+    final takerScoreElement = _extractTakerPlayedScoreElement(
+      turn,
+      agentsPlayOrder,
+    );
+    _handleScoreElements(turn, takerScoreElement, takerWon);
   }
 
   PlayableScoreElement _extractTakerPlayedScoreElement(
-      ActionsHandler<PlayableScoreElement> turn,
-      List<AbstractCardPhaseAgent> agentsPlayOrder) {
+    ActionsHandler<PlayableScoreElement> turn,
+    List<AbstractCardPhaseAgent> agentsPlayOrder,
+  ) {
     return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
 
-  bool _didTakerWin(List<AbstractCardPhaseAgent> agentsPlayOrder,
-      ActionsHandler<PlayableScoreElement> turn) {
+  bool _didTakerWin(
+    List<AbstractCardPhaseAgent> agentsPlayOrder,
+    ActionsHandler<PlayableScoreElement> turn,
+  ) {
     final winner = agentsPlayOrder[turn.winningActionIndex];
     return winner == _taker;
   }
 
   void _dealWinnableScoreElementsToWinner(
-      ActionsHandler<PlayableScoreElement> turn, bool takerWon) {
-    final scoreElements = turn.actionHistory.where(
-            (element) => element.winnable
-    );
+    ActionsHandler<PlayableScoreElement> turn,
+    bool takerWon,
+  ) {
+    final scoreElements =
+        turn.actionHistory.where((element) => element.winnable);
     if (takerWon) {
       _takerScoreElementsConsumer(scoreElements);
     } else {
@@ -50,8 +58,11 @@ class ScoreComputer {
     }
   }
 
-  void _handleUnwinnables(ActionsHandler<PlayableScoreElement> turn,
-      PlayableScoreElement takerPlayedScoreElement, bool takerWon) {
+  void _handleScoreElements(
+    ActionsHandler<PlayableScoreElement> turn,
+    PlayableScoreElement takerPlayedScoreElement,
+    bool takerWon,
+  ) {
     final takerPlayedNonWinnable = !takerPlayedScoreElement.winnable;
     final history = turn.actionHistory;
     final playedNonWinnables = history.where((element) => !element.winnable);
