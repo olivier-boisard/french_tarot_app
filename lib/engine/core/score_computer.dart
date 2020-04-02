@@ -1,6 +1,7 @@
-import '../core/abstract_card_phase_agent.dart';
-import '../core/score_element.dart';
-import '../core/score_manager.dart';
+import 'package:french_tarot/engine/core/score_element.dart';
+import 'package:french_tarot/engine/core/score_manager.dart';
+
+import 'abstract_card_phase_agent.dart';
 import 'abstract_score_computer.dart';
 import 'actions_handler.dart';
 import 'playable_score_element.dart';

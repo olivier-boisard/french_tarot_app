@@ -1,4 +1,4 @@
-import '../core/suited_playable.dart';
+import '../../core/suited_playable.dart';
 import 'abstract_turn.dart';
 
 class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {

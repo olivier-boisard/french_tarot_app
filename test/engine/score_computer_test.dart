@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
-import 'package:french_tarot/engine/card_phase/score_computer.dart';
-import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/score_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
-import 'package:french_tarot/engine/random_decision_maker.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
+import 'package:french_tarot/engine/phases/card/turn.dart';
+import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
 void main() {
   test('Evaluate score', () {

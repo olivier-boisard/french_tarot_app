@@ -1,10 +1,10 @@
-import '../core/abstract_card_phase_agent.dart';
-import '../core/decision_maker_wrapper.dart';
-import '../core/environment_state.dart';
-import '../core/selector.dart';
-import '../core/suited_playable.dart';
-import '../decision_maker.dart';
-import 'one_use_action_handler.dart';
+import '../../core/abstract_card_phase_agent.dart';
+import '../../core/decision_maker.dart';
+import '../../core/decision_maker_wrapper.dart';
+import '../../core/environment_state.dart';
+import '../../core/one_use_action_handler.dart';
+import '../../core/selector.dart';
+import '../../core/suited_playable.dart';
 
 class CardPhaseAgent implements AbstractCardPhaseAgent {
   final OneUseActionHandler<SuitedPlayable> _hand;

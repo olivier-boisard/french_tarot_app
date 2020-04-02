@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
-import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
-import 'package:french_tarot/engine/card_phase/turn.dart';
 import 'package:french_tarot/engine/core/card.dart';
+import 'package:french_tarot/engine/core/one_use_action_handler.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
-import 'package:french_tarot/engine/random_decision_maker.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
+import 'package:french_tarot/engine/phases/card/turn.dart';
+import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
 void main() {
   test('Create random card phase agent', () {

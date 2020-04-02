@@ -2,15 +2,18 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
-import 'package:french_tarot/engine/card_phase/card_phase_agent.dart';
-import 'package:french_tarot/engine/card_phase/one_use_action_handler.dart';
 import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
+import 'package:french_tarot/engine/core/one_use_action_handler.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
-import 'package:french_tarot/engine/random_decision_maker.dart';
+import 'package:french_tarot/engine/phases/card/card_phase.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
+import 'package:french_tarot/engine/phases/dog/dog_phase.dart';
+import 'package:french_tarot/engine/random/random_bidding_phase.dart';
+import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
 void main() {
   test('Run application', () {
@@ -98,3 +101,5 @@ List<AbstractCardPhaseAgent> _createAgents(Deck deck,
   }
   return agents;
 }
+
+class InvalidAmountOfCardsInDeckException implements Exception {}

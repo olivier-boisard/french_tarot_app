@@ -1,5 +1,5 @@
-import '../core/selector.dart';
-import '../decision_maker.dart';
+import 'decision_maker.dart';
+import 'selector.dart';
 
 class OneUseActionHandler<T> {
   final List<T> _actions;
