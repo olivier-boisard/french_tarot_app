@@ -27,6 +27,7 @@ class ScoreManager implements AbstractScoreManager {
     return numberOfOudlers;
   }
 
+  @override
   void winScoreElements(Iterable<ScoreElement> wonScoreElements) {
     _wonScoreElements.addAll(wonScoreElements);
   }
