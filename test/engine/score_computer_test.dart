@@ -27,14 +27,20 @@ void main() {
       _createCardPhaseAgent(),
       _createCardPhaseAgent()
     ];
-    final orderedPlayer = [taker] + opposition;
+    final orderedPlayers = [taker] + opposition;
 
-    final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn1, orderedPlayer)
-      ..consume(turn2, orderedPlayer);
+    final takerScoreManager = ScoreManager();
+    final oppositionScoreManager = ScoreManager();
+    ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    )
+      ..consume(turn1, orderedPlayers)
+      ..consume(turn2, orderedPlayers);
 
-    expect(scoreComputer.takerScore, equals(3));
-    expect(scoreComputer.oppositionScore, equals(2));
+    expect(takerScoreManager.score, equals(3));
+    expect(oppositionScoreManager.score, equals(2));
   });
 
   test('Opposition plays excuse and wins', () {
@@ -50,11 +56,15 @@ void main() {
       _createCardPhaseAgent()
     ];
     final orderedPlayers = [taker] + opposition;
-
-    final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayers);
-    expect(scoreComputer.takerScore, equals(0));
-    expect(scoreComputer.oppositionScore, equals(6));
+    final takerScoreManager = ScoreManager();
+    final oppositionScoreManager = ScoreManager();
+    ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    ).consume(turn, orderedPlayers);
+    expect(takerScoreManager.score, equals(0));
+    expect(oppositionScoreManager.score, equals(6));
   });
 
   test('Oppotion plays excuse and looses', () {
@@ -70,11 +80,16 @@ void main() {
       _createCardPhaseAgent()
     ];
     final orderedPlayers = [taker] + opposition;
-    final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayers);
+    final takerScoreManager = ScoreManager();
+    final oppositionScoreManager = ScoreManager();
+    ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    ).consume(turn, orderedPlayers);
 
-    expect(scoreComputer.takerScore, equals(2));
-    expect(scoreComputer.oppositionScore, equals(4));
+    expect(takerScoreManager.score, equals(2));
+    expect(oppositionScoreManager.score, equals(4));
   });
 
   test('Taker plays excuse', () {
@@ -90,19 +105,17 @@ void main() {
       _createCardPhaseAgent()
     ];
     final orderedPlayers = [taker] + opposition;
-    final scoreComputer = _createScoreComputer(taker)
-      ..consume(turn, orderedPlayers);
+    final takerScoreManager = ScoreManager();
+    final oppositionScoreManager = ScoreManager();
+    ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    ).consume(turn, orderedPlayers);
 
-    expect(scoreComputer.takerScore, equals(4));
-    expect(scoreComputer.oppositionScore, equals(2));
+    expect(takerScoreManager.score, equals(4));
+    expect(oppositionScoreManager.score, equals(2));
   });
-}
-
-ScoreComputer _createScoreComputer(CardPhaseAgent taker) {
-  final takerState = ScoreManager();
-  final oppositionState = ScoreManager();
-  final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
-  return scoreComputer;
 }
 
 CardPhaseAgent _createCardPhaseAgent() {

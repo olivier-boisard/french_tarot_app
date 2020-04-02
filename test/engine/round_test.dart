@@ -27,13 +27,16 @@ void main() {
 
     final taker = agents[0];
     final dog = deck.pop(nCardsInDog);
-    final takerState = ScoreManager()..winScoreElements(dog);
-    final oppositionState = ScoreManager();
-    final scoreComputer = ScoreComputer(taker, takerState, oppositionState);
+    final takerScoreManager = ScoreManager()..winScoreElements(dog);
+    final oppositionScoreManager = ScoreManager();
+    final scoreComputer = ScoreComputer(
+      taker,
+      takerScoreManager,
+      oppositionScoreManager,
+    );
 
-    final round = Round(() => Turn(), scoreComputer.consume);
-    round.play(agents);
-    final totalScore = scoreComputer.oppositionScore + scoreComputer.takerScore;
+    Round(() => Turn(), scoreComputer.consume).play(agents);
+    final totalScore = takerScoreManager.score + oppositionScoreManager.score;
     expect(totalScore, equals(91));
   });
 

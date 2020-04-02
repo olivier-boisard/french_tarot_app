@@ -1,13 +1,11 @@
-import 'package:french_tarot/engine/core/score_element.dart';
-import 'package:french_tarot/engine/core/score_manager.dart';
-
 import 'abstract_card_phase_agent.dart';
-import 'abstract_score_computer.dart';
 import 'actions_handler.dart';
 import 'playable_score_element.dart';
+import 'score_element.dart';
+import 'score_manager.dart';
 
 //TODO SOLID
-class ScoreComputer implements AbstractScoreComputer {
+class ScoreComputer {
   final AbstractCardPhaseAgent _taker;
   final ScoreManager _takerScoreManager;
   final ScoreManager _oppositionScoreManager;
@@ -17,12 +15,6 @@ class ScoreComputer implements AbstractScoreComputer {
     this._takerScoreManager,
     this._oppositionScoreManager,
   );
-
-  @override
-  int get takerScore => _takerScoreManager.score;
-
-  @override
-  int get oppositionScore => _oppositionScoreManager.score;
 
   void consume(ActionsHandler<PlayableScoreElement> turn,
       List<AbstractCardPhaseAgent> agentsPlayOrder) {
