@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 import 'abstract_card.dart';
 import 'suited_playable.dart';
 
+@immutable
 class Card implements AbstractCard {
   @override
   final Suit suit;
