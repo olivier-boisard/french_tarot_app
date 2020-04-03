@@ -31,11 +31,14 @@ void main() {
 
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
+
+    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
     roundScoresComputer.taker = taker;
+
     roundScoresComputer
       ..consume(turn1, orderedPlayers)
       ..consume(turn2, orderedPlayers);
@@ -59,11 +62,14 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
+
+    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
     roundScoresComputer.taker = taker;
+
     roundScoresComputer.consume(turn, orderedPlayers);
     expect(takerScoreManager.score, equals(0));
     expect(oppositionScoreManager.score, equals(6));
@@ -84,11 +90,14 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
+
+    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
     roundScoresComputer.taker = taker;
+
     roundScoresComputer.consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(2));
@@ -110,11 +119,14 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
+
+    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
     roundScoresComputer.taker = taker;
+
     roundScoresComputer.consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(4));
