@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/one_use_action_handler.dart';
-import 'package:french_tarot/engine/core/score_computer.dart';
+import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
-import 'package:french_tarot/engine/phases/card/round.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
@@ -25,17 +25,18 @@ void main() {
       agents.add(CardPhaseAgent(decisionMaker.run, hand));
     }
 
-    final taker = agents[0];
     final dog = deck.pop(nCardsInDog);
     final takerScoreManager = ScoreManager()..winScoreElements(dog);
     final oppositionScoreManager = ScoreManager();
-    final scoreComputer = ScoreComputer(
-      taker,
+
+    //TODO not very satisfying to create an object that is not ready
+    final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
+    roundScoresComputer.taker = agents[0];
 
-    Round(() => Turn(), scoreComputer.consume).play(agents);
+    CardPhase(() => Turn(), roundScoresComputer.consume, agents).run();
     final totalScore = takerScoreManager.score + oppositionScoreManager.score;
     expect(totalScore, equals(91));
   });

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/score_computer.dart';
+import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
@@ -31,11 +31,12 @@ void main() {
 
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
-    ScoreComputer(
-      taker,
+    final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    )
+    );
+    roundScoresComputer.taker = taker;
+    roundScoresComputer
       ..consume(turn1, orderedPlayers)
       ..consume(turn2, orderedPlayers);
 
@@ -58,11 +59,12 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
-    ScoreComputer(
-      taker,
+    final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    ).consume(turn, orderedPlayers);
+    );
+    roundScoresComputer.taker = taker;
+    roundScoresComputer.consume(turn, orderedPlayers);
     expect(takerScoreManager.score, equals(0));
     expect(oppositionScoreManager.score, equals(6));
   });
@@ -82,11 +84,12 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
-    ScoreComputer(
-      taker,
+    final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    ).consume(turn, orderedPlayers);
+    );
+    roundScoresComputer.taker = taker;
+    roundScoresComputer.consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(2));
     expect(oppositionScoreManager.score, equals(4));
@@ -107,11 +110,12 @@ void main() {
     final orderedPlayers = [taker] + opposition;
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
-    ScoreComputer(
-      taker,
+    final roundScoresComputer = RoundScoresComputer(
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    ).consume(turn, orderedPlayers);
+    );
+    roundScoresComputer.taker = taker;
+    roundScoresComputer.consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(4));
     expect(oppositionScoreManager.score, equals(2));
