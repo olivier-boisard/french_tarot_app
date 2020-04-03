@@ -4,6 +4,7 @@ import 'function_interfaces.dart';
 import 'playable_score_element.dart';
 import 'score_element.dart';
 
+//TODO this class is too big
 class RoundScoresComputer {
   //TODO add unit test when taker is null
   AbstractCardPhaseAgent taker;
@@ -48,8 +49,8 @@ class RoundScoresComputer {
     ActionsHandler<PlayableScoreElement> turn,
     bool takerWon,
   ) {
-    final scoreElements =
-        turn.actionHistory.where((element) => element.winnable);
+    final actionHistory = turn.actionHistory;
+    final scoreElements = actionHistory.where((element) => element.winnable);
     if (takerWon) {
       _takerScoreElementsConsumer(scoreElements);
     } else {

@@ -3,8 +3,10 @@ import '../../core/decision.dart';
 import '../../core/environment_state.dart';
 import '../../core/one_use_action_handler.dart';
 import '../../core/selector.dart';
+import '../../core/selector_wrapper.dart';
 import '../../core/suited_playable.dart';
 
+//TODO break dependency to OneUseActionHandler
 class CardPhaseAgent implements AbstractCardPhaseAgent {
   final OneUseActionHandler<SuitedPlayable> _hand;
   final Selector<SuitedPlayable> _decisionMaker;
@@ -13,7 +15,7 @@ class CardPhaseAgent implements AbstractCardPhaseAgent {
 
   @override
   Decision<SuitedPlayable> play(State<SuitedPlayable> turn) {
-    return _hand.pickAction(wrapDecisionMaker(turn, _decisionMaker));
+    return _hand.pickAction(wrapSelector(turn, _decisionMaker));
   }
 
   @override

@@ -6,6 +6,7 @@ class OneUseActionHandler<T> {
 
   OneUseActionHandler(this._actions);
 
+  //TODO use abstraction of Decision
   Decision<T> pickAction(Selector<T> decisionMaker) {
     if (_actions.isEmpty) {
       throw EmptyActionHandlerException();

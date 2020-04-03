@@ -1,9 +1,8 @@
 import '../../core/abstract_card_phase_agent.dart';
 import '../../core/abstract_score_manager.dart';
 import '../../core/function_interfaces.dart';
-import '../bid/bid.dart';
+import '../bid.dart';
 
-// TODO SOLID
 class EarnedPointsComputer {
   final List<AbstractCardPhaseAgent> _agents;
   final AbstractScoreManager _takerScoreManager;
@@ -14,9 +13,10 @@ class EarnedPointsComputer {
 
   void run() {
     final earnedPoints = _computeEarnedPoints();
-    _notifyConsumers(earnedPoints);
+    notifyConsumers<List<int>>(earnedPointsConsumers, earnedPoints);
   }
 
+  //TODO break down in smaller functions
   List<int> _computeEarnedPoints() {
     final contract = [56, 51, 41, 36][_takerScoreManager.nOudlers];
     var takerEarnedPoints = 0;
@@ -42,14 +42,5 @@ class EarnedPointsComputer {
       }
     }
     return earnedPoints;
-  }
-
-  //TODO factorize all such methods
-  void _notifyConsumers(List<int> values) {
-    if (earnedPointsConsumers != null) {
-      for (final consumer in earnedPointsConsumers) {
-        consumer(values);
-      }
-    }
   }
 }
