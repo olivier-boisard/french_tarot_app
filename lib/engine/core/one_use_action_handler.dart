@@ -1,4 +1,4 @@
-import 'decision_maker.dart';
+import 'decision.dart';
 import 'selector.dart';
 
 class OneUseActionHandler<T> {

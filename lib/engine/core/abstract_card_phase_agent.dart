@@ -1,4 +1,4 @@
-import 'decision_maker.dart';
+import 'decision.dart';
 import 'environment_state.dart';
 import 'suited_playable.dart';
 

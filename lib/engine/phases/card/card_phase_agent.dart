@@ -1,6 +1,5 @@
 import '../../core/abstract_card_phase_agent.dart';
-import '../../core/decision_maker.dart';
-import '../../core/decision_maker_wrapper.dart';
+import '../../core/decision.dart';
 import '../../core/environment_state.dart';
 import '../../core/one_use_action_handler.dart';
 import '../../core/selector.dart';

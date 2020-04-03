@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../core/decision_maker.dart';
+import '../core/decision.dart';
 
 class RandomDecisionMaker<A> {
   final Random _random;

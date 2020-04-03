@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'card.dart';
 
+//TODO externalize cards instantiation responsibility
 class Deck {
   final List<Card> _cards;
   final Random _random;

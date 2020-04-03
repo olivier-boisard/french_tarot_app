@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/decision_maker_wrapper.dart';
 import 'package:french_tarot/engine/core/one_use_action_handler.dart';
+import 'package:french_tarot/engine/core/selector_wrapper.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
@@ -39,7 +39,7 @@ void main() {
         Random(i),
       );
       final agent = OneUseActionHandler<SuitedPlayable>(originalHand.toList());
-      final decision = agent.pickAction(wrapDecisionMaker(turn, behavior.run));
+      final decision = agent.pickAction(wrapSelector(turn, behavior.run));
       expect(decision.action, equals(diamondCardInHand));
     }
   });
@@ -63,7 +63,7 @@ void main() {
       final random = Random(i);
       final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(random);
       final agent = OneUseActionHandler<SuitedPlayable>(originalHand.toList());
-      final decision = agent.pickAction(wrapDecisionMaker(turn, behavior.run));
+      final decision = agent.pickAction(wrapSelector(turn, behavior.run));
       diamondCardsInHand.remove(decision.action);
     }
     expect(diamondCardsInHand, isEmpty);
