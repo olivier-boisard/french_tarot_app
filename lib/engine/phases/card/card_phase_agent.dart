@@ -5,7 +5,6 @@ import '../../core/selector.dart';
 import '../../core/selector_wrapper.dart';
 import '../../core/suited_playable.dart';
 
-//TODO break dependency to OneUseActionHandler
 class CardPhaseAgent implements AbstractCardPhaseAgent {
   final Selector<SuitedPlayable> _decisionMaker;
   final List<SuitedPlayable> _hand;
