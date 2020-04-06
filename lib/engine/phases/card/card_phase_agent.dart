@@ -19,5 +19,5 @@ class CardPhaseAgent implements AbstractCardPhaseAgent {
   }
 
   @override
-  bool get isReady => _hand.isEmpty;
+  bool get isReady => !_hand.isEmpty;
 }

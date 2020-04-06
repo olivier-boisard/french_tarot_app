@@ -17,7 +17,7 @@ class CardPhase {
   );
 
   void run() {
-    while (!_agents[0].isReady) {
+    while (_agents[0].isReady) {
       final turn = _abstractTurnFactory();
       for (final agent in _agents) {
         final decision = agent.play(turn);
