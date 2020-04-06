@@ -19,8 +19,8 @@ void main() {
     final agents = <CardPhaseAgent>[];
     for (var i = 0; i < nPlayers; i++) {
       final decisionMaker = RandomDecisionMaker<SuitedPlayable>();
-      final handCards = deck.pop(nCardsPerPlayer);
-      agents.add(CardPhaseAgent(decisionMaker.run, handCards));
+      final hand = deck.pop(nCardsPerPlayer);
+      agents.add(CardPhaseAgent(decisionMaker.run, hand));
     }
 
     final dog = deck.pop(nCardsInDog);

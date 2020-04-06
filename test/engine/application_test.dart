@@ -105,8 +105,8 @@ List<AbstractCardPhaseAgent> _createAgents(Deck deck,
   }
   final agents = <AbstractCardPhaseAgent>[];
   for (final decisionMaker in decisionMakers) {
-    final handCards = deck.pop(nCardsPerAgent);
-    agents.add(CardPhaseAgent(decisionMaker, handCards));
+    final hand = deck.pop(nCardsPerAgent);
+    agents.add(CardPhaseAgent(decisionMaker, hand));
   }
   return agents;
 }

@@ -10,12 +10,12 @@ import 'package:french_tarot/engine/random/random_decision_maker.dart';
 //TODO use RandomCardPhaseAgent here after its creation
 void main() {
   test('Deal card and play first card in turn', () {
-    final handCards = [Card.coloredCard(Suit.diamond, 1)];
-    final handCardsCopy = handCards.toList();
+    final hand = [Card.coloredCard(Suit.diamond, 1)];
+    final handCopy = hand.toList();
     final decisionFunction = RandomDecisionMaker<SuitedPlayable>().run;
-    final cardPhaseAgent = CardPhaseAgent(decisionFunction, handCards);
+    final cardPhaseAgent = CardPhaseAgent(decisionFunction, hand);
 
-    expect(cardPhaseAgent.play(Turn()).action, isIn(handCardsCopy));
+    expect(cardPhaseAgent.play(Turn()).action, isIn(handCopy));
     expect(
       () => cardPhaseAgent.play(Turn()).action,
       throwsA(isInstanceOf<EmptyHandException>()),
