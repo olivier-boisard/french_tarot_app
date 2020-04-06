@@ -13,14 +13,16 @@ class EarnedPointsComputer {
 
   void run() {
     final earnedPoints = _computeEarnedPoints();
-    notifyConsumers<List<int>>(earnedPointsConsumers, earnedPoints);
+    final outputList = _populateOutputList(earnedPoints);
+    notifyConsumers<List<int>>(earnedPointsConsumers, outputList);
   }
 
-  //TODO break down in smaller functions
-  List<int> _computeEarnedPoints() {
+  _EarnedPoints _computeEarnedPoints() {
     final contract = [56, 51, 41, 36][_takerScoreManager.nOudlers];
+
     var takerEarnedPoints = 0;
     var opponentsEarnedPoints = 0;
+
     final nOpponents = _agents.length - 1;
     final score = _takerScoreManager.score;
     if (score >= contract) {
@@ -33,14 +35,28 @@ class EarnedPointsComputer {
       opponentsEarnedPoints = basePoint;
     }
 
-    final earnedPoints = <int>[];
+    return _EarnedPoints(
+      takerEarnedPoints,
+      opponentsEarnedPoints,
+    );
+  }
+
+  List<int> _populateOutputList(_EarnedPoints earnedPoints) {
+    final output = <int>[];
     for (final agent in _agents) {
       if (identical(agent, biddingResult.taker)) {
-        earnedPoints.add(takerEarnedPoints);
+        output.add(earnedPoints.taker);
       } else {
-        earnedPoints.add(opponentsEarnedPoints);
+        output.add(earnedPoints.opponents);
       }
     }
-    return earnedPoints;
+    return output;
   }
+}
+
+class _EarnedPoints {
+  final int taker;
+  final int opponents;
+
+  _EarnedPoints(this.taker, this.opponents);
 }
