@@ -5,7 +5,7 @@ import 'package:french_tarot/engine/application.dart';
 import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
 import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
-import 'package:french_tarot/engine/core/one_use_action_handler.dart';
+import 'package:french_tarot/engine/core/one_use_actions_handler.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
@@ -107,7 +107,7 @@ List<AbstractCardPhaseAgent> _createAgents(Deck deck,
   final agents = <AbstractCardPhaseAgent>[];
   for (final decisionMaker in decisionMakers) {
     final cardsInHand = deck.pop(nCardsPerAgent);
-    final hand = OneUseActionHandler<SuitedPlayable>(cardsInHand);
+    final hand = OneUseActionsHandler<SuitedPlayable>(cardsInHand);
     agents.add(CardPhaseAgent(decisionMaker, hand));
   }
   return agents;

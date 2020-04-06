@@ -1,10 +1,10 @@
 import 'decision.dart';
 import 'selector.dart';
 
-class OneUseActionHandler<T> {
+class OneUseActionsHandler<T> {
   final List<T> _actions;
 
-  OneUseActionHandler(this._actions);
+  OneUseActionsHandler(this._actions);
 
   //TODO use abstraction of Decision
   Decision<T> pickAction(Selector<T> decisionMaker) {

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/one_use_action_handler.dart';
+import 'package:french_tarot/engine/core/one_use_actions_handler.dart';
 import 'package:french_tarot/engine/core/selector_wrapper.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
@@ -13,7 +13,7 @@ void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
     final handCopy = hand.toList();
-    final agent = OneUseActionHandler<SuitedPlayable>(hand);
+    final agent = OneUseActionsHandler<SuitedPlayable>(hand);
     final decisionFunction = RandomDecisionMaker<SuitedPlayable>().run;
 
     expect(agent.pickAction(decisionFunction).action, isIn(handCopy));
@@ -38,7 +38,7 @@ void main() {
       final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(
         Random(i),
       );
-      final agent = OneUseActionHandler<SuitedPlayable>(originalHand.toList());
+      final agent = OneUseActionsHandler<SuitedPlayable>(originalHand.toList());
       final decision = agent.pickAction(wrapSelector(turn, behavior.run));
       expect(decision.action, equals(diamondCardInHand));
     }
@@ -62,7 +62,7 @@ void main() {
     for (var i = 0; i < 1000; i++) {
       final random = Random(i);
       final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(random);
-      final agent = OneUseActionHandler<SuitedPlayable>(originalHand.toList());
+      final agent = OneUseActionsHandler<SuitedPlayable>(originalHand.toList());
       final decision = agent.pickAction(wrapSelector(turn, behavior.run));
       diamondCardsInHand.remove(decision.action);
     }
