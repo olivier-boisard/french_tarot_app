@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/deck.dart';
-import 'package:french_tarot/engine/core/one_use_actions_handler.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
@@ -21,8 +20,7 @@ void main() {
     for (var i = 0; i < nPlayers; i++) {
       final decisionMaker = RandomDecisionMaker<SuitedPlayable>();
       final handCards = deck.pop(nCardsPerPlayer);
-      final hand = OneUseActionsHandler<SuitedPlayable>(handCards);
-      agents.add(CardPhaseAgent(decisionMaker.run, hand));
+      agents.add(CardPhaseAgent(decisionMaker.run, handCards));
     }
 
     final dog = deck.pop(nCardsInDog);

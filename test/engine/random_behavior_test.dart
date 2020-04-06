@@ -2,24 +2,23 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/card.dart';
-import 'package:french_tarot/engine/core/one_use_actions_handler.dart';
-import 'package:french_tarot/engine/core/selector_wrapper.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
 //TODO use RandomCardPhaseAgent here after its creation
 void main() {
   test('Deal card and play first card in turn', () {
-    final hand = [Card.coloredCard(Suit.diamond, 1)];
-    final handCopy = hand.toList();
-    final agent = OneUseActionsHandler<SuitedPlayable>(hand);
+    final handCards = [Card.coloredCard(Suit.diamond, 1)];
+    final handCardsCopy = handCards.toList();
     final decisionFunction = RandomDecisionMaker<SuitedPlayable>().run;
+    final cardPhaseAgent = CardPhaseAgent(decisionFunction, handCards);
 
-    expect(agent.pickAction(decisionFunction).action, isIn(handCopy));
+    expect(cardPhaseAgent.play(Turn()).action, isIn(handCardsCopy));
     expect(
-      () => agent.pickAction(decisionFunction),
-      throwsA(isInstanceOf<EmptyActionHandlerException>()),
+      () => cardPhaseAgent.play(Turn()).action,
+      throwsA(isInstanceOf<EmptyHandException>()),
     );
   });
 
@@ -38,8 +37,9 @@ void main() {
       final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(
         Random(i),
       );
-      final agent = OneUseActionsHandler<SuitedPlayable>(originalHand.toList());
-      final decision = agent.pickAction(wrapSelector(turn, behavior.run));
+      final handCopy = originalHand.toList();
+      final cardPhaseAgent = CardPhaseAgent(behavior.run, handCopy);
+      final decision = cardPhaseAgent.play(turn);
       expect(decision.action, equals(diamondCardInHand));
     }
   });
@@ -62,8 +62,9 @@ void main() {
     for (var i = 0; i < 1000; i++) {
       final random = Random(i);
       final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(random);
-      final agent = OneUseActionsHandler<SuitedPlayable>(originalHand.toList());
-      final decision = agent.pickAction(wrapSelector(turn, behavior.run));
+      final handCopy = originalHand.toList();
+      final cardPhaseAgent = CardPhaseAgent(behavior.run, handCopy);
+      final decision = cardPhaseAgent.play(turn);
       diamondCardsInHand.remove(decision.action);
     }
     expect(diamondCardsInHand, isEmpty);
