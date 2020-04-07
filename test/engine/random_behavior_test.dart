@@ -5,15 +5,13 @@ import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
-import 'package:french_tarot/engine/random/random_decision_maker.dart';
+import 'package:french_tarot/engine/random/random_card_phase_agent_facade.dart';
 
-//TODO use RandomCardPhaseAgent here after its creation
 void main() {
   test('Deal card and play first card in turn', () {
     final hand = [Card.coloredCard(Suit.diamond, 1)];
     final handCopy = hand.toList();
-    final decisionFunction = RandomDecisionMaker<SuitedPlayable>().run;
-    final cardPhaseAgent = CardPhaseAgent(decisionFunction, hand);
+    final cardPhaseAgent = RandomCardPhaseAgentFacade(hand);
 
     expect(cardPhaseAgent.play(Turn()).action, isIn(handCopy));
     expect(
@@ -34,11 +32,11 @@ void main() {
     final turn = Turn()..addAction(Card.coloredCard(Suit.diamond, 2));
 
     for (var i = 0; i < 1000; i++) {
-      final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(
-        Random(i),
-      );
       final handCopy = originalHand.toList();
-      final cardPhaseAgent = CardPhaseAgent(behavior.run, handCopy);
+      final cardPhaseAgent = RandomCardPhaseAgentFacade.withRandom(
+        Random(i),
+        handCopy,
+      );
       final decision = cardPhaseAgent.play(turn);
       expect(decision.action, equals(diamondCardInHand));
     }
@@ -60,10 +58,11 @@ void main() {
 
     final turn = Turn()..addAction(Card.coloredCard(Suit.diamond, 4));
     for (var i = 0; i < 1000; i++) {
-      final random = Random(i);
-      final behavior = RandomDecisionMaker<SuitedPlayable>.withRandom(random);
       final handCopy = originalHand.toList();
-      final cardPhaseAgent = CardPhaseAgent(behavior.run, handCopy);
+      final cardPhaseAgent = RandomCardPhaseAgentFacade.withRandom(
+        Random(i),
+        handCopy,
+      );
       final decision = cardPhaseAgent.play(turn);
       diamondCardsInHand.remove(decision.action);
     }
