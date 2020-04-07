@@ -76,16 +76,16 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
     return actionHistory.first.suit != Suit.none || actionHistory.length != 1;
   }
 
+  List<T> _extractCardsMatchingAskedSuit(List<T> hand) {
+    return hand.where((card) => card.suit == _askedSuit).toList();
+  }
+
   Suit get _askedSuit {
     final firstPlayedCard = actionHistory.first;
     final asked = firstPlayedCard.suit != Suit.none
         ? firstPlayedCard.suit
         : actionHistory[1].suit;
     return asked;
-  }
-
-  List<T> _extractCardsMatchingAskedSuit(List<T> hand) {
-    return hand.where((card) => card.suit == _askedSuit).toList();
   }
 
   T _extractStrongestTrump(List<T> playedTrumps) {

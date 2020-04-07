@@ -30,13 +30,6 @@ class RoundScoresComputer {
     _handleScoreElements(turn, takerScoreElement, takerWon);
   }
 
-  PlayableScoreElement _extractTakerPlayedScoreElement(
-    ActionsHandler<PlayableScoreElement> turn,
-    List<AbstractCardPhaseAgent> agentsPlayOrder,
-  ) {
-    return turn.actionHistory[agentsPlayOrder.indexOf(taker)];
-  }
-
   bool _didTakerWin(
     List<AbstractCardPhaseAgent> agentsPlayOrder,
     ActionsHandler<PlayableScoreElement> turn,
@@ -56,6 +49,13 @@ class RoundScoresComputer {
     } else {
       _oppositionScoreElementsConsumer(scoreElements);
     }
+  }
+
+  PlayableScoreElement _extractTakerPlayedScoreElement(
+    ActionsHandler<PlayableScoreElement> turn,
+    List<AbstractCardPhaseAgent> agentsPlayOrder,
+  ) {
+    return turn.actionHistory[agentsPlayOrder.indexOf(taker)];
   }
 
   void _handleScoreElements(
