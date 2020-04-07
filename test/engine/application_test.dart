@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
 import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
-import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/earned_points_computer.dart';
@@ -97,8 +97,11 @@ List<int> runApplication() {
   return earnedPoints;
 }
 
-List<AbstractCardPhaseAgent> _createAgents(TarotDeckFacade deck,
-    List<Selector<SuitedPlayable>> decisionMakers, int nCardsToDeal) {
+List<AbstractCardPhaseAgent> _createAgents(
+  TarotDeckFacade deck,
+  List<Selector<SuitedPlayable>> decisionMakers,
+  int nCardsToDeal,
+) {
   final nCardsPerAgent = nCardsToDeal ~/ decisionMakers.length;
   if (nCardsToDeal % nCardsPerAgent != 0) {
     throw InvalidAmountOfCardsInDeckException();

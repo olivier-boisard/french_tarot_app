@@ -1,12 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
-import 'package:french_tarot/engine/random/random_decision_maker.dart';
+import 'package:french_tarot/engine/random/random_card_phase_agent_facade.dart';
 
 void main() {
   test('Play round', () {
@@ -18,9 +17,8 @@ void main() {
 
     final agents = <CardPhaseAgent>[];
     for (var i = 0; i < nPlayers; i++) {
-      final decisionMaker = RandomDecisionMaker<SuitedPlayable>();
       final hand = deck.pop(nCardsPerPlayer);
-      agents.add(CardPhaseAgent(decisionMaker.run, hand));
+      agents.add(RandomCardPhaseAgentFacade(hand));
     }
 
     final dog = deck.pop(nCardsInDog);
