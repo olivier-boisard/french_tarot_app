@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/turn.dart';
@@ -10,7 +10,7 @@ import 'package:french_tarot/engine/random/random_decision_maker.dart';
 
 void main() {
   test('Play round', () {
-    final deck = Deck()..shuffle();
+    final deck = TarotDeckFacade()..shuffle();
 
     const nPlayers = 4;
     const nCardsInDog = 6;

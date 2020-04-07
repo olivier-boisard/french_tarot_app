@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
 import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
-import 'package:french_tarot/engine/core/deck.dart';
+import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
@@ -53,7 +53,7 @@ List<int> runApplication() {
   }
 
   // Create agents
-  final deck = Deck.withRandom(random)..shuffle();
+  final deck = TarotDeckFacade.withRandom(random)..shuffle();
   final dog = deck.pop(nCardsInDog);
   final nCardsToDeal = deck.originalSize - dog.length;
   final agents = _createAgents(deck, decisionMakers, nCardsToDeal);
@@ -97,7 +97,7 @@ List<int> runApplication() {
   return earnedPoints;
 }
 
-List<AbstractCardPhaseAgent> _createAgents(Deck deck,
+List<AbstractCardPhaseAgent> _createAgents(TarotDeckFacade deck,
     List<Selector<SuitedPlayable>> decisionMakers, int nCardsToDeal) {
   final nCardsPerAgent = nCardsToDeal ~/ decisionMakers.length;
   if (nCardsToDeal % nCardsPerAgent != 0) {
