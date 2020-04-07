@@ -32,6 +32,7 @@ void main() {
     );
     roundScoresComputer.taker = agents[0];
 
+    //TODO create facade for CardPhase with Turn factory
     CardPhase(() => Turn(), roundScoresComputer.consume, agents).run();
     final totalScore = takerScoreManager.score + oppositionScoreManager.score;
     expect(totalScore, equals(91));
