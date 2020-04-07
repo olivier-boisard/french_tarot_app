@@ -4,7 +4,6 @@ import 'function_interfaces.dart';
 import 'playable_score_element.dart';
 import 'score_element.dart';
 
-//TODO this class is too big
 class RoundScoresComputer {
   //TODO add unit test when taker is null
   AbstractCardPhaseAgent taker;

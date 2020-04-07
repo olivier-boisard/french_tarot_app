@@ -1,7 +1,6 @@
 import '../../core/suited_playable.dart';
 import 'abstract_turn.dart';
 
-//TODO this class is too big
 class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
   @override
   final List<T> actionHistory;
