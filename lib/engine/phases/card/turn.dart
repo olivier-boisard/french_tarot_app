@@ -24,21 +24,6 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
     return index;
   }
 
-  bool get _suitIsDetermined {
-    if (actionHistory.isEmpty) {
-      return false;
-    }
-    return actionHistory.first.suit != Suit.none || actionHistory.length != 1;
-  }
-
-  Suit get _askedSuit {
-    final firstPlayedCard = actionHistory.first;
-    final asked = firstPlayedCard.suit != Suit.none
-        ? firstPlayedCard.suit
-        : actionHistory[1].suit;
-    return asked;
-  }
-
   @override
   void addAction(T action) {
     actionHistory.add(action);
@@ -47,7 +32,7 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
   @override
   List<T> extractAllowedActions(List<T> actions) {
     if (!_suitIsDetermined) {
-      return _copyCardList(actions);
+      return _copyList(actions);
     }
 
     var validCards = _extractCardsMatchingAskedSuit(actions);
@@ -64,12 +49,39 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
         validCards = _extractTrumps(actions);
       }
       if (validCards.isEmpty) {
-        return _copyCardList(actions);
+        return _copyList(actions);
       }
     }
     final cardsWithoutSuit = actions.where((card) => card.suit == Suit.none);
     validCards.addAll(cardsWithoutSuit);
     return validCards;
+  }
+
+  @override
+  T extractGreedyAction(List<T> actions) {
+    // TODO: implement extractGreedyAction
+    throw UnimplementedError();
+  }
+
+  @override
+  List<double> get featureVector {
+    // TODO: implement featureVector
+    throw UnimplementedError();
+  }
+
+  bool get _suitIsDetermined {
+    if (actionHistory.isEmpty) {
+      return false;
+    }
+    return actionHistory.first.suit != Suit.none || actionHistory.length != 1;
+  }
+
+  Suit get _askedSuit {
+    final firstPlayedCard = actionHistory.first;
+    final asked = firstPlayedCard.suit != Suit.none
+        ? firstPlayedCard.suit
+        : actionHistory[1].suit;
+    return asked;
   }
 
   List<T> _extractCardsMatchingAskedSuit(List<T> hand) {
@@ -86,7 +98,7 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
     return strongestTrump;
   }
 
-  List<T> _copyCardList(List<T> hand) {
+  List<T> _copyList(List<T> hand) {
     return hand.toList();
   }
 
@@ -96,18 +108,6 @@ class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
 
   bool _filterTrumps(T card, int lowerBound) {
     return card.suit == Suit.trump && card.strength > lowerBound;
-  }
-
-  @override
-  T extractGreedyAction(List<T> actions) {
-    // TODO: implement extractGreedyAction
-    throw UnimplementedError();
-  }
-
-  @override
-  List<double> get featureVector {
-    // TODO: implement featureVector
-    throw UnimplementedError();
   }
 }
 
