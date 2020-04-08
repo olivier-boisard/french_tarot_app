@@ -22,7 +22,7 @@ void main() {
     const minAbsEarnedScore = 25;
     final earnedPoints = runApplication();
 
-    expect(earnedPoints[0].abs(), greaterThanOrEqualTo(minAbsEarnedScore));
+    expect(earnedPoints.first.abs(), greaterThanOrEqualTo(minAbsEarnedScore));
     expect(earnedPoints.reduce((a, b) => a + b), equals(0));
   });
 

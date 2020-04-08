@@ -35,7 +35,7 @@ void main() {
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = agents[0];
+    roundScoresComputer.taker = agents.first;
 
     CardPhase(() => CardPhaseTurn(), roundScoresComputer.consume, agents).run();
     final totalScore = takerScoreManager.score + oppositionScoreManager.score;
@@ -63,7 +63,7 @@ void main() {
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = agents[0];
+    roundScoresComputer.taker = agents.last;
 
     CardPhase(() => CardPhaseTurn(), roundScoresComputer.consume, agents).run();
 
