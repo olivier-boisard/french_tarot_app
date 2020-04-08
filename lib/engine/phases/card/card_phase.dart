@@ -7,7 +7,7 @@ import 'abstract_turn.dart';
 class CardPhase {
   final ActionPerAgentProcessor<AbstractCard> _actionPerAgentProcessor;
   final Factory<AbstractTurn<AbstractCard>> _abstractTurnFactory;
-  final List<AbstractAgent<AbstractCard>> _agents;
+  List<AbstractAgent<AbstractCard>> _agents;
 
   CardPhase(
     this._abstractTurnFactory,
@@ -23,6 +23,12 @@ class CardPhase {
         turn.addAction(decision.action);
       }
       _actionPerAgentProcessor(turn, _agents);
+      _rotateAgents(turn.winningActionIndex);
     }
+  }
+
+  void _rotateAgents(int rotationSize) {
+    _agents = _agents.sublist(rotationSize)
+      ..addAll(_agents.sublist(0, rotationSize));
   }
 }
