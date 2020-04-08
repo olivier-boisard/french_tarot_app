@@ -42,7 +42,6 @@ void main() {
     expect(totalScore, equals(91));
   });
 
-  //TODO add test to make sure winner of one round gets to play first after
   test('Winner plays first next round', () {
     final agents = <AbstractAgent<AbstractCard>>[
       CardPhaseAgent(pickFirst, [
@@ -51,6 +50,14 @@ void main() {
       ]),
       CardPhaseAgent(pickFirst, [
         Card.coloredCard(Suit.spades, 3),
+        Card.coloredCard(Suit.spades, 4),
+      ]),
+      CardPhaseAgent(pickFirst, [
+        Card.coloredCard(Suit.spades, 5),
+        Card.coloredCard(Suit.spades, 6),
+      ]),
+      CardPhaseAgent(pickFirst, [
+        Card.coloredCard(Suit.spades, 7),
         Card.coloredCard(Suit.heart, 1),
       ])
     ];
@@ -67,8 +74,8 @@ void main() {
 
     CardPhase(() => CardPhaseTurn(), roundScoresComputer.consume, agents).run();
 
-    expect(takerScoreManager.score, equals(0));
-    expect(oppositionScoreManager.score, equals(2));
+    expect(takerScoreManager.score, equals(4));
+    expect(oppositionScoreManager.score, equals(0));
   });
 }
 
