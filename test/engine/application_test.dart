@@ -2,17 +2,17 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/application.dart';
-import 'package:french_tarot/engine/core/abstract_card_phase_agent.dart';
+import 'package:french_tarot/engine/core/abstract_agent.dart';
+import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_turn.dart';
 import 'package:french_tarot/engine/phases/card/earned_points_computer.dart';
-import 'package:french_tarot/engine/phases/card/turn.dart';
 import 'package:french_tarot/engine/phases/dog/dog_phase.dart';
 import 'package:french_tarot/engine/random/random_bidding_phase.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
@@ -44,10 +44,10 @@ List<int> runApplication() {
   final earnedPoints = <int>[];
 
   // Create decision makers
-  final decisionMaker = RandomDecisionMaker<SuitedPlayable>.withRandom(
+  final decisionMaker = RandomDecisionMaker<AbstractCard>.withRandom(
     random,
   ).run;
-  final decisionMakers = <Selector<SuitedPlayable>>[];
+  final decisionMakers = <Selector<AbstractCard>>[];
   for (var i = 0; i < nPlayers; i++) {
     decisionMakers.add(decisionMaker);
   }
@@ -56,7 +56,7 @@ List<int> runApplication() {
   final deck = TarotDeckFacade.withRandom(random)..shuffle();
   final dog = deck.pop(nCardsInDog);
   final nCardsToDeal = deck.originalSize - dog.length;
-  final agents = _createAgents(deck, decisionMakers, nCardsToDeal);
+  final agents = _createCardAgents(deck, decisionMakers, nCardsToDeal);
 
   // Create phases
   final takerScoreManager = ScoreManager();
@@ -69,7 +69,7 @@ List<int> runApplication() {
   final dogPhase = DogPhase(dog, takerScoreManager.winScoreElements);
 
   final cardPhase = CardPhase(
-    () => Turn(),
+    () => CardPhaseTurn(),
     roundScoresComputer.consume,
     agents,
   );
@@ -97,16 +97,16 @@ List<int> runApplication() {
   return earnedPoints;
 }
 
-List<AbstractCardPhaseAgent> _createAgents(
+List<AbstractAgent<AbstractCard>> _createCardAgents(
   TarotDeckFacade deck,
-  List<Selector<SuitedPlayable>> decisionMakers,
+  List<Selector<AbstractCard>> decisionMakers,
   int nCardsToDeal,
 ) {
   final nCardsPerAgent = nCardsToDeal ~/ decisionMakers.length;
   if (nCardsToDeal % nCardsPerAgent != 0) {
     throw InvalidAmountOfCardsInDeckException();
   }
-  final agents = <AbstractCardPhaseAgent>[];
+  final agents = <AbstractAgent<AbstractCard>>[];
   for (final decisionMaker in decisionMakers) {
     final hand = deck.pop(nCardsPerAgent);
     agents.add(CardPhaseAgent(decisionMaker, hand));

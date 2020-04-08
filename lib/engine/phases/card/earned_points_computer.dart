@@ -1,10 +1,10 @@
-import '../../core/abstract_card_phase_agent.dart';
+import '../../core/abstract_agent.dart';
 import '../../core/abstract_score_manager.dart';
 import '../../core/function_interfaces.dart';
 import '../bid.dart';
 
 class EarnedPointsComputer {
-  final List<AbstractCardPhaseAgent> _agents;
+  final List<AbstractAgent> _agents;
   final AbstractScoreManager _takerScoreManager;
   List<Consumer<List<int>>> earnedPointsConsumers;
   BiddingResult biddingResult;

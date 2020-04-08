@@ -4,18 +4,18 @@ import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
-import 'package:french_tarot/engine/phases/card/turn.dart';
+import 'package:french_tarot/engine/phases/card/card_phase_turn.dart';
 import 'package:french_tarot/engine/random/random_card_phase_agent_facade.dart';
 
 void main() {
   test('Evaluate score', () {
-    final turn1 = Turn<Card>()
+    final turn1 = CardPhaseTurn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, 1))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
       ..addAction(Card.coloredCard(Suit.diamond, 3))
       ..addAction(Card.coloredCard(Suit.diamond, 4));
 
-    final turn2 = Turn<Card>()
+    final turn2 = CardPhaseTurn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, CardStrengths.jack))
       ..addAction(Card.coloredCard(Suit.diamond, 7))
       ..addAction(Card.coloredCard(Suit.diamond, 6))
@@ -48,7 +48,7 @@ void main() {
   });
 
   test('Opposition plays excuse and wins', () {
-    final turn = Turn<Card>()
+    final turn = CardPhaseTurn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, 1))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
       ..addAction(const Card.excuse())
@@ -76,7 +76,7 @@ void main() {
   });
 
   test('Oppotion plays excuse and looses', () {
-    final turn = Turn<Card>()
+    final turn = CardPhaseTurn<Card>()
       ..addAction(Card.coloredCard(Suit.diamond, 3))
       ..addAction(Card.coloredCard(Suit.diamond, 2))
       ..addAction(const Card.excuse())
@@ -105,7 +105,7 @@ void main() {
   });
 
   test('Taker plays excuse', () {
-    final turn = Turn<Card>()
+    final turn = CardPhaseTurn<Card>()
       ..addAction(const Card.excuse())
       ..addAction(Card.coloredCard(Suit.diamond, 1))
       ..addAction(Card.coloredCard(Suit.diamond, 2))

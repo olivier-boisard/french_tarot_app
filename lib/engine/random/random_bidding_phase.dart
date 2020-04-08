@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import '../core/abstract_card_phase_agent.dart';
+import '../core/abstract_agent.dart';
 import '../core/function_interfaces.dart';
 import '../phases/bid.dart';
 
 class RandomBiddingPhase {
-  final List<AbstractCardPhaseAgent> _agents;
+  final List<AbstractAgent> _agents;
   final Random _random;
   List<Consumer<BiddingResult>> biddingResultsConsumers;
 

@@ -1,7 +1,7 @@
-import '../core/abstract_card_phase_agent.dart';
+import '../core/abstract_agent.dart';
 
 class BiddingResult {
-  final AbstractCardPhaseAgent taker;
+  final AbstractAgent taker;
   final int bidValue;
 
   BiddingResult(this.taker, this.bidValue);

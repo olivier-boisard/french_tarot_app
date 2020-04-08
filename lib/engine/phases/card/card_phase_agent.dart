@@ -1,17 +1,17 @@
-import '../../core/abstract_card_phase_agent.dart';
+import '../../core/abstract_agent.dart';
 import '../../core/decision.dart';
 import '../../core/environment_state.dart';
 import '../../core/selector.dart';
 import '../../core/suited_playable.dart';
 
-class CardPhaseAgent implements AbstractCardPhaseAgent {
-  final Selector<SuitedPlayable> _decisionMaker;
-  final List<SuitedPlayable> _hand;
+class CardPhaseAgent<T extends SuitedPlayable> implements AbstractAgent<T> {
+  final Selector<T> _decisionMaker;
+  final List<T> _hand;
 
   CardPhaseAgent(this._decisionMaker, this._hand);
 
   @override
-  Decision<SuitedPlayable> play(State<SuitedPlayable> turn) {
+  Decision<T> play(State<T> turn) {
     if (_hand.isEmpty) {
       throw EmptyHandException();
     }
@@ -26,7 +26,6 @@ class CardPhaseAgent implements AbstractCardPhaseAgent {
   static Selector<T> _wrapSelector<T>(State<T> state, Selector<T> selector) {
     return (actions) => selector(state.extractAllowedActions(actions));
   }
-
 }
 
 class EmptyHandException implements Exception {}

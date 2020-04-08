@@ -1,14 +1,13 @@
+import '../../core/abstract_agent.dart';
 import '../../core/abstract_card.dart';
-import '../../core/abstract_card_phase_agent.dart';
 import '../../core/action_per_agent_processor.dart';
 import '../../core/function_interfaces.dart';
-import '../../core/playable_score_element.dart';
 import 'abstract_turn.dart';
 
 class CardPhase {
-  final ActionPerAgentProcessor<PlayableScoreElement> _actionPerAgentProcessor;
+  final ActionPerAgentProcessor<AbstractCard> _actionPerAgentProcessor;
   final Factory<AbstractTurn<AbstractCard>> _abstractTurnFactory;
-  final List<AbstractCardPhaseAgent> _agents;
+  final List<AbstractAgent<AbstractCard>> _agents;
 
   CardPhase(
     this._abstractTurnFactory,

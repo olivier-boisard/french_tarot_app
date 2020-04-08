@@ -1,12 +1,11 @@
 import '../../core/suited_playable.dart';
 import 'abstract_turn.dart';
 
-//TODO is the generic really necessary?
-class Turn<T extends SuitedPlayable> implements AbstractTurn<T> {
+class CardPhaseTurn<T extends SuitedPlayable> implements AbstractTurn<T> {
   @override
   final List<T> actionHistory;
 
-  Turn() : actionHistory = <T>[];
+  CardPhaseTurn() : actionHistory = <T>[];
 
   @override
   int get winningActionIndex {

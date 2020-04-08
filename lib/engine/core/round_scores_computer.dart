@@ -1,4 +1,4 @@
-import 'abstract_card_phase_agent.dart';
+import 'abstract_agent.dart';
 import 'actions_handler.dart';
 import 'function_interfaces.dart';
 import 'playable_score_element.dart';
@@ -6,7 +6,7 @@ import 'score_element.dart';
 
 class RoundScoresComputer {
   //TODO add unit test when taker is null
-  AbstractCardPhaseAgent taker;
+  AbstractAgent taker;
   final Consumer<Iterable<ScoreElement>> _takerScoreElementsConsumer;
   final Consumer<Iterable<ScoreElement>> _oppositionScoreElementsConsumer;
 
@@ -17,7 +17,7 @@ class RoundScoresComputer {
 
   void consume(
     ActionsHandler<PlayableScoreElement> turn,
-    List<AbstractCardPhaseAgent> agentsPlayOrder,
+    List<AbstractAgent> agentsPlayOrder,
   ) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealWinnableScoreElementsToWinner(turn, takerWon);
@@ -30,7 +30,7 @@ class RoundScoresComputer {
   }
 
   bool _didTakerWin(
-    List<AbstractCardPhaseAgent> agentsPlayOrder,
+    List<AbstractAgent> agentsPlayOrder,
     ActionsHandler<PlayableScoreElement> turn,
   ) {
     final winner = agentsPlayOrder[turn.winningActionIndex];
@@ -52,7 +52,7 @@ class RoundScoresComputer {
 
   PlayableScoreElement _extractTakerPlayedScoreElement(
     ActionsHandler<PlayableScoreElement> turn,
-    List<AbstractCardPhaseAgent> agentsPlayOrder,
+    List<AbstractAgent> agentsPlayOrder,
   ) {
     return turn.actionHistory[agentsPlayOrder.indexOf(taker)];
   }
