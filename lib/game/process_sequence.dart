@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'core/function_interfaces.dart';
+import '../engine/core/function_interfaces.dart';
 
-class Application {
+class ProcessSequence {
   final List<Process> _processes;
 
-  Application(this._processes);
+  ProcessSequence(this._processes);
 
   void run() {
     for (final process in _processes) {

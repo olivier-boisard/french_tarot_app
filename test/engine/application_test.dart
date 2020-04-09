@@ -14,6 +14,7 @@ import 'package:french_tarot/engine/phases/card/earned_points_computer.dart';
 import 'package:french_tarot/engine/phases/dog/dog_phase.dart';
 import 'package:french_tarot/engine/random/random_bidding_phase.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
+import 'package:french_tarot/game/process_sequence.dart';
 import 'package:french_tarot/game/round_scores_computer_wrapper.dart';
 
 void main() {
@@ -91,7 +92,7 @@ List<int> runApplication() {
   ];
 
   // Create and run application
-  Application(processes).run();
+  ProcessSequence(processes).run();
 
   return earnedPoints;
 }
