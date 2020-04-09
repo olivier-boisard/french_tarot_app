@@ -175,6 +175,9 @@ void main() {
   });
 
   test('Winning card index, no cards', () {
-    expect(() => CardPhaseTurn().winningActionIndex, throwsA(isInstanceOf<EmptyTurn>()));
+    expect(
+      () => CardPhaseTurn().winningActionIndex,
+      throwsA(isInstanceOf<EmptyTurn>()),
+    );
   });
 }

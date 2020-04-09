@@ -34,10 +34,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = taker;
 
     roundScoresComputer
       ..consume(turn1, orderedPlayers)
@@ -65,10 +65,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = taker;
 
     roundScoresComputer.consume(turn, orderedPlayers);
     expect(takerScoreManager.score, equals(0));
@@ -93,10 +93,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = taker;
 
     roundScoresComputer.consume(turn, orderedPlayers);
 
@@ -122,10 +122,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = taker;
 
     roundScoresComputer.consume(turn, orderedPlayers);
 

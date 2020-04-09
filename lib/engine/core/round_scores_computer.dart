@@ -5,12 +5,12 @@ import 'playable_score_element.dart';
 import 'score_element.dart';
 
 class RoundScoresComputer {
-  //TODO add unit test when taker is null
-  AbstractAgent taker;
+  final AbstractAgent _taker;
   final Consumer<Iterable<ScoreElement>> _takerScoreElementsConsumer;
   final Consumer<Iterable<ScoreElement>> _oppositionScoreElementsConsumer;
 
   RoundScoresComputer(
+    this._taker,
     this._takerScoreElementsConsumer,
     this._oppositionScoreElementsConsumer,
   );
@@ -34,7 +34,7 @@ class RoundScoresComputer {
     ActionsHandler<PlayableScoreElement> turn,
   ) {
     final winner = agentsPlayOrder[turn.winningActionIndex];
-    return identical(winner, taker);
+    return identical(winner, _taker);
   }
 
   void _dealWinnableScoreElementsToWinner(
@@ -54,7 +54,7 @@ class RoundScoresComputer {
     ActionsHandler<PlayableScoreElement> turn,
     List<AbstractAgent> agentsPlayOrder,
   ) {
-    return turn.actionHistory[agentsPlayOrder.indexOf(taker)];
+    return turn.actionHistory[agentsPlayOrder.indexOf(_taker)];
   }
 
   void _handleScoreElements(

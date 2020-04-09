@@ -1,11 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/application.dart';
 import 'package:french_tarot/engine/core/abstract_agent.dart';
 import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/function_interfaces.dart';
-import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
@@ -16,6 +14,7 @@ import 'package:french_tarot/engine/phases/card/earned_points_computer.dart';
 import 'package:french_tarot/engine/phases/dog/dog_phase.dart';
 import 'package:french_tarot/engine/random/random_bidding_phase.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
+import 'package:french_tarot/game/round_scores_computer_wrapper.dart';
 
 void main() {
   test('Run application', () {
@@ -61,7 +60,7 @@ List<int> runApplication() {
   // Create phases
   final takerScoreManager = ScoreManager();
   final oppositionScoreManager = ScoreManager();
-  final roundScoresComputer = RoundScoresComputer(
+  final roundScoresComputerWrapper = RoundScoresComputerWrapper(
     takerScoreManager.winScoreElements,
     oppositionScoreManager.winScoreElements,
   );
@@ -70,7 +69,7 @@ List<int> runApplication() {
 
   final cardPhase = CardPhase(
     () => CardPhaseTurn(),
-    roundScoresComputer.consume,
+    roundScoresComputerWrapper.consume,
     agents,
   );
   final earnedPointsComputer = EarnedPointsComputer(agents, takerScoreManager);
@@ -78,7 +77,7 @@ List<int> runApplication() {
   // Wiring
   biddingPhase.biddingResultsConsumers = [
     (biddingResult) => {dogPhase.biddingResult = biddingResult},
-    (biddingResult) => {roundScoresComputer.taker = biddingResult.taker},
+    (biddingResult) => {roundScoresComputerWrapper.taker = biddingResult.taker},
     (biddingResult) => {earnedPointsComputer.biddingResult = biddingResult},
   ];
   earnedPointsComputer.earnedPointsConsumers = [earnedPoints.addAll];

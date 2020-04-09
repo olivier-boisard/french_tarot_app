@@ -32,10 +32,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      agents.first,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = agents.first;
 
     CardPhase(() => CardPhaseTurn(), roundScoresComputer.consume, agents).run();
     final totalScore = takerScoreManager.score + oppositionScoreManager.score;
@@ -67,10 +67,10 @@ void main() {
 
     //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
+      agents.last,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
     );
-    roundScoresComputer.taker = agents.last;
 
     CardPhase(() => CardPhaseTurn(), roundScoresComputer.consume, agents).run();
 
