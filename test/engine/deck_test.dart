@@ -13,7 +13,8 @@ void main() {
 
   test('Shuffle deck', () {
     const randomSeed = 1;
-    final shuffledDeck = TarotDeckFacade.withRandom(Random(randomSeed))..shuffle();
+    final shuffledDeck = TarotDeckFacade.withRandom(Random(randomSeed))
+      ..shuffle();
     final shuffledCard = shuffledDeck.pop(nCardsInDeck);
     final orderedCard = TarotDeckFacade().pop(nCardsInDeck);
     expect(shuffledCard, isNot(orderedEquals(orderedCard)));
@@ -46,6 +47,9 @@ void main() {
 
     final remainingCards = deck.pop(nCardsInDeck - nCardsToPop);
     final allPoppedCards = firstlyPoppedCards + remainingCards;
-    expect(allPoppedCards, unorderedEquals(TarotDeckFacade().pop(nCardsInDeck)));
+    expect(
+      allPoppedCards,
+      unorderedEquals(TarotDeckFacade().pop(nCardsInDeck)),
+    );
   });
 }
