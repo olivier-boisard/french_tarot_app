@@ -19,6 +19,9 @@ class RoundScoresComputerWrapper {
     ActionsHandler<PlayableScoreElement> turn,
     List<AbstractAgent> agentsPlayOrder,
   ) {
+    if (identical(taker, null)) {
+      throw UnsetTakerException();
+    }
     RoundScoresComputer(
       taker,
       _takerScoreElementsConsumer,
@@ -26,3 +29,5 @@ class RoundScoresComputerWrapper {
     ).consume(turn, agentsPlayOrder);
   }
 }
+
+class UnsetTakerException implements Exception {}
