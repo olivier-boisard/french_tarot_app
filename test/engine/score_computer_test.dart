@@ -32,7 +32,6 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
@@ -63,7 +62,6 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
@@ -91,7 +89,6 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
@@ -120,7 +117,6 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    //TODO not very satisfying to create an object that is not ready
     final roundScoresComputer = RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
