@@ -44,12 +44,7 @@ class Deck {
       Value.numeric_21,
       Value.excuse
     ];
-    final standardSuits = [
-      Suit.heart,
-      Suit.spades,
-      Suit.diamond,
-      Suit.club
-    ];
+    final standardSuits = [Suit.heart, Suit.spades, Suit.diamond, Suit.club];
     for (final suit in standardSuits) {
       for (final value in suitValues) {
         cards.add(TarotCard(suit, value));

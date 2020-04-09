@@ -4,14 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-enum Suit {
-  diamond,
-  heart,
-  spades,
-  club,
-  trump,
-  none
-}
+enum Suit { diamond, heart, spades, club, trump, none }
 
 enum Value {
   numeric_1,
@@ -54,7 +47,6 @@ class TarotCard {
 
   TarotCard(this.suit, this.value);
 }
-
 
 class FaceDownCard extends StatelessWidget {
   @override
@@ -110,7 +102,6 @@ class FaceUpCard extends StatelessWidget {
 
   final TarotCard card;
 
-
   const FaceUpCard(this.card, {Key key}) : super(key: key);
 
   @override
@@ -155,8 +146,7 @@ class FaceUpCard extends StatelessWidget {
                   card.value == Value.excuse
                       ? excuseAsString
                       : '$valueAsString$suitAsString',
-                  textAlign: TextAlign.center
-              ),
+                  textAlign: TextAlign.center),
             ),
           ),
           row,

@@ -10,8 +10,7 @@ import 'deck.dart';
 class Area extends StatelessWidget {
   final bool visibleHand;
 
-  const Area({this.visibleHand = false, Key key})
-      : super(key: key);
+  const Area({this.visibleHand = false, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +22,16 @@ class Area extends StatelessWidget {
       cards.add(
         Padding(
           padding: EdgeInsets.only(left: i * offsetInPixel),
-          child: visibleHand
-              ? FaceUpCard(deck.cards[i])
-              : FaceDownCard(),
+          child: visibleHand ? FaceUpCard(deck.cards[i]) : FaceDownCard(),
         ),
       );
     }
-    return Stack(
-        children: cards
-    );
+    return Stack(children: cards);
   }
-  
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<bool>('visibleHand', visibleHand));
   }
 }
-

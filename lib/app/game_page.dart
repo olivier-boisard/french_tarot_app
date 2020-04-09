@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'areas.dart';
 
 class GamePage extends StatefulWidget {
-
   @override
   _GamePageState createState() => _GamePageState();
 }
@@ -20,7 +19,8 @@ class _GamePageState extends State<GamePage> {
             flex: 1,
             child: Area(),
           ),
-          Expanded( // Screen middle (left player, play area, right player)
+          Expanded(
+            // Screen middle (left player, play area, right player)
             flex: 2,
             child: Row(
               children: <Widget>[
@@ -51,7 +51,8 @@ class _GamePageState extends State<GamePage> {
               ],
             ),
           ),
-          Expanded( // Human Player
+          Expanded(
+            // Human Player
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
