@@ -32,15 +32,11 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    final roundScoresComputer = RoundScoresComputer(
+    RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    );
-
-    roundScoresComputer
-      ..consume(turn1, orderedPlayers)
-      ..consume(turn2, orderedPlayers);
+    )..consume(turn1, orderedPlayers)..consume(turn2, orderedPlayers);
 
     expect(takerScoreManager.score, equals(3));
     expect(oppositionScoreManager.score, equals(2));
@@ -62,13 +58,11 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    final roundScoresComputer = RoundScoresComputer(
+    RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    );
-
-    roundScoresComputer.consume(turn, orderedPlayers);
+    ).consume(turn, orderedPlayers);
     expect(takerScoreManager.score, equals(0));
     expect(oppositionScoreManager.score, equals(6));
   });
@@ -89,13 +83,11 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    final roundScoresComputer = RoundScoresComputer(
+    RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    );
-
-    roundScoresComputer.consume(turn, orderedPlayers);
+    ).consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(2));
     expect(oppositionScoreManager.score, equals(4));
@@ -117,13 +109,11 @@ void main() {
     final takerScoreManager = ScoreManager();
     final oppositionScoreManager = ScoreManager();
 
-    final roundScoresComputer = RoundScoresComputer(
+    RoundScoresComputer(
       taker,
       takerScoreManager.winScoreElements,
       oppositionScoreManager.winScoreElements,
-    );
-
-    roundScoresComputer.consume(turn, orderedPlayers);
+    ).consume(turn, orderedPlayers);
 
     expect(takerScoreManager.score, equals(4));
     expect(oppositionScoreManager.score, equals(2));
