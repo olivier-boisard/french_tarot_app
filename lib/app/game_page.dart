@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'areas.dart';
+import 'areas/face_down_area.dart';
+import 'areas/face_up_area.dart';
 
 class GamePage extends StatefulWidget {
   @override
@@ -10,6 +11,10 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
+    //TODO nCards should not be hardcoded
+    const nCards = 18;
+
+    const faceDownArea = FaceDownArea(nCards);
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -17,7 +22,7 @@ class _GamePageState extends State<GamePage> {
         children: <Widget>[
           const Expanded(
             flex: 1,
-            child: Area(),
+            child: faceDownArea,
           ),
           Expanded(
             // Screen middle (left player, play area, right player)
@@ -30,7 +35,7 @@ class _GamePageState extends State<GamePage> {
                     alignment: Alignment.centerLeft,
                     child: const RotatedBox(
                       quarterTurns: 1,
-                      child: Area(),
+                      child: faceDownArea,
                     ),
                   ),
                 ),
@@ -44,7 +49,7 @@ class _GamePageState extends State<GamePage> {
                     alignment: Alignment.centerRight,
                     child: const RotatedBox(
                       quarterTurns: 3,
-                      child: Area(),
+                      child: faceDownArea,
                     ),
                   ),
                 ),
@@ -56,7 +61,8 @@ class _GamePageState extends State<GamePage> {
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: const Area(visibleHand: true),
+              //TODO this won't compile
+              child: const FaceUpArea(visibleHand: true),
             ),
           ),
         ],
