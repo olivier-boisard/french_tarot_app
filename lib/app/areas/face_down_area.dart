@@ -5,10 +5,19 @@ import 'package:flutter/widgets.dart';
 import '../cards.dart';
 
 //TODO organize by "FaceUp*" and "FaceDown*"
-class FaceDownArea extends StatelessWidget {
+class FaceDownArea extends StatefulWidget {
   final int _nCards;
 
   const FaceDownArea(this._nCards, {Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _FaceDownAreaState(_nCards);
+}
+
+class _FaceDownAreaState extends State<FaceDownArea> {
+  final int _nCards;
+
+  _FaceDownAreaState(this._nCards);
 
   @override
   Widget build(BuildContext context) {

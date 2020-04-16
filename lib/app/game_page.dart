@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../engine/core/card.dart' as engine;
 import 'areas/face_down_area.dart';
 import 'areas/face_up_area.dart';
 
 class GamePage extends StatefulWidget {
+  final List<engine.Card> _visibleHand;
+
+  const GamePage(this._visibleHand, {Key key}) : super(key: key);
+
   @override
-  _GamePageState createState() => _GamePageState();
+  _GamePageState createState() => _GamePageState(_visibleHand);
 }
 
 class _GamePageState extends State<GamePage> {
+  final List<engine.Card> _visibleHand;
+
+  _GamePageState(this._visibleHand);
+
   @override
   Widget build(BuildContext context) {
-    //TODO nCards should not be hardcoded
-    const nCards = 18;
-
-    const faceDownArea = FaceDownArea(nCards);
+    const faceDownArea = FaceDownArea(_visibleHand.length);
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -62,7 +68,7 @@ class _GamePageState extends State<GamePage> {
             child: Align(
               alignment: Alignment.bottomCenter,
               //TODO this won't compile
-              child: const FaceUpArea(visibleHand: true),
+              child: FaceUpArea(_visibleHand),
             ),
           ),
         ],
