@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'app/main.dart';
+import 'engine/core/card.dart' as engine;
 import 'engine/core/tarot_deck_facade.dart';
 
 void main() {
-  final tarotDeckFacade = TarotDeckFacade();
-  runApp(FrenchTarotApp(tarotDeckFacade.pop(18)));
+  final cards = <engine.Card>[];
+  final deck = TarotDeckFacade()..shuffle();
+  for (final card in deck.pop(18)) {
+    cards.add(card as engine.Card);
+  }
+  runApp(FrenchTarotApp(cards));
 }
