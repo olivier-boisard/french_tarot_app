@@ -13,18 +13,18 @@ class FaceUpCard extends StatelessWidget {
   const FaceUpCard(this._card, {Key key}) : super(key: key);
 
   //TODO abstract strength
-  String convertStrengthToString(int strength) {
+  String convertStrengthToString(int value) {
     String output;
-    if (engine.Card.standardSuits.contains(_card)) {
+    if (engine.Card.standardSuits.contains(_card.suit)) {
       final valueToString = {
-        engine.CardStrengths.jack: '♗',
-        engine.CardStrengths.queen: '♕',
-        engine.CardStrengths.knight: '♘',
-        engine.CardStrengths.king: '♔',
+        11: '♗',
+        12: '♕',
+        13: '♘',
+        14: '♔',
       };
-      output = valueToString[strength] ?? strength.toString();
+      output = valueToString[value] ?? value.toString();
     } else {
-      output = strength.toString();
+      output = value.toString();
     }
 
     return output;
@@ -39,7 +39,7 @@ class FaceUpCard extends StatelessWidget {
       Suit.spades: '♠',
       Suit.trump: '⭐',
     };
-    final valueAsString = convertStrengthToString(_card.strength);
+    final valueAsString = convertStrengthToString(_card.value);
     final suitAsString = suitToString[_card.suit];
     const excuseAsString = '🎸';
     final smallTextWidget = Text(
