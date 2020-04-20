@@ -7,6 +7,8 @@ import 'package:french_tarot/engine/core/function_interfaces.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/selector.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
+import 'package:french_tarot/engine/game/process_sequence.dart';
+import 'package:french_tarot/engine/game/round_scores_computer_wrapper.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_turn.dart';
@@ -14,8 +16,6 @@ import 'package:french_tarot/engine/phases/card/earned_points_computer.dart';
 import 'package:french_tarot/engine/phases/dog/dog_phase.dart';
 import 'package:french_tarot/engine/random/random_bidding_phase.dart';
 import 'package:french_tarot/engine/random/random_decision_maker.dart';
-import 'package:french_tarot/game/process_sequence.dart';
-import 'package:french_tarot/game/round_scores_computer_wrapper.dart';
 
 void main() {
   test('Run application', () {
