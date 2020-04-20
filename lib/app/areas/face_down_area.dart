@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 
-import '../cards.dart';
+import '../cards/face_down_card.dart';
 
 //TODO organize by "FaceUp*" and "FaceDown*"
 class FaceDownArea extends StatefulWidget {
