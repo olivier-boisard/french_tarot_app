@@ -1,9 +1,9 @@
-import '../engine/core/abstract_agent.dart';
-import '../engine/core/actions_handler.dart';
-import '../engine/core/function_interfaces.dart';
-import '../engine/core/playable_score_element.dart';
-import '../engine/core/round_scores_computer.dart';
-import '../engine/core/score_element.dart';
+import '../core/abstract_agent.dart';
+import '../core/actions_handler.dart';
+import '../core/function_interfaces.dart';
+import '../core/playable_score_element.dart';
+import '../core/round_scores_computer.dart';
+import '../core/score_element.dart';
 
 class RoundScoresComputerWrapper {
   AbstractAgent taker;
