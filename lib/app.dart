@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app/french_tarot_app.dart';
+import 'app/game_page.dart';
 import 'engine/core/card.dart' as engine;
 import 'engine/core/tarot_deck_facade.dart';
 
@@ -10,5 +11,9 @@ void main() {
   for (final card in deck.pop(18)) {
     cards.add(card as engine.Card);
   }
-  runApp(FrenchTarotApp(cards));
+  final app = FrenchTarotApp(
+    gameWidget: GamePage(cards),
+  );
+
+  runApp(app);
 }
