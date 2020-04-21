@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app/main.dart';
+import 'app/french_tarot_app.dart';
 import 'engine/core/card.dart' as engine;
 import 'engine/core/tarot_deck_facade.dart';
 
