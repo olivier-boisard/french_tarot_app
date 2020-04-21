@@ -7,7 +7,6 @@ final _cardWidgetHeight = 0.04 * window.physicalSize.height;
 final _cardWidgetWidth = _cardWidgetHeight / 2;
 final _cardWidgetBorderRadius = _cardWidgetHeight / 20;
 
-//TODO should depend on an abstraction of Card
 class FaceDownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

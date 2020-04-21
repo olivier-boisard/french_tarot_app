@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../engine/core/card.dart' as engine;
-import 'areas/face_down_area.dart';
-import 'areas/face_up_area.dart';
+class GamePage extends StatelessWidget {
+  final List<Widget> playerAreas;
 
-class GamePage extends StatefulWidget {
-  final List<engine.Card> _visibleHand;
-
-  const GamePage(this._visibleHand, {Key key}) : super(key: key);
-
-  @override
-  _GamePageState createState() => _GamePageState(_visibleHand);
-}
-
-class _GamePageState extends State<GamePage> {
-  final List<engine.Card> _visibleHand;
-
-  _GamePageState(this._visibleHand);
+  const GamePage({Key key, @required this.playerAreas}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final faceDownArea = FaceDownArea(_visibleHand.length);
+    if (playerAreas.length != 4) {
+      throw InvalidNumberOfPlayerAreasException();
+    }
 
     return Scaffold(
       backgroundColor: Colors.green[800],
@@ -29,7 +18,7 @@ class _GamePageState extends State<GamePage> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: faceDownArea,
+            child: playerAreas.last,
           ),
           Expanded(
             // Screen middle (left player, play area, right player)
@@ -42,7 +31,7 @@ class _GamePageState extends State<GamePage> {
                     alignment: Alignment.centerLeft,
                     child: RotatedBox(
                       quarterTurns: 1,
-                      child: faceDownArea,
+                      child: playerAreas[2],
                     ),
                   ),
                 ),
@@ -56,7 +45,7 @@ class _GamePageState extends State<GamePage> {
                     alignment: Alignment.centerRight,
                     child: RotatedBox(
                       quarterTurns: 3,
-                      child: faceDownArea,
+                      child: playerAreas[1],
                     ),
                   ),
                 ),
@@ -68,7 +57,7 @@ class _GamePageState extends State<GamePage> {
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: FaceUpArea(_visibleHand),
+              child: playerAreas.first,
             ),
           ),
         ],
@@ -76,3 +65,5 @@ class _GamePageState extends State<GamePage> {
     );
   }
 }
+
+class InvalidNumberOfPlayerAreasException implements Exception {}
