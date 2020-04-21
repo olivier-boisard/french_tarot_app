@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class FrenchTarotApp extends StatelessWidget {
   final Widget gameWidget;
 
-  // ignore: always_put_required_named_parameters_first
   const FrenchTarotApp({Key key, @required this.gameWidget}) : super(key: key);
 
   // This widget is the root of your application.
