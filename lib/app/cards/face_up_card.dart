@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../engine/core/card.dart'as engine;
 import '../../engine/core/suited_playable.dart';
+import 'dimensions.dart';
 
 class FaceUpCard extends StatelessWidget {
   //TODO should depend on abstraction of card
@@ -60,10 +61,6 @@ class FaceUpCard extends StatelessWidget {
         smallTextWidget,
       ],
     );
-
-    final cardWidgetHeight = 0.04 * window.physicalSize.height;
-    final cardWidgetWidth = cardWidgetHeight / 2;
-    final cardWidgetBorderRadius = cardWidgetHeight / 20;
 
     return Container(
       height: cardWidgetHeight,
