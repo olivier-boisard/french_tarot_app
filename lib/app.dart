@@ -12,7 +12,7 @@ void main() {
   final visibleCards = <FaceUpCard>[];
   final deck = TarotDeckFacade()..shuffle();
   for (final card in deck.pop(18)) {
-    visibleCards.add(FaceUpCard(card as engine.Card));
+    visibleCards.add(FaceUpCard(card: card as engine.Card));
   }
 
   final faceDownCards = <FaceDownCard>[];

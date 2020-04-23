@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,17 +10,17 @@ import 'dimensions.dart';
 
 class FaceUpCard extends StatelessWidget {
   //TODO should depend on abstraction of card
-  final engine.Card _card;
+  final engine.Card card;
 
-  const FaceUpCard(this._card, {Key key}) : super(key: key);
+  const FaceUpCard({Key key, @required this.card}) : super(key: key);
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    final valueAsString = _convertStrengthToString(_card.value);
+    final valueAsString = _convertStrengthToString(card.value);
     final suitAsString = _convertSuitToString();
     const excuseAsString = '🎸';
     final smallTextWidget = Text(
-      _card != const engine.Card.excuse()
+      card != const engine.Card.excuse()
           ? '$valueAsString\n$suitAsString'
           : excuseAsString,
       textAlign: TextAlign.center,
@@ -52,7 +53,7 @@ class FaceUpCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                  _card == const engine.Card.excuse()
+                  card == const engine.Card.excuse()
                       ? excuseAsString
                       : '$valueAsString$suitAsString',
                   textAlign: TextAlign.center),
@@ -67,7 +68,7 @@ class FaceUpCard extends StatelessWidget {
   //TODO abstract strength
   String _convertStrengthToString(int value) {
     String output;
-    if (engine.Card.standardSuits.contains(_card.suit)) {
+    if (engine.Card.standardSuits.contains(card.suit)) {
       final valueToString = {
         11: '♗',
         12: '♕',
@@ -90,7 +91,12 @@ class FaceUpCard extends StatelessWidget {
       Suit.spades: '♠',
       Suit.trump: '⭐',
     };
-    final suitAsString = suitToString[_card.suit];
+    final suitAsString = suitToString[card.suit];
     return suitAsString;
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<engine.Card>('card', card));
   }
 }
