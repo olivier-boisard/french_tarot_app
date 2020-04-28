@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../engine/core/abstract_tarot_card.dart';
 import '../../engine/core/suited_playable.dart';
 import '../../engine/core/tarot_card.dart' as engine;
 import 'dimensions.dart';
 
 class FaceUpCard extends StatelessWidget {
-  //TODO should depend on abstraction of card
-  final engine.TarotCard card;
+  final AbstractTarotCard card;
 
   const FaceUpCard({Key key, @required this.card}) : super(key: key);
 
@@ -53,7 +53,7 @@ class FaceUpCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                  card == const engine.TarotCard.excuse()
+                  card.isExcuse
                       ? excuseAsString
                       : '$valueAsString$suitAsString',
                   textAlign: TextAlign.center),

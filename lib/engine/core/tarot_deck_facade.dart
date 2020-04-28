@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'abstract_card.dart';
+import 'abstract_tarot_card.dart';
 import 'deck.dart';
 import 'tarot_card.dart';
 
-class TarotDeckFacade extends Deck<AbstractCard> {
+class TarotDeckFacade extends Deck<AbstractTarotCard> {
   TarotDeckFacade() : super(_createCardList());
 
   TarotDeckFacade.withRandom(Random random)
