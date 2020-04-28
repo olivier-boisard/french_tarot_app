@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import 'abstract_card.dart';
+import 'abstract_tarot_card.dart';
 import 'suited_playable.dart';
 
 @immutable
-class Card implements AbstractCard {
+class TarotCard implements AbstractTarotCard {
   @override
   final Suit suit;
   final int value;
@@ -15,16 +15,16 @@ class Card implements AbstractCard {
     Suit.spades
   ];
 
-  Card.coloredCard(this.suit, this.value) {
+  TarotCard.coloredCard(this.suit, this.value) {
     _checkStrengthIsValid();
     _checkSuitIsValid();
   }
 
-  Card.trump(this.value) : suit = Suit.trump {
+  TarotCard.trump(this.value) : suit = Suit.trump {
     _checkStrengthIsValid();
   }
 
-  const Card.excuse()
+  const TarotCard.excuse()
       : suit = Suit.none,
         value = CardStrengths.excuse;
 
@@ -49,7 +49,11 @@ class Card implements AbstractCard {
 
   @override
   bool get isOudler {
-    final oudlers = [Card.trump(1), Card.trump(21), const Card.excuse()];
+    final oudlers = [
+      TarotCard.trump(1),
+      TarotCard.trump(21),
+      const TarotCard.excuse()
+    ];
     return oudlers.contains(this);
   }
 
@@ -94,7 +98,10 @@ class Card implements AbstractCard {
   }
 
   @override
-  bool get winnable => this != const Card.excuse();
+  bool get winnable => isExcuse();
+
+  @override
+  bool isExcuse() => this != const TarotCard.excuse();
 }
 
 class CardStrengths {

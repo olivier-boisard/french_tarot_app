@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../engine/core/card.dart' as engine;
 import '../../engine/core/suited_playable.dart';
+import '../../engine/core/tarot_card.dart' as engine;
 import 'dimensions.dart';
 
 class FaceUpCard extends StatelessWidget {
   //TODO should depend on abstraction of card
-  final engine.Card card;
+  final engine.TarotCard card;
 
   const FaceUpCard({Key key, @required this.card}) : super(key: key);
 
@@ -20,7 +20,7 @@ class FaceUpCard extends StatelessWidget {
     final suitAsString = _convertSuitToString();
     const excuseAsString = '🎸';
     final smallTextWidget = Text(
-      card != const engine.Card.excuse()
+      card != const engine.TarotCard.excuse()
           ? '$valueAsString\n$suitAsString'
           : excuseAsString,
       textAlign: TextAlign.center,
@@ -53,7 +53,7 @@ class FaceUpCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                  card == const engine.Card.excuse()
+                  card == const engine.TarotCard.excuse()
                       ? excuseAsString
                       : '$valueAsString$suitAsString',
                   textAlign: TextAlign.center),
@@ -68,7 +68,7 @@ class FaceUpCard extends StatelessWidget {
   //TODO abstract strength
   String _convertStrengthToString(int value) {
     String output;
-    if (engine.Card.standardSuits.contains(card.suit)) {
+    if (engine.TarotCard.standardSuits.contains(card.suit)) {
       final valueToString = {
         11: '♗',
         12: '♕',
@@ -93,9 +93,10 @@ class FaceUpCard extends StatelessWidget {
     };
     return suitToString[card.suit];
   }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<engine.Card>('card', card));
+    properties.add(DiagnosticsProperty<engine.TarotCard>('card', card));
   }
 }

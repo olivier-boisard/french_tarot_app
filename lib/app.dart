@@ -5,14 +5,14 @@ import 'app/cards/face_up_card.dart';
 import 'app/french_tarot_app.dart';
 import 'app/game_page.dart';
 import 'app/player_area.dart';
-import 'engine/core/card.dart' as engine;
+import 'engine/core/tarot_card.dart' as engine;
 import 'engine/core/tarot_deck_facade.dart';
 
 void main() {
   final visibleCards = <FaceUpCard>[];
   final deck = TarotDeckFacade()..shuffle();
   for (final card in deck.pop(18)) {
-    visibleCards.add(FaceUpCard(card: card as engine.Card));
+    visibleCards.add(FaceUpCard(card: card as engine.TarotCard));
   }
 
   final faceDownCards = <FaceDownCard>[];

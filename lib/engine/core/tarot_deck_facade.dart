@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'abstract_card.dart';
-import 'card.dart';
 import 'deck.dart';
+import 'tarot_card.dart';
 
 class TarotDeckFacade extends Deck<AbstractCard> {
   TarotDeckFacade() : super(_createCardList());
@@ -19,20 +19,20 @@ class TarotDeckFacade extends Deck<AbstractCard> {
   }
 
   static void _addExcuse(List<AbstractCard> cards) {
-    cards.add(const Card.excuse());
+    cards.add(const TarotCard.excuse());
   }
 
   static void _addTrumps(List<AbstractCard> cards) {
     const maxTrumpStrength = 21;
     for (var strength = 1; strength <= maxTrumpStrength; strength++) {
-      cards.add(Card.trump(strength));
+      cards.add(TarotCard.trump(strength));
     }
   }
 
   static void _addRegularCards(List<AbstractCard> cards) {
-    for (final suit in Card.standardSuits) {
+    for (final suit in TarotCard.standardSuits) {
       for (var strength = 1; strength <= CardStrengths.king; strength++) {
-        cards.add(Card.coloredCard(suit, strength));
+        cards.add(TarotCard.coloredCard(suit, strength));
       }
     }
   }

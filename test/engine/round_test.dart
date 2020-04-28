@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/engine/core/abstract_agent.dart';
 import 'package:french_tarot/engine/core/abstract_card.dart';
-import 'package:french_tarot/engine/core/card.dart';
 import 'package:french_tarot/engine/core/decision.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/tarot_card.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';
 import 'package:french_tarot/engine/phases/card/card_phase_agent.dart';
@@ -44,20 +44,20 @@ void main() {
   test('Winner plays first next round', () {
     final agents = <AbstractAgent<AbstractCard>>[
       CardPhaseAgent(pickFirst, [
-        Card.coloredCard(Suit.spades, 1),
-        Card.coloredCard(Suit.spades, 2),
+        TarotCard.coloredCard(Suit.spades, 1),
+        TarotCard.coloredCard(Suit.spades, 2),
       ]),
       CardPhaseAgent(pickFirst, [
-        Card.coloredCard(Suit.spades, 3),
-        Card.coloredCard(Suit.spades, 4),
+        TarotCard.coloredCard(Suit.spades, 3),
+        TarotCard.coloredCard(Suit.spades, 4),
       ]),
       CardPhaseAgent(pickFirst, [
-        Card.coloredCard(Suit.spades, 5),
-        Card.coloredCard(Suit.spades, 6),
+        TarotCard.coloredCard(Suit.spades, 5),
+        TarotCard.coloredCard(Suit.spades, 6),
       ]),
       CardPhaseAgent(pickFirst, [
-        Card.coloredCard(Suit.spades, 7),
-        Card.coloredCard(Suit.heart, 1),
+        TarotCard.coloredCard(Suit.spades, 7),
+        TarotCard.coloredCard(Suit.heart, 1),
       ])
     ];
 
