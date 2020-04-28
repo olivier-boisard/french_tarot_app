@@ -91,8 +91,7 @@ class FaceUpCard extends StatelessWidget {
       Suit.spades: '♠',
       Suit.trump: '⭐',
     };
-    final suitAsString = suitToString[card.suit];
-    return suitAsString;
+    return suitToString[card.suit];
   }
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
