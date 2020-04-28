@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+//TODO create other learning test along those lines: https://flutter.dev/docs/cookbook/testing/widget/tap-drag
 class MyWidget extends StatelessWidget {
   final String title;
   final String message;
