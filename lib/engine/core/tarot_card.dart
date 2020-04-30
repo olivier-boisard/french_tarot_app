@@ -102,7 +102,7 @@ class TarotCard implements AbstractTarotCard {
   bool get winnable => isExcuse;
 
   @override
-  bool get isExcuse => this != const TarotCard.excuse();
+  bool get isExcuse => this == const TarotCard.excuse();
 }
 
 class CardStrengths {

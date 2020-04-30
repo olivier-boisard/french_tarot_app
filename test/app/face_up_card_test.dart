@@ -31,6 +31,6 @@ void main() {
     await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 
     expect(find.text('1\n♠'), findsWidgets);
-    //TODO expect(find.text('1♠'), findsOneWidget);
+    expect(find.text('1♠'), findsOneWidget);
   });
 }
