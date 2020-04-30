@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,7 +22,7 @@ class _TodoListState extends State<TodoList> {
       title: _appTitle,
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_appTitle),
+          title: const Text(_appTitle),
         ),
         body: Column(
           children: [
@@ -31,14 +32,14 @@ class _TodoListState extends State<TodoList> {
             Expanded(
               child: ListView.builder(
                 itemCount: todos.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (context, index) {
                   final todo = todos[index];
 
                   return Dismissible(
                     key: Key('$todo$index'),
                     onDismissed: (direction) => todos.removeAt(index),
-                    child: ListTile(title: Text(todo)),
                     background: Container(color: Colors.red),
+                    child: ListTile(title: Text(todo)),
                   );
                 },
               ),
@@ -55,6 +56,14 @@ class _TodoListState extends State<TodoList> {
           child: Icon(Icons.add),
         ),
       ),
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(IterableProperty<String>('todos', todos))..add(
+      DiagnosticsProperty<TextEditingController>('controller', controller),
     );
   }
 }
