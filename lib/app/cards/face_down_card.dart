@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'abstract_card_widget.dart';
 import 'dimensions.dart';
 
-class FaceDownCard extends StatelessWidget {
-  //TODO have common ancestor for FaceDownCard and FaceUpCard
+class FaceDownCard extends AbstractCardWidget {
 
-  final Dimensions dimensions;
-
-  const FaceDownCard({Key key, @required this.dimensions}) : super(key: key);
+  const FaceDownCard({Key key, @required dimensions})
+      : super(key: key, dimensions: dimensions);
 
   @override
   Widget build(BuildContext context) {
