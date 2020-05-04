@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/app/cards/dimensions.dart';
 import 'package:french_tarot/app/cards/face_down_card.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
+import 'package:french_tarot/app/core/dimensions.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/player_area.dart';

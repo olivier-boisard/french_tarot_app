@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'abstract_card_widget.dart';
-import 'dimensions.dart';
+import '../core/abstract_card_widget.dart';
+import '../core/dimensions.dart';
 
 class FaceDownCard extends AbstractCardWidget {
 

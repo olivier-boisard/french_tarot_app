@@ -7,8 +7,8 @@ import 'package:flutter/widgets.dart';
 import '../../engine/core/abstract_tarot_card.dart';
 import '../../engine/core/suited_playable.dart';
 import '../../engine/core/tarot_card.dart' as engine;
-import 'abstract_card_widget.dart';
-import 'dimensions.dart';
+import '../core/abstract_card_widget.dart';
+import '../core/dimensions.dart';
 
 class FaceUpCard extends AbstractCardWidget {
   final AbstractTarotCard card;
