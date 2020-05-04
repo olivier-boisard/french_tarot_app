@@ -12,7 +12,10 @@ import 'dimensions.dart';
 class FaceUpCard extends StatelessWidget {
   final AbstractTarotCard card;
 
-  const FaceUpCard({Key key, @required this.card}) : super(key: key);
+  final Dimensions dimensions;
+
+  const FaceUpCard({ Key key, @required this.card, @required this.dimensions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +42,12 @@ class FaceUpCard extends StatelessWidget {
     );
 
     return Container(
-      height: cardWidgetHeight,
-      width: cardWidgetWidth,
+      height: dimensions.height,
+      width: dimensions.width,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
         color: Colors.white,
-        borderRadius: BorderRadius.circular(cardWidgetBorderRadius),
+        borderRadius: BorderRadius.circular(dimensions.borderRadius),
       ),
       child: Column(
         children: <Widget>[
@@ -97,6 +100,8 @@ class FaceUpCard extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<engine.TarotCard>('card', card));
+    properties..add(DiagnosticsProperty<engine.TarotCard>('card', card))..add(
+      DiagnosticsProperty<Dimensions>('dimensions', dimensions),
+    );
   }
 }
