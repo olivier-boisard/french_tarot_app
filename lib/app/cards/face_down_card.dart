@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'dimensions.dart';
 
 class FaceDownCard extends StatelessWidget {
-  //TODO have common ancestor for FaceDownCard and FaceUpCard
 
   final Dimensions dimensions;
 
