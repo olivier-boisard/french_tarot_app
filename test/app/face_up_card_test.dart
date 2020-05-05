@@ -5,6 +5,7 @@ import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/core/dimensions.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
+import 'package:french_tarot/app/played_cards_area.dart';
 import 'package:french_tarot/app/player_area.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
@@ -23,10 +24,12 @@ void main() {
     final playedCard = find.byType(FaceUpCard);
     await tester.drag(playedCard, const Offset(0, 500));
 
-    find.descendant(
+    final playedCardFinder = find.descendant(
       of: find.byType(PlayedCardsArea),
       matching: find.widgetWithText(FaceUpCard, playedCardWidgetText),
     );
+
+    expect(playedCardFinder, findsOneWidget);
   });
 }
 
