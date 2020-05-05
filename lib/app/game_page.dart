@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../engine/core/abstract_tarot_card.dart';
+import 'cards/face_up_card.dart';
+import 'core/dimensions.dart';
+
 class GamePage extends StatelessWidget {
   final List<Widget> playerAreas;
 
@@ -37,7 +41,19 @@ class GamePage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Container(),
+                  //TODO there should be 4 card placeholders here
+                  child: DragTarget<AbstractTarotCard>(
+                    //TODO onWillAccept should check the card is allowed
+                    //TODO onAccept should update app state
+                    builder: (context, candidates, rejects) {
+                      return candidates.isNotEmpty ?
+                      FaceUpCard(
+                        card: candidates.first,
+                        dimensions: Dimensions.fromScreen(),
+                      ) :
+                      Container();
+                    },
+                  ),
                 ),
                 Expanded(
                   flex: 1,

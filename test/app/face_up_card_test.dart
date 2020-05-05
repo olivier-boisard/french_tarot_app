@@ -7,6 +7,7 @@ import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
 import 'package:french_tarot/app/player_area.dart';
+import 'package:french_tarot/engine/core/abstract_tarot_card.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
@@ -34,9 +35,13 @@ void main() {
 }
 
 Future _prepareApp(WidgetTester tester) async {
-  final visibleCards = <FaceUpCard>[
-    FaceUpCard(card: TarotCard.coloredCard(Suit.spades, 1),
-      dimensions: Dimensions.fromScreen(),
+  final card = TarotCard.coloredCard(Suit.spades, 1);
+  final dimensions = Dimensions.fromScreen();
+  final visibleCards = <Draggable<AbstractTarotCard>>[
+    Draggable<AbstractTarotCard>(
+      data: card,
+      feedback: FaceUpCard(card: card, dimensions: dimensions),
+      child: FaceUpCard(card: card, dimensions: dimensions),
     ),
   ];
 
