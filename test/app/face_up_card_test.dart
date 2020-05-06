@@ -58,6 +58,7 @@ Future _prepareApp(WidgetTester tester) async {
       PlayerArea(cards: faceDownCards),
       PlayerArea(cards: faceDownCards),
     ],
+    playedCardsArea: Container(),
   );
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 }

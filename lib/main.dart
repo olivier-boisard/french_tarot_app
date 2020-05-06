@@ -42,6 +42,7 @@ void main() {
         PlayerArea(cards: faceDownCards),
         PlayerArea(cards: faceDownCards),
       ],
+      playedCardsArea: Container(),
     ),
   );
 
