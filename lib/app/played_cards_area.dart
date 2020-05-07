@@ -2,20 +2,26 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
+import '../engine/core/function_interfaces.dart';
 import 'cards/face_up_card.dart';
 import 'core/dimensions.dart';
 
 class PlayedCardsArea extends StatelessWidget {
   final LinkedHashMap<PlayerLocation, Widget> playedCards;
+  final Transformer<bool, AbstractTarotCard> cardIsAllowed;
 
   Dimensions get cardDimensions {
     return Dimensions.fromScreen();
   }
 
-  const PlayedCardsArea({Key key, @required this.playedCards})
-      : super(key: key);
+  const PlayedCardsArea({
+    Key key,
+    @required this.playedCards,
+    @required this.cardIsAllowed,
+  }) : super(key: key);
 
 
   @override
@@ -65,20 +71,13 @@ class PlayedCardsArea extends StatelessWidget {
 
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
-      //TODO onWillAccept should check the card is allowed
-      //TODO onAccept should update app state
+      onWillAccept: cardIsAllowed,
+      //TODO onAccept should play card
       builder: (context, candidates, rejects) {
-        return candidates.isNotEmpty
-            ? _buildFaceUpCard(candidates)
+        return candidates.isNotEmpty && cardIsAllowed(candidates.first)
+            ? FaceUpCard(card: candidates.first, dimensions: cardDimensions)
             : Container();
       },
-    );
-  }
-
-  FaceUpCard _buildFaceUpCard(List<AbstractTarotCard> candidates) {
-    return FaceUpCard(
-      card: candidates.first,
-      dimensions: cardDimensions,
     );
   }
 
@@ -94,6 +93,11 @@ class PlayedCardsArea extends StatelessWidget {
         DiagnosticsProperty<LinkedHashMap<PlayerLocation, Widget>>(
           'playedCards',
           playedCards,
+        )
+    )..add(
+        ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
+            'cardIsAllowed',
+            cardIsAllowed
         )
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import 'app/cards/face_down_card.dart';
@@ -5,6 +7,7 @@ import 'app/cards/face_up_card.dart';
 import 'app/core/dimensions.dart';
 import 'app/french_tarot_app.dart';
 import 'app/game_page.dart';
+import 'app/played_cards_area.dart';
 import 'app/player_area.dart';
 import 'engine/core/abstract_tarot_card.dart';
 import 'engine/core/tarot_deck_facade.dart';
@@ -34,6 +37,7 @@ void main() {
     faceDownCards.add(FaceDownCard(dimensions: cardDimensions));
   }
 
+  final playedCards = LinkedHashMap<PlayerLocation, Widget>();
   final app = FrenchTarotApp(
     gameWidget: GamePage(
       playerAreas: <Widget>[
@@ -42,7 +46,10 @@ void main() {
         PlayerArea(cards: faceDownCards),
         PlayerArea(cards: faceDownCards),
       ],
-      playedCardsArea: Container(),
+      playedCardsArea: PlayedCardsArea(
+        playedCards: playedCards,
+        cardIsAllowed: (card) => true,
+      ),
     ),
   );
 
