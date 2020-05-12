@@ -49,6 +49,12 @@ void main() {
       playedCardsArea: PlayedCardsArea(
         playedCards: playedCards,
         cardIsAllowed: (card) => true,
+        playCard: (card) {
+          playedCards[PlayerLocation.bottom] = FaceUpCard(
+            card: card,
+            dimensions: Dimensions.fromScreen(),
+          );
+        },
       ),
     ),
   );
