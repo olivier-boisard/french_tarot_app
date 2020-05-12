@@ -9,26 +9,45 @@ import '../engine/core/function_interfaces.dart';
 import 'cards/face_up_card.dart';
 import 'core/dimensions.dart';
 
-class PlayedCardsArea extends StatelessWidget {
+class PlayedCardsArea extends StatefulWidget {
   final LinkedHashMap<PlayerLocation, Widget> playedCards;
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
-
-  Dimensions get cardDimensions {
-    return Dimensions.fromScreen();
-  }
+  final Consumer<AbstractTarotCard> playCard;
 
   const PlayedCardsArea({
     Key key,
     @required this.playedCards,
     @required this.cardIsAllowed,
+    @required this.playCard
   }) : super(key: key);
 
+  @override
+  _PlayerCardsAreaState createState() {
+    return _PlayerCardsAreaState(playedCards, cardIsAllowed, playCard);
+  }
+}
+
+enum PlayerLocation {
+  top,
+  left,
+  right,
+  bottom
+}
+
+class _PlayerCardsAreaState extends State<PlayedCardsArea> {
+  final LinkedHashMap<PlayerLocation, Widget> playedCards;
+  final Transformer<bool, AbstractTarotCard> cardIsAllowed;
+  final Consumer<AbstractTarotCard> playCard;
+  final Dimensions _cardDimensions;
+
+  _PlayerCardsAreaState(this.playedCards, this.cardIsAllowed, this.playCard) :
+        _cardDimensions=Dimensions.fromScreen();
 
   @override
   Widget build(BuildContext context) {
     final cardPlaceHolder = Container(
-      width: cardDimensions.width,
-      height: cardDimensions.height,
+      width: _cardDimensions.width,
+      height: _cardDimensions.height,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,40 +91,17 @@ class PlayedCardsArea extends StatelessWidget {
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
       onWillAccept: cardIsAllowed,
-      //TODO onAccept should play card
+      onAccept: (cardToPlay) {
+        setState(() {
+          playCard(cardToPlay);
+        });
+      },
       builder: (context, candidates, rejects) {
         return candidates.isNotEmpty && cardIsAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first, dimensions: cardDimensions)
+            ? FaceUpCard(card: candidates.first, dimensions: _cardDimensions)
             : Container();
       },
     );
   }
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(
-        DiagnosticsProperty<Dimensions>(
-          'cardDimensions',
-          cardDimensions,
-        )
-    )..add(
-        DiagnosticsProperty<LinkedHashMap<PlayerLocation, Widget>>(
-          'playedCards',
-          playedCards,
-        )
-    )..add(
-        ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
-            'cardIsAllowed',
-            cardIsAllowed
-        )
-    );
-  }
-}
-
-enum PlayerLocation {
-  top,
-  left,
-  right,
-  bottom
 }
