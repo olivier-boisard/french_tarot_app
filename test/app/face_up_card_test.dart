@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/app/cards/face_down_card.dart';
@@ -53,6 +55,7 @@ Future _prepareApp(WidgetTester tester) async {
     faceDownCards.add(FaceDownCard(dimensions: Dimensions.fromScreen()));
   }
 
+  final playedCards = LinkedHashMap<PlayerLocation, Widget>();
   final gamePage = GamePage(
     playerAreas: <Widget>[
       PlayerArea(cards: visibleCards),
@@ -60,7 +63,16 @@ Future _prepareApp(WidgetTester tester) async {
       PlayerArea(cards: faceDownCards),
       PlayerArea(cards: faceDownCards),
     ],
-    playedCardsArea: Container(),
+    playedCardsArea: PlayedCardsArea(
+      playedCards: playedCards,
+      cardIsAllowed: (card) => true,
+      playCard: (card) {
+        playedCards[PlayerLocation.bottom] = FaceUpCard(
+          card: card,
+          dimensions: Dimensions.fromScreen(),
+        );
+      },
+    ),
   );
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 }
