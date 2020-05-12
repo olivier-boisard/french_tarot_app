@@ -23,6 +23,8 @@ void main() {
   testWidgets('Play card', (tester) async {
     await _prepareApp(tester);
     final playedCard = find.byType(FaceUpCard);
+
+    //TODO evaluate offset properly
     await tester.drag(playedCard, const Offset(0, 500));
 
     final playedCardFinder = find.descendant(
