@@ -13,6 +13,7 @@ import 'package:french_tarot/engine/core/abstract_tarot_card.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
+//TODO strip this unit test from useless elements
 void main() {
   const playedCardWidgetText = '1♠';
   testWidgets('Hand cards are visible', (tester) async {
