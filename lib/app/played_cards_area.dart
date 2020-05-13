@@ -14,16 +14,25 @@ class PlayedCardsArea extends StatefulWidget {
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
 
+  // This is for testing purpose only
+  final Key cardDraggableTargetKey;
+
   const PlayedCardsArea({
     Key key,
     @required this.playedCards,
     @required this.cardIsAllowed,
-    @required this.playCard
+    @required this.playCard,
+    this.cardDraggableTargetKey,
   }) : super(key: key);
 
   @override
   _PlayerCardsAreaState createState() {
-    return _PlayerCardsAreaState(playedCards, cardIsAllowed, playCard);
+    return _PlayerCardsAreaState(
+      playedCards,
+      cardIsAllowed,
+      playCard,
+      cardDraggableTargetKey,
+    );
   }
 }
 
@@ -40,8 +49,13 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
   final Consumer<AbstractTarotCard> playCard;
   final Dimensions _cardDimensions;
 
-  _PlayerCardsAreaState(this.playedCards, this.cardIsAllowed, this.playCard) :
-        _cardDimensions=Dimensions.fromScreen();
+  // This is for testing purpose only
+  final Key cardDraggableTargetKey;
+
+  _PlayerCardsAreaState(this.playedCards,
+      this.cardIsAllowed,
+      this.playCard,
+      this.cardDraggableTargetKey) : _cardDimensions=Dimensions.fromScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +104,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
 
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
+      key: cardDraggableTargetKey,
       onWillAccept: cardIsAllowed,
       onAccept: (cardToPlay) {
         setState(() {
@@ -103,5 +118,4 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
       },
     );
   }
-
 }

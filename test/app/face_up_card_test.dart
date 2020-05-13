@@ -24,11 +24,20 @@ void main() {
   });
 
   testWidgets('Play card', (tester) async {
-    await _prepareApp(tester);
-    final playedCard = find.byType(FaceUpCard);
+    const cardToPlayKey = Key('cardToPlay');
+    const cardToPlayTargetKey = Key('cardToPlayTarget');
 
-    //TODO evaluate offset properly
-    await tester.drag(playedCard, const Offset(0, 500));
+    await _prepareApp(
+      tester,
+      cardToPlayKey: cardToPlayKey,
+      cardToPlayTargetKey: cardToPlayTargetKey,
+    );
+    final playedCard = find.byKey(cardToPlayKey);
+    final dragTarget = find.byKey(cardToPlayTargetKey);
+
+    final playedCardCenter = tester.getCenter(playedCard);
+    final dragTargetCenter = tester.getCenter(dragTarget);
+    await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
 
     final playedCardFinder = find.descendant(
       of: find.byType(PlayedCardsArea),
@@ -39,11 +48,13 @@ void main() {
   });
 }
 
-Future _prepareApp(WidgetTester tester) async {
+Future _prepareApp(WidgetTester tester,
+    {Key cardToPlayKey, Key cardToPlayTargetKey}) async {
   final card = TarotCard.coloredCard(Suit.spades, 1);
   final dimensions = Dimensions.fromScreen();
   final visibleCards = <Draggable<AbstractTarotCard>>[
     Draggable<AbstractTarotCard>(
+      key: cardToPlayKey,
       data: card,
       feedback: FaceUpCard(card: card, dimensions: dimensions),
       child: FaceUpCard(card: card, dimensions: dimensions),
@@ -73,6 +84,7 @@ Future _prepareApp(WidgetTester tester) async {
           dimensions: Dimensions.fromScreen(),
         );
       },
+      cardDraggableTargetKey: cardToPlayTargetKey,
     ),
   );
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
