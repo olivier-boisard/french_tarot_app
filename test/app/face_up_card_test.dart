@@ -69,6 +69,8 @@ void main() {
 
     //TODO test played card not in hand anymore
   });
+
+  //TODO test play unallowed card
 }
 
 //TODO refactor
