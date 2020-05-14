@@ -32,12 +32,12 @@ void main() {
       cardToPlayKey: cardToPlayKey,
       cardToPlayTargetKey: cardToPlayTargetKey,
     );
-    final playedCard = find.byKey(cardToPlayKey);
-    final dragTarget = find.byKey(cardToPlayTargetKey);
 
+    final playedCard = find.byKey(cardToPlayKey);
     final playedCardCenter = tester.getCenter(playedCard);
-    final dragTargetCenter = tester.getCenter(dragTarget);
+    final dragTargetCenter = tester.getCenter(find.byKey(cardToPlayTargetKey));
     await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
+    await tester.pumpAndSettle();
 
     final playedCardFinder = find.descendant(
       of: find.byType(PlayedCardsArea),
