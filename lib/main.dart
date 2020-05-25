@@ -12,6 +12,8 @@ import 'app/player_area.dart';
 import 'engine/core/abstract_tarot_card.dart';
 import 'engine/core/tarot_deck_facade.dart';
 
+//TODO replace List with Iterable everywhere possible in the code
+
 void main() {
   final visibleCards = <Draggable<AbstractTarotCard>>[];
   final deck = TarotDeckFacade()..shuffle();
