@@ -25,6 +25,7 @@ void main() {
 
   testWidgets('Play card', (tester) async {
     const cardToPlayTargetKey = Key('cardToPlayTarget');
+    const playerHandKey = Key('playerHand');
 
     await _prepareApp(
       tester,
@@ -36,6 +37,15 @@ void main() {
         TarotCard.coloredCard(Suit.spades, 4),
       ],
       cardToPlayTargetKey: cardToPlayTargetKey,
+      playerHandKey: playerHandKey,
+    );
+
+    expect(
+      find.descendant(
+        of: find.byKey(playerHandKey),
+        matching: find.byKey(cardToPlayKey),
+      ),
+      findsOneWidget,
     );
 
     final playedCard = find.byKey(cardToPlayKey);
@@ -44,6 +54,7 @@ void main() {
     await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
     await tester.pumpAndSettle();
 
+    //TODO avoid using hard coded texts here and below
     final playedCardFinder = find.descendant(
       of: find.byType(PlayedCardsArea),
       matching: find.widgetWithText(FaceUpCard, '1♠'),
@@ -66,19 +77,25 @@ void main() {
     expect(secondOfSpades, findsOneWidget);
     expect(thirdOfSpades, findsOneWidget);
     expect(fourthOfSpades, findsOneWidget);
-
-    //TODO test played card not in hand anymore
+    expect(
+      find.descendant(
+        of: find.byKey(playerHandKey),
+        matching: find.byKey(cardToPlayKey),
+      ),
+      findsNothing,
+    );
   });
 
   //TODO test play unallowed card
 }
 
-//TODO refactor
+//TODO refactor and reuse script's main function
 Future _prepareApp(WidgetTester tester, AbstractTarotCard cardPlayedByUser,
     Key cardToPlayKey, {List<AbstractTarotCard> cardPlayedByOthers,
-      Key cardToPlayTargetKey}) async {
+      Key cardToPlayTargetKey,
+      Key playerHandKey}) async {
   final dimensions = Dimensions.fromScreen();
-  final visibleCards = <Draggable<AbstractTarotCard>>[
+  final visibleCardWidgets = <Draggable<AbstractTarotCard>>[
     Draggable<AbstractTarotCard>(
       key: cardToPlayKey,
       data: cardPlayedByUser,
@@ -96,7 +113,7 @@ Future _prepareApp(WidgetTester tester, AbstractTarotCard cardPlayedByUser,
   final playedCards = LinkedHashMap<PlayerLocation, Widget>();
   final gamePage = GamePage(
     playerAreas: <Widget>[
-      PlayerArea(cards: visibleCards),
+      PlayerArea(key: playerHandKey, cards: visibleCardWidgets),
       PlayerArea(cards: faceDownCards),
       PlayerArea(cards: faceDownCards),
       PlayerArea(cards: faceDownCards),
