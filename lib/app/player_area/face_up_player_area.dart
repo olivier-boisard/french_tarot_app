@@ -6,6 +6,8 @@ import 'screen_sized.dart';
 
 class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
   final List<AbstractTarotCard> cards;
+
+  //TODO is there a way to get rid of this?
   final List<Key> cardWidgetKeys;
 
   FaceUpPlayerArea({Key key, @required this.cards, this.cardWidgetKeys})
