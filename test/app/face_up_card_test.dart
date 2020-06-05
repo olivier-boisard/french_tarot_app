@@ -1,15 +1,14 @@
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/app/cards/face_down_card.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/core/dimensions.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
-import 'package:french_tarot/app/player_area.dart';
+import 'package:french_tarot/app/player_area/face_down_player_area.dart';
+import 'package:french_tarot/app/player_area/face_up_player_area.dart';
 import 'package:french_tarot/engine/core/abstract_tarot_card.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
@@ -94,29 +93,19 @@ Future _prepareApp(WidgetTester tester, AbstractTarotCard cardPlayedByUser,
     Key cardToPlayKey, {List<AbstractTarotCard> cardPlayedByOthers,
       Key cardToPlayTargetKey,
       Key playerHandKey}) async {
-  final dimensions = Dimensions.fromScreen();
-  final visibleCardWidgets = <Draggable<AbstractTarotCard>>[
-    Draggable<AbstractTarotCard>(
-      key: cardToPlayKey,
-      data: cardPlayedByUser,
-      feedback: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
-      child: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
-    ),
-  ];
-
-  final faceDownCards = <FaceDownCard>[];
   const nCards = 18;
-  for (var i = 0; i < nCards; i++) {
-    faceDownCards.add(FaceDownCard(dimensions: Dimensions.fromScreen()));
-  }
 
   final playedCards = LinkedHashMap<PlayerLocation, Widget>();
   final gamePage = GamePage(
     playerAreas: <Widget>[
-      PlayerArea(key: playerHandKey, cards: visibleCardWidgets),
-      PlayerArea(cards: faceDownCards),
-      PlayerArea(cards: faceDownCards),
-      PlayerArea(cards: faceDownCards),
+      FaceUpPlayerArea(
+        key: playerHandKey,
+        cards: [cardPlayedByUser],
+        cardWidgetKeys: [cardToPlayKey],
+      ),
+      FaceDownPlayerArea(nCards: nCards),
+      FaceDownPlayerArea(nCards: nCards),
+      FaceDownPlayerArea(nCards: nCards),
     ],
     playedCardsArea: PlayedCardsArea(
       playedCards: playedCards,
