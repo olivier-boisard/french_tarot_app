@@ -30,7 +30,7 @@ class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
         feedback: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
         child: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
       );
-      cardWidgets.add(padWidget(cardWidget, i * offsetInPixel));
+      cardWidgets.add(ScreenSized.padWidget(cardWidget, i * offsetInPixel));
     }
     return Stack(children: cardWidgets);
   }

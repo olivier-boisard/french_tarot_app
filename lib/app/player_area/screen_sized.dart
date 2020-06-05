@@ -10,7 +10,7 @@ mixin ScreenSized on StatelessWidget {
 
   Dimensions get dimensions => Dimensions.fromScreen();
 
-  Widget padWidget(Widget widget, double leftOffsetInPixels) {
+  static Widget padWidget(Widget widget, double leftOffsetInPixels) {
     return Padding(
       padding: EdgeInsets.only(left: leftOffsetInPixels),
       child: widget,
