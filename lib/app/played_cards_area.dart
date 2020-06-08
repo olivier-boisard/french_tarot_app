@@ -14,7 +14,7 @@ class PlayedCardsArea extends StatefulWidget {
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
 
-  // This is for testing purpose only
+  // TODO is there a way to get rid of this?
   final Key cardDraggableTargetKey;
 
   const PlayedCardsArea({
@@ -49,7 +49,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
   final Consumer<AbstractTarotCard> playCard;
   final Dimensions _cardDimensions;
 
-  // This is for testing purpose only
+  // TODO is there a way to get rid of this?
   final Key cardDraggableTargetKey;
 
   _PlayerCardsAreaState(this.playedCards,
