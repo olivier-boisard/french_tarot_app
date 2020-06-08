@@ -10,7 +10,7 @@ import 'player_area/face_down_player_area.dart';
 import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
-class GamePage extends StatelessWidget with ScreenSized {
+class GamePage extends StatefulWidget {
   final List<AbstractTarotCard> visibleHand;
 
   //TODO is there a way to get rid of this?
@@ -25,6 +25,32 @@ class GamePage extends StatelessWidget with ScreenSized {
     this.cardDraggableTargetKey,
     this.playerHandKey,
   }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _GamePageState(
+      visibleHand: visibleHand,
+      visibleCardKeys: visibleCardKeys,
+      cardDraggableTargetKey: cardDraggableTargetKey,
+      playerHandKey: playerHandKey,
+    );
+  }
+}
+
+class _GamePageState extends State<GamePage> with ScreenSized {
+  final List<AbstractTarotCard> visibleHand;
+
+  //TODO is there a way to get rid of this?
+  final List<Key> visibleCardKeys;
+  final Key cardDraggableTargetKey;
+  final Key playerHandKey;
+
+  _GamePageState({
+    @required this.visibleHand,
+    this.cardDraggableTargetKey,
+    this.visibleCardKeys,
+    this.playerHandKey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +124,22 @@ class GamePage extends StatelessWidget with ScreenSized {
       ),
     );
   }
+
+  void _updateVisibleHand(
+    Iterable<AbstractTarotCard> newHand,
+    Iterable<Key> newKeys,
+  ) {
+    setState(() {
+      _replaceListElements(visibleHand, newHand);
+      _replaceListElements(visibleCardKeys, newKeys);
+    });
+  }
+
+  static void _replaceListElements(List list, Iterable newElements) {
+    list
+      ..clear()
+      ..addAll(newElements);
+  }
 }
 
-class InvalidNumberOfPlayerAreasException implements Exception {}
+class Game implements Exception {}

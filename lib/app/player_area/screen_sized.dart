@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../core/dimensions.dart';
 
 
-mixin ScreenSized on StatelessWidget {
+mixin ScreenSized {
   double get offsetInPixel => window.physicalSize.width / 70;
 
   Dimensions get dimensions => Dimensions.fromScreen();
