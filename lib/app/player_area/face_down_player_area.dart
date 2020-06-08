@@ -13,7 +13,7 @@ class FaceDownPlayerArea extends StatelessWidget with ScreenSized {
     final cardWidgets = <Widget>[];
     for (var i = 0; i < nCards; i++) {
       final cardWidget = FaceDownCard(dimensions: dimensions);
-      cardWidgets.add(padWidget(cardWidget, i * offsetInPixel));
+      cardWidgets.add(ScreenSized.padWidget(cardWidget, i * offsetInPixel));
     }
     return Stack(children: cardWidgets);
   }
