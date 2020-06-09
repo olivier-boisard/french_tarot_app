@@ -7,17 +7,7 @@ import 'screen_sized.dart';
 class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
   final List<AbstractTarotCard> cards;
 
-  //TODO is there a way to get rid of this?
-  final List<Key> cardWidgetKeys;
-
-  FaceUpPlayerArea({Key key, @required this.cards, this.cardWidgetKeys})
-      : super(key: key) {
-    if (cardWidgetKeys != null) {
-      if (cards.length != cardWidgetKeys.length) {
-        throw _InvalidNumberOfKeysException();
-      }
-    }
-  }
+  FaceUpPlayerArea({Key key, @required this.cards}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +16,6 @@ class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
       final cardPlayedByUser = cards[i];
       final cardWidget = Draggable<AbstractTarotCard>(
         data: cardPlayedByUser,
-        key: cardWidgetKeys?.elementAt(i),
         feedback: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
         child: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
       );
@@ -35,5 +24,3 @@ class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
     return Stack(children: cardWidgets);
   }
 }
-
-class _InvalidNumberOfKeysException implements Exception {}

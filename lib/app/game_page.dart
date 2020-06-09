@@ -11,51 +11,30 @@ import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
-  final List<AbstractTarotCard> visibleHand;
-
-  //TODO is there a way to get rid of this?
-  final List<Key> visibleCardKeys;
-  final Key cardDraggableTargetKey;
-  final Key playerHandKey;
+  List<AbstractTarotCard> visibleHand;
 
   GamePage({
     Key key,
     @required this.visibleHand,
-    this.visibleCardKeys,
-    this.cardDraggableTargetKey,
-    this.playerHandKey,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return _GamePageState(
       visibleHand: visibleHand,
-      visibleCardKeys: visibleCardKeys,
-      cardDraggableTargetKey: cardDraggableTargetKey,
-      playerHandKey: playerHandKey,
     );
   }
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
-  final List<AbstractTarotCard> visibleHand;
+  List<AbstractTarotCard> visibleHand;
+  final playedCards = LinkedHashMap<PlayerLocation, Widget>();
 
-  //TODO is there a way to get rid of this?
-  final List<Key> visibleCardKeys;
-  final Key cardDraggableTargetKey;
-  final Key playerHandKey;
-
-  _GamePageState({
-    @required this.visibleHand,
-    this.cardDraggableTargetKey,
-    this.visibleCardKeys,
-    this.playerHandKey,
-  });
+  _GamePageState({@required this.visibleHand});
 
   @override
   Widget build(BuildContext context) {
     final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
-    final playedCards = LinkedHashMap<PlayerLocation, Widget>();
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -86,13 +65,14 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                     playedCards: playedCards,
                     cardIsAllowed: (card) => true,
                     playCard: (card) {
-                      // Display card that was played by user
-                      playedCards[PlayerLocation.bottom] = FaceUpCard(
-                        card: card,
-                        dimensions: dimensions,
-                      );
+                      setState(() {
+                        playedCards[PlayerLocation.bottom] = FaceUpCard(
+                          card: card,
+                          dimensions: dimensions,
+                        );
+                        visibleHand.remove(card);
+                      });
                     },
-                    cardDraggableTargetKey: cardDraggableTargetKey,
                   ),
                 ),
                 Expanded(
@@ -115,30 +95,12 @@ class _GamePageState extends State<GamePage> with ScreenSized {
               alignment: Alignment.bottomCenter,
               child: FaceUpPlayerArea(
                 cards: visibleHand,
-                cardWidgetKeys: visibleCardKeys,
-                key: playerHandKey,
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  void _updateVisibleHand(
-    Iterable<AbstractTarotCard> newHand,
-    Iterable<Key> newKeys,
-  ) {
-    setState(() {
-      _replaceListElements(visibleHand, newHand);
-      _replaceListElements(visibleCardKeys, newKeys);
-    });
-  }
-
-  static void _replaceListElements(List list, Iterable newElements) {
-    list
-      ..clear()
-      ..addAll(newElements);
   }
 }
 
