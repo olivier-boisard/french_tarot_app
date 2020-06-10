@@ -11,9 +11,9 @@ import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
-  List<AbstractTarotCard> visibleHand;
+  final List<AbstractTarotCard> visibleHand;
 
-  GamePage({
+  const GamePage({
     Key key,
     @required this.visibleHand,
   }) : super(key: key);
