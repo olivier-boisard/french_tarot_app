@@ -50,7 +50,12 @@ void main() {
     );
   });
 
-  //TODO test play unallowed card
+  testWidgets('Try to play wrong card', (tester) async {
+    //TODO wire UI with engine so that cards played by opponents are displayed
+
+    //TODO test play unallowed card
+  });
+
   //TODO test opponents play cards
 }
 
