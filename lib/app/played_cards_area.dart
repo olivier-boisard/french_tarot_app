@@ -14,15 +14,11 @@ class PlayedCardsArea extends StatefulWidget {
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
 
-  // TODO is there a way to get rid of this?
-  final Key cardDraggableTargetKey;
-
   const PlayedCardsArea({
     Key key,
     @required this.playedCards,
     @required this.cardIsAllowed,
     @required this.playCard,
-    this.cardDraggableTargetKey,
   }) : super(key: key);
 
   @override
