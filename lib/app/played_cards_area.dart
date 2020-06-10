@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../engine/core/abstract_tarot_card.dart';
 import '../engine/core/function_interfaces.dart';
 import 'cards/face_up_card.dart';
-import 'core/dimensions.dart';
+import 'player_area/screen_sized.dart';
 
 class PlayedCardsArea extends StatefulWidget {
   final LinkedHashMap<PlayerLocation, Widget> playedCards;
@@ -38,23 +38,22 @@ enum PlayerLocation {
   bottom
 }
 
-class _PlayerCardsAreaState extends State<PlayedCardsArea> {
+class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
   final LinkedHashMap<PlayerLocation, Widget> playedCards;
-  final Transformer<bool, AbstractTarotCard> cardIsAllowed;
+  final DragTargetWillAccept<AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
-  final Dimensions _cardDimensions;
 
   _PlayerCardsAreaState(
     this.playedCards,
     this.cardIsAllowed,
     this.playCard,
-  ) : _cardDimensions = Dimensions.fromScreen();
+  );
 
   @override
   Widget build(BuildContext context) {
     final cardPlaceHolder = Container(
-      width: _cardDimensions.width,
-      height: _cardDimensions.height,
+      width: dimensions.width,
+      height: dimensions.height,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,6 +96,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
 
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
+      key: const Key('AbstractTarotCardDragTarget'),
       onWillAccept: cardIsAllowed,
       onAccept: (cardToPlay) {
         setState(() {
@@ -105,7 +105,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
       },
       builder: (context, candidates, rejects) {
         return candidates.isNotEmpty && cardIsAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first, dimensions: _cardDimensions)
+            ? FaceUpCard(card: candidates.first, dimensions: dimensions)
             : Container();
       },
     );

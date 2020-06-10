@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
@@ -26,7 +27,6 @@ void main() {
       findsOneWidget,
     );
 
-    // Finder AAA (see TODO below)
     final playedCardFinder = find.descendant(
       of: find.byType(PlayedCardsArea),
       matching: find.byType(FaceUpCard),
@@ -35,18 +35,12 @@ void main() {
 
     final playedCard = find.byType(FaceUpCard);
     final playedCardCenter = tester.getCenter(playedCard);
-    final dragTargetCenter = tester.getCenter(find.byType(FaceUpCard));
+    const dragTargetKey = Key('AbstractTarotCardDragTarget');
+    final dragTargetCenter = tester.getCenter(find.byKey(dragTargetKey));
     await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
     await tester.pumpAndSettle();
 
-    //TODO factorize this finder with finder AAA above
-    expect(
-      find.descendant(
-        of: find.byType(PlayedCardsArea),
-        matching: find.byType(FaceUpCard),
-      ),
-      findsOneWidget,
-    );
+    expect(playedCardFinder, findsOneWidget);
     expect(
       find.descendant(
         of: find.byType(FaceUpPlayerArea),
