@@ -31,7 +31,6 @@ class PlayedCardsArea extends StatefulWidget {
       playedCards,
       cardIsAllowed,
       playCard,
-      cardDraggableTargetKey,
     );
   }
 }
@@ -49,13 +48,11 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
   final Consumer<AbstractTarotCard> playCard;
   final Dimensions _cardDimensions;
 
-  // TODO is there a way to get rid of this?
-  final Key cardDraggableTargetKey;
-
-  _PlayerCardsAreaState(this.playedCards,
-      this.cardIsAllowed,
-      this.playCard,
-      this.cardDraggableTargetKey) : _cardDimensions=Dimensions.fromScreen();
+  _PlayerCardsAreaState(
+    this.playedCards,
+    this.cardIsAllowed,
+    this.playCard,
+  ) : _cardDimensions = Dimensions.fromScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +101,6 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> {
 
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
-      key: cardDraggableTargetKey,
       onWillAccept: cardIsAllowed,
       onAccept: (cardToPlay) {
         setState(() {
