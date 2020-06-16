@@ -10,28 +10,25 @@ import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
   final List<AbstractTarotCard> visibleHand;
-  final Map<PlayerLocation, Widget> playedCards;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
-    this.playedCards = const <PlayerLocation, Widget>{},
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return _GamePageState(
       visibleHand: visibleHand,
-      playedCards: playedCards,
     );
   }
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<AbstractTarotCard> visibleHand;
-  final Map<PlayerLocation, Widget> playedCards;
+  final playedCards = <PlayerLocation, Widget>{};
 
-  _GamePageState({@required this.visibleHand, @required this.playedCards});
+  _GamePageState({@required this.visibleHand});
 
   @override
   Widget build(BuildContext context) {
