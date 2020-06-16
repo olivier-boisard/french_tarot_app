@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'cards/face_up_card.dart';
 import 'player_area/screen_sized.dart';
 
 class PlayedCardsArea extends StatefulWidget {
-  final Map<PlayerLocation, Widget> playedCards;
+  final LinkedHashMap<PlayerLocation, Widget> playedCards;
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
 
@@ -37,7 +39,7 @@ enum PlayerLocation {
 }
 
 class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
-  final Map<PlayerLocation, Widget> playedCards;
+  final LinkedHashMap<PlayerLocation, Widget> playedCards;
   final DragTargetWillAccept<AbstractTarotCard> cardIsAllowed;
   final Consumer<AbstractTarotCard> playCard;
 
