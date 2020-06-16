@@ -52,9 +52,17 @@ void main() {
 
   testWidgets('Try to play wrong card', (tester) async {
     //TODO wire UI with engine so that cards played by opponents are displayed
+    final playedCardBefore=TarotCard.coloredCard(Suit.spades, 1);
+    final cardsInHand=<AbstractTarotCard>[
+      TarotCard.coloredCard(Suit.spades, 2),
+      TarotCard.coloredCard(Suit.heart, 1)
+    ];
+    final gamePage=GamePage(visibleHand: cardsInHand);
 
     //TODO test play unallowed card
   });
+
+  //TODO test play allowed card
 
   //TODO test opponents play cards
 }
