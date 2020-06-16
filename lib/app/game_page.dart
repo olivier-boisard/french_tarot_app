@@ -27,8 +27,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
-  List<AbstractTarotCard> visibleHand;
-  final playedCards = LinkedHashMap<PlayerLocation, Widget>();
+  final List<AbstractTarotCard> visibleHand;
 
   _GamePageState({@required this.visibleHand});
 
