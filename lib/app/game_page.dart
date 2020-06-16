@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +26,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<AbstractTarotCard> visibleHand;
-  final playedCards = LinkedHashMap<PlayerLocation, Widget>();
+  final playedCards = <PlayerLocation, Widget>{};
 
   _GamePageState({@required this.visibleHand});
 
