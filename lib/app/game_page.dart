@@ -10,29 +10,33 @@ import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
   final List<AbstractTarotCard> visibleHand;
+  final Map<PlayerLocation, Widget> playedCards;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
+    this.playedCards = const <PlayerLocation, Widget>{},
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return _GamePageState(
       visibleHand: visibleHand,
+      playedCards: playedCards,
     );
   }
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<AbstractTarotCard> visibleHand;
-  final playedCards = <PlayerLocation, Widget>{};
+  final Map<PlayerLocation, Widget> playedCards;
 
-  _GamePageState({@required this.visibleHand});
+  _GamePageState({@required this.visibleHand, @required this.playedCards});
 
   @override
   Widget build(BuildContext context) {
     final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
+    final playedCardsMutable = Map<PlayerLocation, Widget>.from(playedCards);
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -60,11 +64,11 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                 Expanded(
                   flex: 2,
                   child: PlayedCardsArea(
-                    playedCards: playedCards,
+                    playedCards: playedCardsMutable,
                     cardIsAllowed: (card) => true,
                     playCard: (card) {
                       setState(() {
-                        playedCards[PlayerLocation.bottom] = FaceUpCard(
+                        playedCardsMutable[PlayerLocation.bottom] = FaceUpCard(
                           card: card,
                           dimensions: dimensions,
                         );
