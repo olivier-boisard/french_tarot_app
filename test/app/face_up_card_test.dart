@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
@@ -51,7 +52,14 @@ void main() {
   });
 
   testWidgets('Try to play wrong card', (tester) async {
-    //TODO wire UI with engine so that cards played by opponents are displayed
+    final playedCards = <AbstractTarotCard>[
+      TarotCard.coloredCard(Suit.spades, 1),
+    ];
+    final playersHand = <AbstractTarotCard>[
+      TarotCard.coloredCard(Suit.spades, 2),
+      TarotCard.coloredCard(Suit.heart, 1),
+    ];
+    final gamePage=GamePage(playedCards: playedCards, visibleHand: playersHand);
 
     //TODO test play unallowed card
   });

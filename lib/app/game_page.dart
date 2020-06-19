@@ -10,12 +10,12 @@ import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
   final List<AbstractTarotCard> visibleHand;
-  final Map<PlayerLocation, Widget> playedCards;
+  final List<AbstractTarotCard> playedCards;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
-    this.playedCards = const <PlayerLocation, Widget>{},
+    this.playedCards = const <AbstractTarotCard>[],
   }) : super(key: key);
 
   @override
@@ -29,14 +29,24 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<AbstractTarotCard> visibleHand;
-  final Map<PlayerLocation, Widget> playedCards;
+  final List<AbstractTarotCard> playedCards;
+  static final List<PlayerLocation> _playerLocations = [
+    PlayerLocation.left,
+    PlayerLocation.top,
+    PlayerLocation.right,
+  ];
 
-  _GamePageState({@required this.visibleHand, @required this.playedCards});
+  _GamePageState({@required this.visibleHand, @required this.playedCards}) {
+    if (playedCards.length > _playerLocations.length) {
+      throw InvalidPlayedCardsNumberException();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
-    final playedCardsMutable = Map<PlayerLocation, Widget>.from(playedCards);
+    final locatedPlayedCard = _createLocationToPlayedCard();
+
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -64,11 +74,11 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                 Expanded(
                   flex: 2,
                   child: PlayedCardsArea(
-                    playedCards: playedCardsMutable,
+                    playedCards: locatedPlayedCard,
                     cardIsAllowed: (card) => true,
                     playCard: (card) {
                       setState(() {
-                        playedCardsMutable[PlayerLocation.bottom] = FaceUpCard(
+                        locatedPlayedCard[PlayerLocation.bottom] = FaceUpCard(
                           card: card,
                           dimensions: dimensions,
                         );
@@ -104,6 +114,19 @@ class _GamePageState extends State<GamePage> with ScreenSized {
       ),
     );
   }
+
+  Map<PlayerLocation, Widget> _createLocationToPlayedCard() {
+    final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
+    for (var i = playedCards.length - 1; i >= 0; i--) {
+      playedCardsMappedToLocations[_playerLocations[i]] = FaceUpCard(
+        card: playedCards[i],
+        dimensions: dimensions,
+      );
+    }
+    return playedCardsMappedToLocations;
+  }
 }
 
-class Game implements Exception {}
+class GamePageException implements Exception {}
+
+class InvalidPlayedCardsNumberException implements GamePageException {}
