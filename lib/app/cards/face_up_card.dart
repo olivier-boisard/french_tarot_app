@@ -13,8 +13,11 @@ import '../core/dimensions.dart';
 class FaceUpCard extends AbstractCardWidget {
   final AbstractTarotCard card;
 
-  const FaceUpCard({Key key, @required this.card, @required dimensions})
-      : super(key: key, dimensions: dimensions);
+  const FaceUpCard({
+    Key key,
+    @required this.card,
+    dimensions = const Dimensions(0),
+  }) : super(key: key, dimensions: dimensions);
 
   @override
   Widget build(BuildContext context) {
