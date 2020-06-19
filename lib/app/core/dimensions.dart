@@ -11,7 +11,7 @@ class Dimensions {
 
   double get borderRadius => height / 20;
 
-  Dimensions(this.height);
+  const Dimensions(this.height);
 
   Dimensions.fromScreen() : height=0.04 * window.physicalSize.height;
 }
