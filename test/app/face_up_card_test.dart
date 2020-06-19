@@ -42,6 +42,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(playedCardFinder, findsOneWidget);
+
+    //TODO this fails
     expect(
       find.descendant(
         of: find.byType(FaceUpPlayerArea),
@@ -52,14 +54,17 @@ void main() {
   });
 
   testWidgets('Try to play wrong card', (tester) async {
-    final playedCards = <AbstractTarotCard>[
-      TarotCard.coloredCard(Suit.spades, 1),
+    final playedCards = <FaceUpCard>[
+      FaceUpCard(card: TarotCard.coloredCard(Suit.spades, 1))
     ];
-    final playersHand = <AbstractTarotCard>[
-      TarotCard.coloredCard(Suit.spades, 2),
-      TarotCard.coloredCard(Suit.heart, 1),
+    final playersHand = <FaceUpCard>[
+      FaceUpCard(card: TarotCard.coloredCard(Suit.spades, 2)),
+      FaceUpCard(card: TarotCard.coloredCard(Suit.heart, 1)),
     ];
-    final gamePage=GamePage(playedCards: playedCards, visibleHand: playersHand);
+    final gamePage = GamePage(
+      playedCards: playedCards,
+      visibleHand: playersHand,
+    );
 
     //TODO test play unallowed card
   });
@@ -67,7 +72,7 @@ void main() {
   //TODO test opponents play cards
 }
 
-Future _prepareApp(WidgetTester tester, AbstractTarotCard playedCard) async {
-  final gamePage = GamePage(visibleHand: [playedCard]);
+Future _prepareApp(WidgetTester tester, AbstractTarotCard cardToPlay) async {
+  final gamePage = GamePage(visibleHand: [FaceUpCard(card: cardToPlay)]);
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 }

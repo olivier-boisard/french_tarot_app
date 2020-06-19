@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../engine/core/abstract_tarot_card.dart';
 import 'cards/face_up_card.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
@@ -9,13 +8,13 @@ import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
 class GamePage extends StatefulWidget {
-  final List<AbstractTarotCard> visibleHand;
-  final List<AbstractTarotCard> playedCards;
+  final List<FaceUpCard> visibleHand;
+  final List<FaceUpCard> playedCards;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
-    this.playedCards = const <AbstractTarotCard>[],
+    this.playedCards = const <FaceUpCard>[],
   }) : super(key: key);
 
   @override
@@ -28,8 +27,8 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
-  final List<AbstractTarotCard> visibleHand;
-  final List<AbstractTarotCard> playedCards;
+  final List<FaceUpCard> visibleHand;
+  final List<FaceUpCard> playedCards;
   static final List<PlayerLocation> _playerLocations = [
     PlayerLocation.left,
     PlayerLocation.top,
@@ -118,10 +117,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   Map<PlayerLocation, Widget> _createLocationToPlayedCard() {
     final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
     for (var i = playedCards.length - 1; i >= 0; i--) {
-      playedCardsMappedToLocations[_playerLocations[i]] = FaceUpCard(
-        card: playedCards[i],
-        dimensions: dimensions,
-      );
+      playedCardsMappedToLocations[_playerLocations[i]] = playedCards[i];
     }
     return playedCardsMappedToLocations;
   }

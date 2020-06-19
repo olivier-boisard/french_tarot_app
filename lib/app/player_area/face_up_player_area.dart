@@ -5,7 +5,7 @@ import '../cards/face_up_card.dart';
 import 'screen_sized.dart';
 
 class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
-  final List<AbstractTarotCard> cards;
+  final List<FaceUpCard> cards;
 
   FaceUpPlayerArea({Key key, @required this.cards}) : super(key: key);
 
@@ -13,13 +13,16 @@ class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
   Widget build(BuildContext context) {
     final cardWidgets = <Widget>[];
     for (var i = 0; i < cards.length; i++) {
-      final cardPlayedByUser = cards[i];
-      final cardWidget = Draggable<AbstractTarotCard>(
-        data: cardPlayedByUser,
-        feedback: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
-        child: FaceUpCard(card: cardPlayedByUser, dimensions: dimensions),
+      final card = cards[i].card;
+      final cardWidget = FaceUpCard(card: card, dimensions: dimensions);
+      final draggableCardWidget = Draggable<AbstractTarotCard>(
+        data: card,
+        feedback: cardWidget,
+        child: cardWidget,
       );
-      cardWidgets.add(ScreenSized.padWidget(cardWidget, i * offsetInPixel));
+      cardWidgets.add(
+        ScreenSized.padWidget(draggableCardWidget, i * offsetInPixel),
+      );
     }
     return Stack(children: cardWidgets);
   }
