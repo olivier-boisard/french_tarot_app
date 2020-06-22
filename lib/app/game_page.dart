@@ -44,7 +44,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   @override
   Widget build(BuildContext context) {
     final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
-    final locatedPlayedCard = _createLocationToPlayedCard();
+    final playedCards = _createLocationToPlayedCard();
 
     return Scaffold(
       backgroundColor: Colors.green[800],
@@ -73,15 +73,19 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                 Expanded(
                   flex: 2,
                   child: PlayedCardsArea(
-                    playedCards: locatedPlayedCard,
+                    playedCards: playedCards,
                     cardIsAllowed: (card) => true,
                     playCard: (card) {
                       setState(() {
-                        locatedPlayedCard[PlayerLocation.bottom] = FaceUpCard(
-                          card: card,
-                          dimensions: dimensions,
-                        );
-                        visibleHand.remove(card);
+                        final playedCardWidget = FaceUpCard(card: card);
+                        playedCards[PlayerLocation.bottom] = playedCardWidget;
+                        final originalHandSize=visibleHand.length;
+                        visibleHand.removeWhere((element) {
+                          return element.card == playedCardWidget.card;
+                        });
+                        if (originalHandSize==visibleHand.length){
+                          throw CardNotFoundInHandException();
+                        }
                       });
                     },
                   ),
@@ -126,3 +130,5 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 class GamePageException implements Exception {}
 
 class InvalidPlayedCardsNumberException implements GamePageException {}
+
+class CardNotFoundInHandException implements GamePageException {}

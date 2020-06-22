@@ -103,7 +103,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
       },
       builder: (context, candidates, rejects) {
         return candidates.isNotEmpty && cardIsAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first, dimensions: dimensions)
+            ? FaceUpCard(card: candidates.first)
             : Container();
       },
     );

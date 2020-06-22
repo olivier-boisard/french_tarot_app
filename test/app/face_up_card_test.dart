@@ -43,7 +43,6 @@ void main() {
 
     expect(playedCardFinder, findsOneWidget);
 
-    //TODO this fails
     expect(
       find.descendant(
         of: find.byType(FaceUpPlayerArea),

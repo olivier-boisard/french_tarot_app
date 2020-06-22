@@ -14,7 +14,7 @@ class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
     final cardWidgets = <Widget>[];
     for (var i = 0; i < cards.length; i++) {
       final card = cards[i].card;
-      final cardWidget = FaceUpCard(card: card, dimensions: dimensions);
+      final cardWidget = FaceUpCard(card: card);
       final draggableCardWidget = Draggable<AbstractTarotCard>(
         data: card,
         feedback: cardWidget,

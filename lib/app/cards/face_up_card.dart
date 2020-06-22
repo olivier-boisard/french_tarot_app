@@ -7,17 +7,16 @@ import 'package:flutter/widgets.dart';
 import '../../engine/core/abstract_tarot_card.dart';
 import '../../engine/core/suited_playable.dart';
 import '../../engine/core/tarot_card.dart' as engine;
-import '../core/abstract_card_widget.dart';
 import '../core/dimensions.dart';
+import '../player_area/screen_sized.dart';
 
-class FaceUpCard extends AbstractCardWidget {
+class FaceUpCard extends StatelessWidget with ScreenSized {
   final AbstractTarotCard card;
 
-  const FaceUpCard({
+  FaceUpCard({
     Key key,
     @required this.card,
-    dimensions = const Dimensions(0),
-  }) : super(key: key, dimensions: dimensions);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

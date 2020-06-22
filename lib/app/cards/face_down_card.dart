@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../core/abstract_card_widget.dart';
 import '../core/dimensions.dart';
+import '../player_area/screen_sized.dart';
 
-class FaceDownCard extends AbstractCardWidget {
-
-  const FaceDownCard({Key key, @required dimensions})
-      : super(key: key, dimensions: dimensions);
+class FaceDownCard extends StatelessWidget with ScreenSized {
+  FaceDownCard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
