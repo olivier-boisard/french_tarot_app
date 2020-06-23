@@ -53,8 +53,6 @@ void main() {
     expect(cardInHandFinder, findsOneWidget);
     expect(playedCardFinder, findsNothing);
   });
-
-  //TODO test opponents play cards
 }
 
 Future dragCardToPlay(WidgetTester tester) async {
