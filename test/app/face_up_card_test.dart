@@ -12,63 +12,51 @@ import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {
   final card = TarotCard.coloredCard(Suit.spades, 1);
+
   testWidgets('Hand cards are visible', (tester) async {
     await _prepareApp(tester, card);
     expect(find.byType(FaceUpCard), findsOneWidget);
   });
+  final playedCardFinder = find.descendant(
+    of: find.byType(PlayedCardsArea),
+    matching: find.byType(FaceUpCard),
+  );
+  final cardInHandFinder = find.descendant(
+    of: find.byType(FaceUpPlayerArea),
+    matching: find.byType(FaceUpCard),
+  );
 
   testWidgets('Play card', (tester) async {
     await _prepareApp(tester, card);
-
-    expect(
-      find.descendant(
-        of: find.byType(FaceUpPlayerArea),
-        matching: find.byType(FaceUpCard),
-      ),
-      findsOneWidget,
-    );
-
-    final playedCardFinder = find.descendant(
-      of: find.byType(PlayedCardsArea),
-      matching: find.byType(FaceUpCard),
-    );
+    expect(cardInHandFinder, findsOneWidget);
     expect(playedCardFinder, findsNothing);
 
-    final playedCard = find.byType(FaceUpCard);
-    final playedCardCenter = tester.getCenter(playedCard);
-    const dragTargetKey = Key('AbstractTarotCardDragTarget');
-    final dragTargetCenter = tester.getCenter(find.byKey(dragTargetKey));
-    await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
-    await tester.pumpAndSettle();
-
+    await dragCardToPlay(tester);
+    expect(cardInHandFinder, findsNothing);
     expect(playedCardFinder, findsOneWidget);
-
-    expect(
-      find.descendant(
-        of: find.byType(FaceUpPlayerArea),
-        matching: find.byType(FaceUpCard),
-      ),
-      findsNothing,
-    );
   });
 
   testWidgets('Try to play wrong card', (tester) async {
-    final playedCards = <FaceUpCard>[
-      FaceUpCard(card: TarotCard.coloredCard(Suit.spades, 1))
-    ];
-    final playersHand = <FaceUpCard>[
-      FaceUpCard(card: TarotCard.coloredCard(Suit.spades, 2)),
-      FaceUpCard(card: TarotCard.coloredCard(Suit.heart, 1)),
-    ];
-    final gamePage = GamePage(
-      playedCards: playedCards,
-      visibleHand: playersHand,
-    );
+    await _prepareApp(tester, card);
 
-    //TODO test play unallowed card
+    expect(cardInHandFinder, findsOneWidget);
+    expect(playedCardFinder, findsNothing);
+
+    await dragCardToPlay(tester);
+    expect(cardInHandFinder, findsOneWidget);
+    expect(playedCardFinder, findsNothing);
   });
 
   //TODO test opponents play cards
+}
+
+Future dragCardToPlay(WidgetTester tester) async {
+  final playedCard = find.byType(FaceUpCard);
+  final playedCardCenter = tester.getCenter(playedCard);
+  const dragTargetKey = Key('AbstractTarotCardDragTarget');
+  final dragTargetCenter = tester.getCenter(find.byKey(dragTargetKey));
+  await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
+  await tester.pumpAndSettle();
 }
 
 Future _prepareApp(WidgetTester tester, AbstractTarotCard cardToPlay) async {
