@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../engine/core/abstract_tarot_card.dart';
+import '../engine/core/function_interfaces.dart';
 import 'cards/face_up_card.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
@@ -10,10 +12,12 @@ import 'player_area/screen_sized.dart';
 class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
+  final Transformer<bool, AbstractTarotCard> isCardAllowed;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
+    @required this.isCardAllowed,
     this.playedCards = const <FaceUpCard>[],
   }) : super(key: key);
 
@@ -22,6 +26,7 @@ class GamePage extends StatefulWidget {
     return _GamePageState(
       visibleHand: visibleHand,
       playedCards: playedCards,
+      isCardAllowed: isCardAllowed,
     );
   }
 }
@@ -29,13 +34,19 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
+  final Transformer<bool, AbstractTarotCard> isCardAllowed;
+
   static final List<PlayerLocation> _playerLocations = [
     PlayerLocation.left,
     PlayerLocation.top,
     PlayerLocation.right,
   ];
 
-  _GamePageState({@required this.visibleHand, @required this.playedCards}) {
+  _GamePageState({
+    @required this.visibleHand,
+    @required this.playedCards,
+    @required this.isCardAllowed,
+  }) {
     if (playedCards.length > _playerLocations.length) {
       throw InvalidPlayedCardsNumberException();
     }
@@ -74,16 +85,16 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                   flex: 2,
                   child: PlayedCardsArea(
                     playedCards: playedCards,
-                    cardIsAllowed: (card) => true,
+                    cardIsAllowed: isCardAllowed,
                     playCard: (card) {
                       setState(() {
                         final playedCardWidget = FaceUpCard(card: card);
                         playedCards[PlayerLocation.bottom] = playedCardWidget;
-                        final originalHandSize=visibleHand.length;
+                        final originalHandSize = visibleHand.length;
                         visibleHand.removeWhere((element) {
                           return element.card == playedCardWidget.card;
                         });
-                        if (originalHandSize==visibleHand.length){
+                        if (originalHandSize == visibleHand.length) {
                           throw CardNotFoundInHandException();
                         }
                       });

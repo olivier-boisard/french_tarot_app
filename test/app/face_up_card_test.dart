@@ -6,15 +6,18 @@ import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
 import 'package:french_tarot/app/player_area/face_up_player_area.dart';
-import 'package:french_tarot/engine/core/abstract_tarot_card.dart';
 import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {
   final card = TarotCard.coloredCard(Suit.spades, 1);
+  final gamePageAcceptingAnyCard = GamePage(
+    visibleHand: [FaceUpCard(card: card)],
+    isCardAllowed: (card) => true,
+  );
 
   testWidgets('Hand cards are visible', (tester) async {
-    await _prepareApp(tester, card);
+    await _prepareApp(tester, gamePageAcceptingAnyCard);
     expect(find.byType(FaceUpCard), findsOneWidget);
   });
   final playedCardFinder = find.descendant(
@@ -27,7 +30,7 @@ void main() {
   );
 
   testWidgets('Play card', (tester) async {
-    await _prepareApp(tester, card);
+    await _prepareApp(tester, gamePageAcceptingAnyCard);
     expect(cardInHandFinder, findsOneWidget);
     expect(playedCardFinder, findsNothing);
 
@@ -36,8 +39,12 @@ void main() {
     expect(playedCardFinder, findsOneWidget);
   });
 
-  testWidgets('Try to play wrong card', (tester) async {
-    await _prepareApp(tester, card);
+  testWidgets('Reject played card', (tester) async {
+    final gamePageRejectingAnyCard = GamePage(
+      visibleHand: [FaceUpCard(card: card)],
+      isCardAllowed: (card) => false,
+    );
+    await _prepareApp(tester, gamePageRejectingAnyCard);
 
     expect(cardInHandFinder, findsOneWidget);
     expect(playedCardFinder, findsNothing);
@@ -59,7 +66,6 @@ Future dragCardToPlay(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-Future _prepareApp(WidgetTester tester, AbstractTarotCard cardToPlay) async {
-  final gamePage = GamePage(visibleHand: [FaceUpCard(card: cardToPlay)]);
+Future _prepareApp(WidgetTester tester, GamePage gamePage) async {
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 }
