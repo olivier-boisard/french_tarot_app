@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../core/dimensions.dart';
 import '../player_area/screen_sized.dart';
 
 class FaceDownCard extends StatelessWidget with ScreenSized {
@@ -19,11 +18,5 @@ class FaceDownCard extends StatelessWidget with ScreenSized {
         borderRadius: BorderRadius.circular(dimensions.borderRadius),
       ),
     );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Dimensions>('dimensions', dimensions));
   }
 }
