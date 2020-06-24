@@ -1,7 +1,7 @@
 import '../core/function_interfaces.dart';
 
 class ProcessSequence {
-  final List<Process> _processes;
+  final Iterable<Process> _processes;
 
   ProcessSequence(this._processes);
 

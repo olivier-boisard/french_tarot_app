@@ -17,7 +17,7 @@ class RoundScoresComputer {
 
   void consume(
     ActionsHandler<PlayableScoreElement> turn,
-    List<AbstractAgent> agentsPlayOrder,
+    Iterable<AbstractAgent> agentsPlayOrder,
   ) {
     final takerWon = _didTakerWin(agentsPlayOrder, turn);
     _dealWinnableScoreElementsToWinner(turn, takerWon);

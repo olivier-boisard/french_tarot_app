@@ -1,3 +1,3 @@
 import 'decision.dart';
 
-typedef Selector<T> = Decision<T> Function(List<T>);
+typedef Selector<T> = Decision<T> Function(Iterable<T>);

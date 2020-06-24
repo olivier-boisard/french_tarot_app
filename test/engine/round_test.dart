@@ -77,7 +77,7 @@ void main() {
   });
 }
 
-Decision<T> pickFirst<T>(List<T> allowedActions) {
+Decision<T> pickFirst<T>(Iterable<T> allowedActions) {
   const probability = 1.0;
   return Decision(probability, allowedActions.first);
 }

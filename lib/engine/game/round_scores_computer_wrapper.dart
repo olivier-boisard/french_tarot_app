@@ -17,7 +17,7 @@ class RoundScoresComputerWrapper {
 
   void consume(
     ActionsHandler<PlayableScoreElement> turn,
-    List<AbstractAgent> agentsPlayOrder,
+    Iterable<AbstractAgent> agentsPlayOrder,
   ) {
     if (identical(taker, null)) {
       throw UnsetTakerException();

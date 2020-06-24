@@ -6,7 +6,7 @@ typedef Process = void Function();
 
 typedef Transformer<R, P> = R Function(P);
 
-void notifyConsumers<T>(List<Consumer<T>> consumers, T consumable) {
+void notifyConsumers<T>(Iterable<Consumer<T>> consumers, T consumable) {
   if (consumers != null) {
     for (final consumer in consumers) {
       consumer(consumable);
