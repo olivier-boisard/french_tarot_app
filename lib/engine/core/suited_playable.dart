@@ -1,4 +1,4 @@
-enum Suit { spades, heart, diamond, clover, trump, none }
+import 'suits.dart';
 
 abstract class SuitedPlayable {
   bool beats(Suit demanded, SuitedPlayable card);

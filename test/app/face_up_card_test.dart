@@ -6,7 +6,7 @@ import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
 import 'package:french_tarot/app/player_area/face_up_player_area.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/suits.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {

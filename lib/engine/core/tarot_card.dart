@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'abstract_tarot_card.dart';
 import 'suited_playable.dart';
+import 'suits.dart';
 
 @immutable
 class TarotCard implements AbstractTarotCard {
@@ -9,12 +10,6 @@ class TarotCard implements AbstractTarotCard {
   final Suit suit;
   @override
   final int value;
-  static const List<Suit> standardSuits = [
-    Suit.heart,
-    Suit.diamond,
-    Suit.clover,
-    Suit.spades
-  ];
 
   TarotCard.coloredCard(this.suit, this.value) {
     _checkStrengthIsValid();
