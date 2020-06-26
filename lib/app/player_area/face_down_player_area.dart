@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../cards/face_down_card.dart';
+import '../../engine/core/function_interfaces.dart';
 import 'screen_sized.dart';
 
 class FaceDownPlayerArea extends StatelessWidget with ScreenSized {

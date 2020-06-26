@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'abstract_tarot_card.dart';
 import 'deck.dart';
+import 'suits.dart';
 import 'tarot_card.dart';
 
 class TarotDeckFacade extends Deck<AbstractTarotCard> {

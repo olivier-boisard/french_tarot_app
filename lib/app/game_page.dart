@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
 import '../engine/core/function_interfaces.dart';
+import 'cards/face_down_card.dart';
 import 'cards/face_up_card.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
