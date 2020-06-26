@@ -31,7 +31,7 @@ class TarotDeckFacade extends Deck<AbstractTarotCard> {
   }
 
   static void _addRegularCards(List<AbstractTarotCard> cards) {
-    for (final suit in TarotCard.standardSuits) {
+    for (final suit in standardSuits) {
       for (var strength = 1; strength <= CardStrengths.king; strength++) {
         cards.add(TarotCard.coloredCard(suit, strength));
       }
