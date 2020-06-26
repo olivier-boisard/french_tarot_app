@@ -55,7 +55,10 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 
   @override
   Widget build(BuildContext context) {
-    final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
+    final faceDownPlayerArea = FaceDownPlayerArea(
+      nCards: visibleHand.length,
+      faceDownCardFactory: () => FaceDownCard(),
+    );
     final playedCards = _createLocationToPlayedCard();
 
     return Scaffold(
