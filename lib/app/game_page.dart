@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
-import '../engine/core/function_interfaces.dart';
-import 'cards/face_down_card.dart';
+import '../engine/core/function_interfaces.dart' as interfaces;
 import 'cards/face_up_card.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
@@ -13,12 +12,14 @@ import 'player_area/screen_sized.dart';
 class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
-  final Transformer<bool, AbstractTarotCard> isCardAllowed;
+  final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
+  final interfaces.Factory<Widget> faceDownCardFactory;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
     @required this.isCardAllowed,
+    @required this.faceDownCardFactory,
     this.playedCards = const <FaceUpCard>[],
   }) : super(key: key);
 
@@ -28,6 +29,7 @@ class GamePage extends StatefulWidget {
       visibleHand: visibleHand,
       playedCards: playedCards,
       isCardAllowed: isCardAllowed,
+      faceDownCardFactory: faceDownCardFactory,
     );
   }
 }
@@ -35,7 +37,8 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
-  final Transformer<bool, AbstractTarotCard> isCardAllowed;
+  final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
+  final interfaces.Factory<Widget> faceDownCardFactory;
 
   static final List<PlayerLocation> _playerLocations = [
     PlayerLocation.left,
@@ -47,6 +50,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
     @required this.visibleHand,
     @required this.playedCards,
     @required this.isCardAllowed,
+    @required this.faceDownCardFactory,
   }) {
     if (playedCards.length > _playerLocations.length) {
       throw InvalidPlayedCardsNumberException();
@@ -57,7 +61,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   Widget build(BuildContext context) {
     final faceDownPlayerArea = FaceDownPlayerArea(
       nCards: visibleHand.length,
-      faceDownCardFactory: () => FaceDownCard(),
+      faceDownCardFactory: faceDownCardFactory,
     );
     final playedCards = _createLocationToPlayedCard();
 

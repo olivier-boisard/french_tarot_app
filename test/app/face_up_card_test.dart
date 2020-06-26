@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:french_tarot/app/cards/face_down_card.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
@@ -14,6 +15,7 @@ void main() {
   final gamePageAcceptingAnyCard = GamePage(
     visibleHand: [FaceUpCard(card: card)],
     isCardAllowed: (card) => true,
+    faceDownCardFactory: () => FaceDownCard(),
   );
 
   testWidgets('Hand cards are visible', (tester) async {
@@ -43,6 +45,7 @@ void main() {
     final gamePageRejectingAnyCard = GamePage(
       visibleHand: [FaceUpCard(card: card)],
       isCardAllowed: (card) => false,
+      faceDownCardFactory: () => FaceDownCard(),
     );
     await _prepareApp(tester, gamePageRejectingAnyCard);
 
