@@ -96,11 +96,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
     return DragTarget<AbstractTarotCard>(
       key: const Key('AbstractTarotCardDragTarget'),
       onWillAccept: cardIsAllowed,
-      onAccept: (cardToPlay) {
-        setState(() {
-          playCard(cardToPlay);
-        });
-      },
+      onAccept: playCard,
       builder: (context, candidates, rejects) {
         return candidates.isNotEmpty && cardIsAllowed(candidates.first)
             ? FaceUpCard(card: candidates.first)
