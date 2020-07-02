@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../engine/core/suits.dart';
 import '../player_area/screen_sized.dart';
-import 'card_widget.dart';
+import 'abstract_card_widget.dart';
 
 class FaceUpCard extends AbstractCardWidget with ScreenSized {
   FaceUpCard({

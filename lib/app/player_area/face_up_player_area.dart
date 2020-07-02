@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../engine/core/abstract_tarot_card.dart';
-import '../cards/card_widget.dart';
+import '../cards/abstract_card_widget.dart';
 import 'screen_sized.dart';
 
 class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
