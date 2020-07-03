@@ -3,28 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
-import '../engine/core/function_interfaces.dart';
-import 'cards/face_up_card.dart';
 import 'player_area/screen_sized.dart';
 
 class PlayedCardsArea extends StatefulWidget {
   final Map<PlayerLocation, Widget> playedCards;
-  final Transformer<bool, AbstractTarotCard> cardIsAllowed;
-  final Consumer<AbstractTarotCard> playCard;
+  final DragTarget<AbstractTarotCard> playTarget;
 
   const PlayedCardsArea({
     Key key,
     @required this.playedCards,
-    @required this.cardIsAllowed,
-    @required this.playCard,
+    this.playTarget,
   }) : super(key: key);
 
   @override
   _PlayerCardsAreaState createState() {
     return _PlayerCardsAreaState(
-      playedCards,
-      cardIsAllowed,
-      playCard,
+      playedCards: playedCards,
+      playTarget: playTarget,
     );
   }
 }
@@ -38,14 +33,12 @@ enum PlayerLocation {
 
 class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
   final Map<PlayerLocation, Widget> playedCards;
-  final DragTargetWillAccept<AbstractTarotCard> cardIsAllowed;
-  final Consumer<AbstractTarotCard> playCard;
+  final DragTarget<AbstractTarotCard> playTarget;
 
-  _PlayerCardsAreaState(
-    this.playedCards,
-    this.cardIsAllowed,
-    this.playCard,
-  );
+  _PlayerCardsAreaState({
+    @required this.playedCards,
+    this.playTarget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,24 +77,10 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
           flex: 1,
           child: Align(
             alignment: Alignment.topCenter,
-            child: playedCards[PlayerLocation.bottom]
-                ?? _buildPlayedCardDraggableTarget(),
+            child: playedCards[PlayerLocation.bottom] ?? playTarget,
           ),
-        )
+        ),
       ],
-    );
-  }
-
-  DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
-    return DragTarget<AbstractTarotCard>(
-      key: const Key('AbstractTarotCardDragTarget'),
-      onWillAccept: cardIsAllowed,
-      onAccept: playCard,
-      builder: (context, candidates, rejects) {
-        return candidates.isNotEmpty && cardIsAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first)
-            : Container();
-      },
     );
   }
 }
