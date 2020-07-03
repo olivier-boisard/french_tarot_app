@@ -9,7 +9,7 @@ import 'player_area/face_down_player_area.dart';
 import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
-//TODO refactor (after PlayedCardsArea)
+//TODO refactor
 class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
