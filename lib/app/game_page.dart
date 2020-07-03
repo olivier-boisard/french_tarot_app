@@ -94,28 +94,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                   flex: 2,
                   child: PlayedCardsArea(
                     playedCards: playedCards,
-                    playTarget: DragTarget<AbstractTarotCard>(
-                      key: const Key('AbstractTarotCardDragTarget'),
-                      onWillAccept: isCardAllowed,
-                      onAccept: (card) {
-                        setState(() {
-                          final playedCardWidget = FaceUpCard(card: card);
-                          playedCards[PlayerLocation.bottom] = playedCardWidget;
-                          final originalHandSize = visibleHand.length;
-                          visibleHand.removeWhere((element) {
-                            return element.card == playedCardWidget.card;
-                          });
-                          if (originalHandSize == visibleHand.length) {
-                            throw CardNotFoundInHandException();
-                          }
-                        });
-                      },
-                      builder: (context, candidates, rejects) {
-                        return candidates.isNotEmpty && isCardAllowed(candidates.first)
-                            ? FaceUpCard(card: candidates.first)
-                            : Container();
-                      },
-                    ),
+                    playTarget: buildDragTarget(playedCards),
                   ),
                 ),
                 Expanded(
@@ -143,6 +122,33 @@ class _GamePageState extends State<GamePage> with ScreenSized {
           ),
         ],
       ),
+    );
+  }
+
+  DragTarget<AbstractTarotCard> buildDragTarget(
+    Map<PlayerLocation, Widget> playedCards,
+  ) {
+    return DragTarget<AbstractTarotCard>(
+      key: const Key('AbstractTarotCardDragTarget'),
+      onWillAccept: isCardAllowed,
+      onAccept: (card) {
+        setState(() {
+          final playedCardWidget = FaceUpCard(card: card);
+          playedCards[PlayerLocation.bottom] = playedCardWidget;
+          final originalHandSize = visibleHand.length;
+          visibleHand.removeWhere((element) {
+            return element.card == playedCardWidget.card;
+          });
+          if (originalHandSize == visibleHand.length) {
+            throw CardNotFoundInHandException();
+          }
+        });
+      },
+      builder: (context, candidates, rejects) {
+        return candidates.isNotEmpty && isCardAllowed(candidates.first)
+            ? FaceUpCard(card: candidates.first)
+            : Container();
+      },
     );
   }
 
