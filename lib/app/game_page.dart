@@ -14,13 +14,13 @@ class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
-  final interfaces.Factory<Widget> faceDownCardFactory;
+  final FaceDownPlayerArea faceDownPlayerArea;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
     @required this.isCardAllowed,
-    @required this.faceDownCardFactory,
+    @required this.faceDownPlayerArea,
     this.playedCards = const <FaceUpCard>[],
   }) : super(key: key);
 
@@ -30,7 +30,7 @@ class GamePage extends StatefulWidget {
       visibleHand: visibleHand,
       playedCards: playedCards,
       isCardAllowed: isCardAllowed,
-      faceDownCardFactory: faceDownCardFactory,
+      faceDownPlayerArea: faceDownPlayerArea,
     );
   }
 }
@@ -39,7 +39,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
-  final interfaces.Factory<Widget> faceDownCardFactory;
+  final FaceDownPlayerArea faceDownPlayerArea;
 
   static final List<PlayerLocation> _playerLocations = [
     PlayerLocation.left,
@@ -49,9 +49,9 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 
   _GamePageState({
     @required this.visibleHand,
-    @required this.playedCards,
     @required this.isCardAllowed,
-    @required this.faceDownCardFactory,
+    @required this.faceDownPlayerArea,
+    this.playedCards = const <FaceUpCard>[],
   }) {
     if (playedCards.length > _playerLocations.length) {
       throw InvalidPlayedCardsNumberException();
@@ -60,10 +60,6 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 
   @override
   Widget build(BuildContext context) {
-    final faceDownPlayerArea = FaceDownPlayerArea(
-      nCards: visibleHand.length,
-      faceDownCardFactory: faceDownCardFactory,
-    );
     final playedCards = _createLocationToPlayedCard();
 
     return Scaffold(

@@ -6,16 +6,21 @@ import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
+import 'package:french_tarot/app/player_area/face_down_player_area.dart';
 import 'package:french_tarot/app/player_area/face_up_player_area.dart';
 import 'package:french_tarot/engine/core/suits.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {
   final card = TarotCard.coloredCard(Suit.spades, 1);
+  final faceDownPlayerArea = FaceDownPlayerArea(
+    nCards: 1,
+    faceDownCardFactory: () => FaceDownCard(),
+  );
   final gamePageAcceptingAnyCard = GamePage(
     visibleHand: [FaceUpCard(card: card)],
     isCardAllowed: (card) => true,
-    faceDownCardFactory: () => FaceDownCard(),
+    faceDownPlayerArea: faceDownPlayerArea,
   );
 
   testWidgets('Hand cards are visible', (tester) async {
@@ -45,7 +50,7 @@ void main() {
     final gamePageRejectingAnyCard = GamePage(
       visibleHand: [FaceUpCard(card: card)],
       isCardAllowed: (card) => false,
-      faceDownCardFactory: () => FaceDownCard(),
+      faceDownPlayerArea: faceDownPlayerArea,
     );
     await _prepareApp(tester, gamePageRejectingAnyCard);
 
