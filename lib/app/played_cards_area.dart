@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../engine/core/abstract_tarot_card.dart';
 import 'player_area/screen_sized.dart';
 
 class PlayedCardsArea extends StatefulWidget {
   final Map<PlayerLocation, Widget> playedCards;
-  final DragTarget<AbstractTarotCard> playTarget;
+  final Widget playTarget;
 
   const PlayedCardsArea({
     Key key,
@@ -33,7 +32,7 @@ enum PlayerLocation {
 
 class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
   final Map<PlayerLocation, Widget> playedCards;
-  final DragTarget<AbstractTarotCard> playTarget;
+  final Widget playTarget;
 
   _PlayerCardsAreaState({
     @required this.playedCards,
