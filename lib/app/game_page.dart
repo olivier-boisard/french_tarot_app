@@ -41,22 +41,12 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
 
-  static final List<PlayerLocation> _playerLocations = [
-    PlayerLocation.left,
-    PlayerLocation.top,
-    PlayerLocation.right,
-  ];
-
   _GamePageState({
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
     this.playedCards = const <FaceUpCard>[],
-  }) {
-    if (playedCards.length > _playerLocations.length) {
-      throw InvalidPlayedCardsNumberException();
-    }
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +140,13 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 
   Map<PlayerLocation, Widget> _createLocationToPlayedCard() {
     final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
+    final  playerLocations = <PlayerLocation>[
+      PlayerLocation.left,
+      PlayerLocation.top,
+      PlayerLocation.right,
+    ];
     for (var i = playedCards.length - 1; i >= 0; i--) {
-      playedCardsMappedToLocations[_playerLocations[i]] = playedCards[i];
+      playedCardsMappedToLocations[playerLocations[i]] = playedCards[i];
     }
     return playedCardsMappedToLocations;
   }

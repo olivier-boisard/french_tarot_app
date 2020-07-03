@@ -75,3 +75,18 @@ Future dragCardToPlay(WidgetTester tester) async {
 Future _prepareApp(WidgetTester tester, GamePage gamePage) async {
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
 }
+
+Map<PlayerLocation, Widget> _createLocationToPlayedCard(
+  List<Widget> playedCards,
+) {
+  final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
+  final playerLocations = <PlayerLocation>[
+    PlayerLocation.left,
+    PlayerLocation.top,
+    PlayerLocation.right,
+  ];
+  for (var i = playedCards.length - 1; i >= 0; i--) {
+    playedCardsMappedToLocations[playerLocations[i]] = playedCards[i];
+  }
+  return playedCardsMappedToLocations;
+}
