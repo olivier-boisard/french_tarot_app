@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
 import '../engine/core/function_interfaces.dart' as interfaces;
@@ -12,7 +13,7 @@ import 'player_area/screen_sized.dart';
 //TODO refactor
 class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
-  final List<FaceUpCard> playedCards;
+  final Map<PlayerLocation, Widget> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
 
@@ -21,7 +22,7 @@ class GamePage extends StatefulWidget {
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
-    this.playedCards = const <FaceUpCard>[],
+    this.playedCards = const <PlayerLocation, Widget>{},
   }) : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> with ScreenSized {
   final List<FaceUpCard> visibleHand;
-  final List<FaceUpCard> playedCards;
+  final Map<PlayerLocation, Widget> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
 
@@ -45,13 +46,12 @@ class _GamePageState extends State<GamePage> with ScreenSized {
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
-    this.playedCards = const <FaceUpCard>[],
+    this.playedCards = const <PlayerLocation, Widget>{},
   });
 
   @override
   Widget build(BuildContext context) {
-    final playedCards = _createLocationToPlayedCard();
-
+    final playedCardsCopy = Map<PlayerLocation, Widget>.from(playedCards);
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -76,13 +76,13 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                 Expanded(
                   flex: 2,
                   child: PlayedCardsArea(
-                    playedCards: playedCards,
+                    playedCards: playedCardsCopy,
                     playTarget: DragTarget<AbstractTarotCard>(
                       key: const Key('AbstractTarotCardDragTarget'),
                       onWillAccept: isCardAllowed,
                       onAccept: (card) {
                         setState(() {
-                          _onPlayedCardAccept(card, playedCards);
+                          _onPlayedCardAccept(card, playedCardsCopy);
                         });
                       },
                       builder: (context, candidates, rejects) {
@@ -120,7 +120,8 @@ class _GamePageState extends State<GamePage> with ScreenSized {
     );
   }
 
-  void _onPlayedCardAccept(AbstractTarotCard card, Map<PlayerLocation, Widget> playedCards) {
+  void _onPlayedCardAccept(
+      AbstractTarotCard card, Map<PlayerLocation, Widget> playedCards) {
     final playedCardWidget = FaceUpCard(card: card);
     playedCards[PlayerLocation.bottom] = playedCardWidget;
     final originalHandSize = visibleHand.length;
@@ -130,19 +131,6 @@ class _GamePageState extends State<GamePage> with ScreenSized {
     if (originalHandSize == visibleHand.length) {
       throw CardNotFoundInHandException();
     }
-  }
-
-  Map<PlayerLocation, Widget> _createLocationToPlayedCard() {
-    final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
-    final  playerLocations = <PlayerLocation>[
-      PlayerLocation.left,
-      PlayerLocation.top,
-      PlayerLocation.right,
-    ];
-    for (var i = playedCards.length - 1; i >= 0; i--) {
-      playedCardsMappedToLocations[playerLocations[i]] = playedCards[i];
-    }
-    return playedCardsMappedToLocations;
   }
 }
 
