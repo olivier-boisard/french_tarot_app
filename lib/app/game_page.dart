@@ -57,10 +57,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: faceDownPlayerArea,
-          ),
+          Expanded(flex: 1, child: faceDownPlayerArea),
           Expanded(
             // Screen middle (left player, play area, right player)
             flex: 2,
@@ -80,7 +77,21 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                   flex: 2,
                   child: PlayedCardsArea(
                     playedCards: playedCards,
-                    playTarget: buildDragTarget(playedCards),
+                    playTarget: DragTarget<AbstractTarotCard>(
+                      key: const Key('AbstractTarotCardDragTarget'),
+                      onWillAccept: isCardAllowed,
+                      onAccept: (card) {
+                        setState(() {
+                          _onPlayedCardAccept(card, playedCards);
+                        });
+                      },
+                      builder: (context, candidates, rejects) {
+                        return candidates.isNotEmpty &&
+                                isCardAllowed(candidates.first)
+                            ? FaceUpCard(card: candidates.first)
+                            : Container();
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
@@ -101,9 +112,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: FaceUpPlayerArea(
-                cards: visibleHand,
-              ),
+              child: FaceUpPlayerArea(cards: visibleHand),
             ),
           ),
         ],
@@ -111,31 +120,16 @@ class _GamePageState extends State<GamePage> with ScreenSized {
     );
   }
 
-  DragTarget<AbstractTarotCard> buildDragTarget(
-    Map<PlayerLocation, Widget> playedCards,
-  ) {
-    return DragTarget<AbstractTarotCard>(
-      key: const Key('AbstractTarotCardDragTarget'),
-      onWillAccept: isCardAllowed,
-      onAccept: (card) {
-        setState(() {
-          final playedCardWidget = FaceUpCard(card: card);
-          playedCards[PlayerLocation.bottom] = playedCardWidget;
-          final originalHandSize = visibleHand.length;
-          visibleHand.removeWhere((element) {
-            return element.card == playedCardWidget.card;
-          });
-          if (originalHandSize == visibleHand.length) {
-            throw CardNotFoundInHandException();
-          }
-        });
-      },
-      builder: (context, candidates, rejects) {
-        return candidates.isNotEmpty && isCardAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first)
-            : Container();
-      },
-    );
+  void _onPlayedCardAccept(AbstractTarotCard card, Map<PlayerLocation, Widget> playedCards) {
+    final playedCardWidget = FaceUpCard(card: card);
+    playedCards[PlayerLocation.bottom] = playedCardWidget;
+    final originalHandSize = visibleHand.length;
+    visibleHand.removeWhere((element) {
+      return element.card == playedCardWidget.card;
+    });
+    if (originalHandSize == visibleHand.length) {
+      throw CardNotFoundInHandException();
+    }
   }
 
   Map<PlayerLocation, Widget> _createLocationToPlayedCard() {
