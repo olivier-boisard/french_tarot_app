@@ -7,7 +7,6 @@ import '../engine/core/function_interfaces.dart' as interfaces;
 import 'cards/abstract_card_widget.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
-import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
 //TODO refactor
@@ -17,6 +16,7 @@ class GamePage extends StatefulWidget {
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
   final interfaces.Transformer<Widget, AbstractTarotCard> faceUpCardBuilder;
+  final Widget faceUpArea;
 
   const GamePage({
     Key key,
@@ -24,6 +24,7 @@ class GamePage extends StatefulWidget {
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
     @required this.faceUpCardBuilder,
+    @required this.faceUpArea,
     this.playedCards = const <PlayerLocation, Widget>{},
   }) : super(key: key);
 
@@ -35,6 +36,7 @@ class GamePage extends StatefulWidget {
       isCardAllowed: isCardAllowed,
       faceDownPlayerArea: faceDownPlayerArea,
       faceUpCardBuilder: faceUpCardBuilder,
+      faceUpArea: faceUpArea,
     );
   }
 }
@@ -45,12 +47,14 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
   final interfaces.Transformer<Widget, AbstractTarotCard> faceUpCardBuilder;
+  final Widget faceUpArea;
 
   _GamePageState({
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
     @required this.faceUpCardBuilder,
+    @required this.faceUpArea,
     this.playedCards = const <PlayerLocation, Widget>{},
   });
 
@@ -125,7 +129,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: FaceUpPlayerArea(cards: visibleHand),
+              child: faceUpArea,
             ),
           ),
         ],

@@ -17,11 +17,13 @@ void main() {
     nCards: 1,
     faceDownCardFactory: () => FaceDownCard(),
   );
+  final visibleHand = [FaceUpCard(card: card)];
   final gamePageAcceptingAnyCard = GamePage(
-    visibleHand: [FaceUpCard(card: card)],
+    visibleHand: visibleHand,
     isCardAllowed: (card) => true,
     faceDownPlayerArea: faceDownPlayerArea,
     faceUpCardBuilder: (card) => FaceUpCard(card: card),
+    faceUpArea: FaceUpPlayerArea(cards: visibleHand),
   );
 
   testWidgets('Hand cards are visible', (tester) async {
@@ -49,10 +51,11 @@ void main() {
 
   testWidgets('Reject played card', (tester) async {
     final gamePageRejectingAnyCard = GamePage(
-      visibleHand: [FaceUpCard(card: card)],
+      visibleHand: visibleHand,
       isCardAllowed: (card) => false,
       faceDownPlayerArea: faceDownPlayerArea,
       faceUpCardBuilder: (card) => FaceUpCard(card: card),
+      faceUpArea: FaceUpPlayerArea(cards: visibleHand),
     );
     await _prepareApp(tester, gamePageRejectingAnyCard);
 
