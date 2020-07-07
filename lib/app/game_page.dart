@@ -52,6 +52,32 @@ class _GamePageState extends State<GamePage> with ScreenSized {
   @override
   Widget build(BuildContext context) {
     final playedCardsCopy = Map<PlayerLocation, Widget>.from(playedCards);
+    final dragTarget = DragTarget<AbstractTarotCard>(
+      key: const Key('AbstractTarotCardDragTarget'),
+      onWillAccept: isCardAllowed,
+      onAccept: (card) {
+        setState(() {
+          final playedCardWidget = FaceUpCard(card: card);
+          playedCardsCopy[PlayerLocation.bottom] = playedCardWidget;
+          final originalHandSize = visibleHand.length;
+          visibleHand.removeWhere((element) {
+            return element.card == playedCardWidget.card;
+          });
+          if (originalHandSize == visibleHand.length) {
+            throw CardNotFoundInHandException();
+          }
+        });
+      },
+      builder: (context, candidates, rejects) {
+        return candidates.isNotEmpty && isCardAllowed(candidates.first)
+            ? FaceUpCard(card: candidates.first)
+            : Container();
+      },
+    );
+    final playedCardsArea = PlayedCardsArea(
+      playedCards: playedCardsCopy,
+      playTarget: dragTarget,
+    );
     return Scaffold(
       backgroundColor: Colors.green[800],
       body: Column(
@@ -75,24 +101,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                 ),
                 Expanded(
                   flex: 2,
-                  child: PlayedCardsArea(
-                    playedCards: playedCardsCopy,
-                    playTarget: DragTarget<AbstractTarotCard>(
-                      key: const Key('AbstractTarotCardDragTarget'),
-                      onWillAccept: isCardAllowed,
-                      onAccept: (card) {
-                        setState(() {
-                          _onPlayedCardAccept(card, playedCardsCopy);
-                        });
-                      },
-                      builder: (context, candidates, rejects) {
-                        return candidates.isNotEmpty &&
-                                isCardAllowed(candidates.first)
-                            ? FaceUpCard(card: candidates.first)
-                            : Container();
-                      },
-                    ),
-                  ),
+                  child: playedCardsArea,
                 ),
                 Expanded(
                   flex: 1,
@@ -118,19 +127,6 @@ class _GamePageState extends State<GamePage> with ScreenSized {
         ],
       ),
     );
-  }
-
-  void _onPlayedCardAccept(
-      AbstractTarotCard card, Map<PlayerLocation, Widget> playedCards) {
-    final playedCardWidget = FaceUpCard(card: card);
-    playedCards[PlayerLocation.bottom] = playedCardWidget;
-    final originalHandSize = visibleHand.length;
-    visibleHand.removeWhere((element) {
-      return element.card == playedCardWidget.card;
-    });
-    if (originalHandSize == visibleHand.length) {
-      throw CardNotFoundInHandException();
-    }
   }
 }
 
