@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 
 import '../engine/core/abstract_tarot_card.dart';
 import '../engine/core/function_interfaces.dart' as interfaces;
-import 'cards/face_up_card.dart';
+import 'cards/abstract_card_widget.dart';
 import 'played_cards_area.dart';
 import 'player_area/face_down_player_area.dart';
 import 'player_area/face_up_player_area.dart';
@@ -12,16 +12,18 @@ import 'player_area/screen_sized.dart';
 
 //TODO refactor
 class GamePage extends StatefulWidget {
-  final List<FaceUpCard> visibleHand;
+  final List<AbstractCardWidget> visibleHand;
   final Map<PlayerLocation, Widget> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
+  final interfaces.Transformer<Widget, AbstractTarotCard> faceUpCardBuilder;
 
   const GamePage({
     Key key,
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
+    @required this.faceUpCardBuilder,
     this.playedCards = const <PlayerLocation, Widget>{},
   }) : super(key: key);
 
@@ -32,20 +34,23 @@ class GamePage extends StatefulWidget {
       playedCards: playedCards,
       isCardAllowed: isCardAllowed,
       faceDownPlayerArea: faceDownPlayerArea,
+      faceUpCardBuilder: faceUpCardBuilder,
     );
   }
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
-  final List<FaceUpCard> visibleHand;
+  final List<AbstractCardWidget> visibleHand;
   final Map<PlayerLocation, Widget> playedCards;
   final interfaces.Transformer<bool, AbstractTarotCard> isCardAllowed;
   final FaceDownPlayerArea faceDownPlayerArea;
+  final interfaces.Transformer<Widget, AbstractTarotCard> faceUpCardBuilder;
 
   _GamePageState({
     @required this.visibleHand,
     @required this.isCardAllowed,
     @required this.faceDownPlayerArea,
+    @required this.faceUpCardBuilder,
     this.playedCards = const <PlayerLocation, Widget>{},
   });
 
@@ -57,11 +62,10 @@ class _GamePageState extends State<GamePage> with ScreenSized {
       onWillAccept: isCardAllowed,
       onAccept: (card) {
         setState(() {
-          final playedCardWidget = FaceUpCard(card: card);
-          playedCardsCopy[PlayerLocation.bottom] = playedCardWidget;
+          playedCardsCopy[PlayerLocation.bottom] = faceUpCardBuilder(card);
           final originalHandSize = visibleHand.length;
           visibleHand.removeWhere((element) {
-            return element.card == playedCardWidget.card;
+            return element.card == card;
           });
           if (originalHandSize == visibleHand.length) {
             throw CardNotFoundInHandException();
@@ -70,7 +74,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
       },
       builder: (context, candidates, rejects) {
         return candidates.isNotEmpty && isCardAllowed(candidates.first)
-            ? FaceUpCard(card: candidates.first)
+            ? faceUpCardBuilder(candidates.first)
             : Container();
       },
     );

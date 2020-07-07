@@ -21,6 +21,7 @@ void main() {
     visibleHand: [FaceUpCard(card: card)],
     isCardAllowed: (card) => true,
     faceDownPlayerArea: faceDownPlayerArea,
+    faceUpCardBuilder: (card) => FaceUpCard(card: card),
   );
 
   testWidgets('Hand cards are visible', (tester) async {
@@ -51,6 +52,7 @@ void main() {
       visibleHand: [FaceUpCard(card: card)],
       isCardAllowed: (card) => false,
       faceDownPlayerArea: faceDownPlayerArea,
+      faceUpCardBuilder: (card) => FaceUpCard(card: card),
     );
     await _prepareApp(tester, gamePageRejectingAnyCard);
 
