@@ -73,6 +73,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
           flex: 1,
           child: Align(
             alignment: Alignment.bottomCenter,
+            key: const Key('TopPlayedCard'),
             child: playedCards[PlayerLocation.top] ?? cardPlaceHolder,
           ),
         ),
@@ -84,8 +85,14 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
                 flex: 1,
                 child: Container(),
               ),
-              playedCards[PlayerLocation.left] ?? cardPlaceHolder,
-              playedCards[PlayerLocation.right] ?? cardPlaceHolder,
+              Container(
+                key: const Key('LeftPlayedCard'),
+                child: playedCards[PlayerLocation.left] ?? cardPlaceHolder,
+              ),
+              Container(
+                key: const Key('RightPlayedCard'),
+                child: playedCards[PlayerLocation.right] ?? cardPlaceHolder,
+              ),
               Expanded(
                 flex: 1,
                 child: Container(),
