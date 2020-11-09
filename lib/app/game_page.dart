@@ -63,7 +63,6 @@ class _GamePageState extends State<GamePage> with ScreenSized {
 
   @override
   Widget build(BuildContext context) {
-    final faceDownPlayerArea = FaceDownPlayerArea(nCards: visibleHand.length);
     final playedCards = _createLocationToPlayedCard();
 
     return Scaffold(
@@ -73,7 +72,10 @@ class _GamePageState extends State<GamePage> with ScreenSized {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: faceDownPlayerArea,
+            child: FaceDownPlayerArea(
+              nCards: visibleHand.length,
+              key: const Key('TopFaceUpArea'),
+            ),
           ),
           Expanded(
             // Screen middle (left player, play area, right player)
@@ -86,7 +88,10 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                     alignment: Alignment.centerLeft,
                     child: RotatedBox(
                       quarterTurns: 1,
-                      child: faceDownPlayerArea,
+                      child: FaceDownPlayerArea(
+                        nCards: visibleHand.length,
+                        key: const Key('LeftFaceUpArea'),
+                      ),
                     ),
                   ),
                 ),
@@ -116,7 +121,10 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                     alignment: Alignment.centerRight,
                     child: RotatedBox(
                       quarterTurns: 3,
-                      child: faceDownPlayerArea,
+                      child: FaceDownPlayerArea(
+                        nCards: visibleHand.length,
+                        key: const Key('RightFaceUpArea'),
+                      ),
                     ),
                   ),
                 ),
