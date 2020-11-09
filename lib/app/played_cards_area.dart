@@ -27,14 +27,27 @@ class PlayedCardsArea extends StatefulWidget {
       playCard,
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<Map<PlayerLocation, Widget>>(
+        'playedCards',
+        playedCards,
+      ))
+      ..add(ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
+        'cardIsAllowed',
+        cardIsAllowed,
+      ))
+      ..add(ObjectFlagProperty<Consumer<AbstractTarotCard>>.has(
+        'playCard',
+        playCard,
+      ));
+  }
 }
 
-enum PlayerLocation {
-  top,
-  left,
-  right,
-  bottom
-}
+enum PlayerLocation { top, left, right, bottom }
 
 class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
   final Map<PlayerLocation, Widget> playedCards;
@@ -84,8 +97,8 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
           flex: 1,
           child: Align(
             alignment: Alignment.topCenter,
-            child: playedCards[PlayerLocation.bottom]
-                ?? _buildPlayedCardDraggableTarget(),
+            child: playedCards[PlayerLocation.bottom] ??
+                _buildPlayedCardDraggableTarget(),
           ),
         )
       ],
@@ -107,5 +120,23 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
             : Container();
       },
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<Map<PlayerLocation, Widget>>(
+        'playedCards',
+        playedCards,
+      ))
+      ..add(ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
+        'cardIsAllowed',
+        cardIsAllowed,
+      ))
+      ..add(ObjectFlagProperty<Consumer<AbstractTarotCard>>.has(
+        'playCard',
+        playCard,
+      ));
   }
 }
