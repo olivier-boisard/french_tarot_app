@@ -74,7 +74,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
             flex: 1,
             child: FaceDownPlayerArea(
               nCards: visibleHand.length,
-              key: const Key('TopFaceUpArea'),
+              key: const Key('TopFaceDownArea'),
             ),
           ),
           Expanded(
@@ -90,7 +90,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                       quarterTurns: 1,
                       child: FaceDownPlayerArea(
                         nCards: visibleHand.length,
-                        key: const Key('LeftFaceUpArea'),
+                        key: const Key('LeftFaceDownArea'),
                       ),
                     ),
                   ),
@@ -123,7 +123,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                       quarterTurns: 3,
                       child: FaceDownPlayerArea(
                         nCards: visibleHand.length,
-                        key: const Key('RightFaceUpArea'),
+                        key: const Key('RightFaceDownArea'),
                       ),
                     ),
                   ),
