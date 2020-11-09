@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../engine/core/function_interfaces.dart';
@@ -29,6 +29,11 @@ class FaceDownPlayerArea extends StatelessWidget with ScreenSized {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IntProperty('nCards', nCards));
+    properties
+      ..add(IntProperty('nCards', nCards))
+      ..add(DiagnosticsProperty<Factory<Widget>>(
+        'faceDownCardFactory',
+        faceDownCardFactory,
+      ));
   }
 }
