@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:french_tarot/app/cards/face_down_card.dart';
 import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
@@ -29,14 +30,33 @@ void main() {
     matching: find.byType(FaceUpCard),
   );
 
+  final topPlayerHand = find.descendant(
+    of: find.byKey(const Key('TopFaceDownArea')),
+    matching: find.byType(FaceDownCard),
+  );
+  final leftPlayerHand = find.descendant(
+    of: find.byKey(const Key('LeftFaceDownArea')),
+    matching: find.byType(FaceDownCard),
+  );
+  final rightPlayerHand = find.descendant(
+    of: find.byKey(const Key('RightFaceDownArea')),
+    matching: find.byType(FaceDownCard),
+  );
+
   testWidgets('Play card', (tester) async {
     await _prepareApp(tester, gamePageAcceptingAnyCard);
     expect(cardInHandFinder, findsOneWidget);
     expect(playedCardFinder, findsNothing);
+    expect(topPlayerHand, findsOneWidget);
+    expect(leftPlayerHand, findsOneWidget);
+    expect(rightPlayerHand, findsOneWidget);
 
     await dragCardToPlay(tester);
     expect(cardInHandFinder, findsNothing);
     expect(playedCardFinder, findsOneWidget);
+    expect(topPlayerHand, findsNothing);
+    expect(leftPlayerHand, findsNothing);
+    expect(rightPlayerHand, findsNothing);
   });
 
   testWidgets('Reject played card', (tester) async {
