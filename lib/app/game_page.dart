@@ -29,6 +29,15 @@ class GamePage extends StatefulWidget {
       isCardAllowed: isCardAllowed,
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
+      'isCardAllowed',
+      isCardAllowed,
+    ));
+  }
 }
 
 class _GamePageState extends State<GamePage> with ScreenSized {
@@ -135,6 +144,15 @@ class _GamePageState extends State<GamePage> with ScreenSized {
       playedCardsMappedToLocations[_playerLocations[i]] = playedCards[i];
     }
     return playedCardsMappedToLocations;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<Transformer<bool, AbstractTarotCard>>.has(
+      'isCardAllowed',
+      isCardAllowed,
+    ));
   }
 }
 
