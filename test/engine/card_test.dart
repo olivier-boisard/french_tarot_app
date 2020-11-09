@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/suits.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {

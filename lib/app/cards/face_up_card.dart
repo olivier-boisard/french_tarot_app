@@ -4,33 +4,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../engine/core/abstract_tarot_card.dart';
-import '../../engine/core/suited_playable.dart';
-import '../../engine/core/tarot_card.dart' as engine;
-import '../core/dimensions.dart';
+import '../../engine/core/suits.dart';
 import '../player_area/screen_sized.dart';
+import 'abstract_card_widget.dart';
 
-class FaceUpCard extends StatelessWidget with ScreenSized {
-  final AbstractTarotCard card;
-
+class FaceUpCard extends AbstractCardWidget with ScreenSized {
   FaceUpCard({
     Key key,
-    @required this.card,
-  }) : super(key: key);
+    @required card,
+  }) : super(key: key, card: card);
 
   @override
   Widget build(BuildContext context) {
     final valueAsString = _convertStrengthToString(card.value);
     final suitAsString = _convertSuitToString();
-    const excuseAsString = '🎸';
+    const excuseString = '🎸';
+    final text = card.isExcuse ? excuseString : '$valueAsString\n$suitAsString';
     final smallTextWidget = Text(
-      card != const engine.TarotCard.excuse()
-          ? '$valueAsString\n$suitAsString'
-          : excuseAsString,
+      text,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: window.physicalSize.width / 150,
-      ),
+      style: TextStyle(fontSize: window.physicalSize.width / 150),
     );
     final row = Row(
       children: <Widget>[
@@ -57,10 +50,9 @@ class FaceUpCard extends StatelessWidget with ScreenSized {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                  card.isExcuse
-                      ? excuseAsString
-                      : '$valueAsString$suitAsString',
-                  textAlign: TextAlign.center),
+                card.isExcuse ? excuseString : '$valueAsString$suitAsString',
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           row,
@@ -72,16 +64,12 @@ class FaceUpCard extends StatelessWidget with ScreenSized {
   //TODO abstract strength
   String _convertStrengthToString(int value) {
     String output;
-    if (engine.TarotCard.standardSuits.contains(card.suit)) {
-      final valueToString = {
-        11: '♗',
-        12: '♕',
-        13: '♘',
-        14: '♔',
-      };
-      output = valueToString[value] ?? value.toString();
+    final valueAsString = value.toString();
+    if (standardSuits.contains(card.suit)) {
+      final valueToString = {11: '♗', 12: '♕', 13: '♘', 14: '♔'};
+      output = valueToString[value] ?? valueAsString;
     } else {
-      output = value.toString();
+      output = valueAsString;
     }
 
     return output;
@@ -96,13 +84,5 @@ class FaceUpCard extends StatelessWidget with ScreenSized {
       Suit.trump: '⭐',
     };
     return suitToString[card.suit];
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty<engine.TarotCard>('card', card))..add(
-      DiagnosticsProperty<Dimensions>('dimensions', dimensions),
-    );
   }
 }

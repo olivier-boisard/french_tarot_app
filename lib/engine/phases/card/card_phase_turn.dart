@@ -1,4 +1,5 @@
 import '../../core/suited_playable.dart';
+import '../../core/suits.dart';
 import 'abstract_turn.dart';
 
 class CardPhaseTurn<T extends SuitedPlayable> implements AbstractTurn<T> {

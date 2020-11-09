@@ -4,15 +4,24 @@ import 'package:french_tarot/app/cards/face_up_card.dart';
 import 'package:french_tarot/app/french_tarot_app.dart';
 import 'package:french_tarot/app/game_page.dart';
 import 'package:french_tarot/app/played_cards_area.dart';
+import 'package:french_tarot/app/player_area/face_down_player_area.dart';
 import 'package:french_tarot/app/player_area/face_up_player_area.dart';
-import 'package:french_tarot/engine/core/suited_playable.dart';
+import 'package:french_tarot/engine/core/suits.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 
 void main() {
   final card = TarotCard.coloredCard(Suit.spades, 1);
+  final faceDownPlayerArea = FaceDownPlayerArea(
+    nCards: 1,
+    faceDownCardFactory: () => FaceDownCard(),
+  );
+  final visibleHand = [FaceUpCard(card: card)];
   final gamePageAcceptingAnyCard = GamePage(
-    visibleHand: [FaceUpCard(card: card)],
+    visibleHand: visibleHand,
     isCardAllowed: (card) => true,
+    faceDownPlayerArea: faceDownPlayerArea,
+    faceUpCardBuilder: (card) => FaceUpCard(card: card),
+    faceUpArea: FaceUpPlayerArea(cards: visibleHand),
   );
 
   testWidgets('Hand cards are visible', (tester) async {
@@ -77,8 +86,11 @@ void main() {
 
   testWidgets('Reject played card', (tester) async {
     final gamePageRejectingAnyCard = GamePage(
-      visibleHand: [FaceUpCard(card: card)],
+      visibleHand: visibleHand,
       isCardAllowed: (card) => false,
+      faceDownPlayerArea: faceDownPlayerArea,
+      faceUpCardBuilder: (card) => FaceUpCard(card: card),
+      faceUpArea: FaceUpPlayerArea(cards: visibleHand),
     );
     await _prepareApp(tester, gamePageRejectingAnyCard);
 
@@ -102,4 +114,19 @@ Future dragCardToPlay(WidgetTester tester) async {
 
 Future _prepareApp(WidgetTester tester, GamePage gamePage) async {
   await tester.pumpWidget(FrenchTarotApp(gameWidget: gamePage));
+}
+
+Map<PlayerLocation, Widget> _createLocationToPlayedCard(
+  List<Widget> playedCards,
+) {
+  final playedCardsMappedToLocations = <PlayerLocation, Widget>{};
+  final playerLocations = <PlayerLocation>[
+    PlayerLocation.left,
+    PlayerLocation.top,
+    PlayerLocation.right,
+  ];
+  for (var i = playedCards.length - 1; i >= 0; i--) {
+    playedCardsMappedToLocations[playerLocations[i]] = playedCards[i];
+  }
+  return playedCardsMappedToLocations;
 }

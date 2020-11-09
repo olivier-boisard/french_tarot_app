@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 import '../../engine/core/abstract_tarot_card.dart';
-import '../cards/face_up_card.dart';
+import '../cards/abstract_card_widget.dart';
 import 'screen_sized.dart';
 
 class FaceUpPlayerArea extends StatelessWidget with ScreenSized {
-  final Iterable<FaceUpCard> cards;
+  final Iterable<AbstractCardWidget> cards;
 
   FaceUpPlayerArea({Key key, @required this.cards}) : super(key: key);
 
