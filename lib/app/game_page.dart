@@ -9,6 +9,10 @@ import 'player_area/face_down_player_area.dart';
 import 'player_area/face_up_player_area.dart';
 import 'player_area/screen_sized.dart';
 
+const topFaceDownAreaKey = Key('TopFaceDownArea');
+const leftFaceDownArea = Key('LeftFaceDownArea');
+const rightFaceDownAreaKey = Key('RightFaceDownArea');
+
 class GamePage extends StatefulWidget {
   final List<FaceUpCard> visibleHand;
   final List<FaceUpCard> playedCards;
@@ -74,7 +78,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
             flex: 1,
             child: FaceDownPlayerArea(
               nCards: visibleHand.length,
-              key: const Key('TopFaceDownArea'),
+              key: topFaceDownAreaKey,
             ),
           ),
           Expanded(
@@ -90,7 +94,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                       quarterTurns: 1,
                       child: FaceDownPlayerArea(
                         nCards: visibleHand.length,
-                        key: const Key('LeftFaceDownArea'),
+                        key: leftFaceDownArea,
                       ),
                     ),
                   ),
@@ -123,7 +127,7 @@ class _GamePageState extends State<GamePage> with ScreenSized {
                       quarterTurns: 3,
                       child: FaceDownPlayerArea(
                         nCards: visibleHand.length,
-                        key: const Key('RightFaceDownArea'),
+                        key: rightFaceDownAreaKey,
                       ),
                     ),
                   ),

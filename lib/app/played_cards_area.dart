@@ -7,6 +7,11 @@ import '../engine/core/function_interfaces.dart';
 import 'cards/face_up_card.dart';
 import 'player_area/screen_sized.dart';
 
+const topPlayedCardKey = Key('TopPlayedCard');
+const leftPlayedCardKey =  Key('LeftPlayedCard');
+const rightPlayedCardKey =  Key('RightPlayedCard');
+const abstractTarotCardDragTargetKey = Key('AbstractTarotCardDragTarget');
+
 class PlayedCardsArea extends StatefulWidget {
   final Map<PlayerLocation, Widget> playedCards;
   final Transformer<bool, AbstractTarotCard> cardIsAllowed;
@@ -66,6 +71,9 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
       width: dimensions.width,
       height: dimensions.height,
     );
+
+
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -73,7 +81,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
           flex: 1,
           child: Align(
             alignment: Alignment.bottomCenter,
-            key: const Key('TopPlayedCard'),
+            key: topPlayedCardKey,
             child: playedCards[PlayerLocation.top] ?? cardPlaceHolder,
           ),
         ),
@@ -86,11 +94,11 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
                 child: Container(),
               ),
               Container(
-                key: const Key('LeftPlayedCard'),
+                key: leftPlayedCardKey,
                 child: playedCards[PlayerLocation.left] ?? cardPlaceHolder,
               ),
               Container(
-                key: const Key('RightPlayedCard'),
+                key: rightPlayedCardKey,
                 child: playedCards[PlayerLocation.right] ?? cardPlaceHolder,
               ),
               Expanded(
@@ -114,7 +122,7 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
 
   DragTarget<AbstractTarotCard> _buildPlayedCardDraggableTarget() {
     return DragTarget<AbstractTarotCard>(
-      key: const Key('AbstractTarotCardDragTarget'),
+      key: abstractTarotCardDragTargetKey,
       onWillAccept: cardIsAllowed,
       onAccept: (cardToPlay) {
         setState(() {

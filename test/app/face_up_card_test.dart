@@ -31,15 +31,15 @@ void main() {
   );
 
   final topPlayerHand = find.descendant(
-    of: find.byKey(const Key('TopFaceDownArea')),
+    of: find.byKey(topFaceDownAreaKey),
     matching: find.byType(FaceDownCard),
   );
   final leftPlayerHand = find.descendant(
-    of: find.byKey(const Key('LeftFaceDownArea')),
+    of: find.byKey(leftFaceDownArea),
     matching: find.byType(FaceDownCard),
   );
   final rightPlayerHand = find.descendant(
-    of: find.byKey(const Key('RightFaceDownArea')),
+    of: find.byKey(rightFaceDownAreaKey),
     matching: find.byType(FaceDownCard),
   );
 
@@ -78,8 +78,8 @@ void main() {
 Future dragCardToPlay(WidgetTester tester) async {
   final playedCard = find.byType(FaceUpCard);
   final playedCardCenter = tester.getCenter(playedCard);
-  const dragTargetKey = Key('AbstractTarotCardDragTarget');
-  final dragTargetCenter = tester.getCenter(find.byKey(dragTargetKey));
+  final finder = find.byKey(abstractTarotCardDragTargetKey);
+  final dragTargetCenter = tester.getCenter(finder);
   await tester.drag(playedCard, dragTargetCenter - playedCardCenter);
   await tester.pumpAndSettle();
 }
