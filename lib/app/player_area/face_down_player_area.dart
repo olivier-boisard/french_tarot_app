@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../cards/face_down_card.dart';
@@ -16,5 +17,11 @@ class FaceDownPlayerArea extends StatelessWidget with ScreenSized {
       cardWidgets.add(ScreenSized.padWidget(cardWidget, i * offsetInPixel));
     }
     return Stack(children: cardWidgets);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IntProperty('nCards', nCards));
   }
 }
