@@ -4,7 +4,7 @@ import 'package:french_tarot/engine/core/abstract_card.dart';
 import 'package:french_tarot/engine/core/decision.dart';
 import 'package:french_tarot/engine/core/round_scores_computer.dart';
 import 'package:french_tarot/engine/core/score_manager.dart';
-import 'package:french_tarot/engine/core/suits.dart';
+import 'package:french_tarot/engine/core/suited_playable.dart';
 import 'package:french_tarot/engine/core/tarot_card.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 import 'package:french_tarot/engine/phases/card/card_phase.dart';

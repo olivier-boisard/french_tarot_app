@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'abstract_tarot_card.dart';
 import 'deck.dart';
-import 'suits.dart';
 import 'tarot_card.dart';
 
 class TarotDeckFacade extends Deck<AbstractTarotCard> {
@@ -31,7 +30,7 @@ class TarotDeckFacade extends Deck<AbstractTarotCard> {
   }
 
   static void _addRegularCards(List<AbstractTarotCard> cards) {
-    for (final suit in standardSuits) {
+    for (final suit in TarotCard.standardSuits) {
       for (var strength = 1; strength <= CardStrengths.king; strength++) {
         cards.add(TarotCard.coloredCard(suit, strength));
       }

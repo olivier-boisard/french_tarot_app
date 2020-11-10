@@ -1,27 +1,20 @@
-import 'package:flutter/rendering.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../engine/core/function_interfaces.dart';
+import '../cards/face_down_card.dart';
 import 'screen_sized.dart';
 
 class FaceDownPlayerArea extends StatelessWidget with ScreenSized {
   final int nCards;
-  final Factory<Widget> faceDownCardFactory;
 
-  FaceDownPlayerArea({
-    Key key,
-    @required this.nCards,
-    @required this.faceDownCardFactory,
-  }) : super(key: key);
+  FaceDownPlayerArea({Key key, @required this.nCards}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cardWidgets = <Widget>[];
     for (var i = 0; i < nCards; i++) {
-      cardWidgets.add(ScreenSized.padWidget(
-        faceDownCardFactory(),
-        i * offsetInPixel,
-      ));
+      final cardWidget = FaceDownCard();
+      cardWidgets.add(ScreenSized.padWidget(cardWidget, i * offsetInPixel));
     }
     return Stack(children: cardWidgets);
   }
@@ -29,11 +22,6 @@ class FaceDownPlayerArea extends StatelessWidget with ScreenSized {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(IntProperty('nCards', nCards))
-      ..add(DiagnosticsProperty<Factory<Widget>>(
-        'faceDownCardFactory',
-        faceDownCardFactory,
-      ));
+    properties.add(IntProperty('nCards', nCards));
   }
 }
