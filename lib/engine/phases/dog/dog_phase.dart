@@ -9,7 +9,5 @@ class DogPhase {
 
   DogPhase(this._dog, this._dogConsumer);
 
-  void run() {
-    _dogConsumer(_dog);
-  }
+  void run() => _dogConsumer(_dog);
 }
