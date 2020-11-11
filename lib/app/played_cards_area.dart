@@ -8,8 +8,8 @@ import 'cards/face_up_card.dart';
 import 'player_area/screen_sized.dart';
 
 const topPlayedCardKey = Key('TopPlayedCard');
-const leftPlayedCardKey =  Key('LeftPlayedCard');
-const rightPlayedCardKey =  Key('RightPlayedCard');
+const leftPlayedCardKey = Key('LeftPlayedCard');
+const rightPlayedCardKey = Key('RightPlayedCard');
 const abstractTarotCardDragTargetKey = Key('AbstractTarotCardDragTarget');
 
 class PlayedCardsArea extends StatefulWidget {
@@ -71,8 +71,6 @@ class _PlayerCardsAreaState extends State<PlayedCardsArea> with ScreenSized {
       width: dimensions.width,
       height: dimensions.height,
     );
-
-
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
