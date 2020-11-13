@@ -21,6 +21,21 @@ class Deck<T> {
     return _cards.length;
   }
 
+  int computeNCardsPerPlayer(int nPlayers) {
+    final nCardsToDeal = nRemainingCards - computeNCardsInDog(nPlayers);
+    return (nCardsToDeal / nPlayers).floor();
+  }
+
+  int computeNCardsInDog(int nPlayers) {
+    var output = 0;
+    if (nPlayers == 4) {
+      output = 6;
+    } else {
+      throw UnsupportedNumberOfPlayersException();
+    }
+    return output;
+  }
+
   void shuffle() {
     _cards.shuffle(_random);
   }
@@ -31,3 +46,5 @@ class Deck<T> {
     return output;
   }
 }
+
+class UnsupportedNumberOfPlayersException implements Exception {}

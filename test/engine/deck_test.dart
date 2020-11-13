@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:french_tarot/engine/core/deck.dart';
 import 'package:french_tarot/engine/core/tarot_deck_facade.dart';
 
 void main() {
@@ -50,6 +51,27 @@ void main() {
     expect(
       allPoppedCards,
       unorderedEquals(TarotDeckFacade().pop(nCardsInDeck)),
+    );
+  });
+
+  test('Compute number of cards per player', () {
+    final deck = TarotDeckFacade();
+    const nPlayers = 4;
+    expect(deck.computeNCardsPerPlayer(nPlayers), 18);
+  });
+
+  test('Compute number of cards in dog', () {
+    final deck = TarotDeckFacade();
+    const nPlayers = 4;
+    const nCardsInDog = 6;
+    expect(deck.computeNCardsInDog(nPlayers), nCardsInDog);
+    expect(
+      () => deck.computeNCardsInDog(3),
+      throwsA(isInstanceOf<UnsupportedNumberOfPlayersException>()),
+    );
+    expect(
+      () => deck.computeNCardsInDog(5),
+      throwsA(isInstanceOf<UnsupportedNumberOfPlayersException>()),
     );
   });
 }
